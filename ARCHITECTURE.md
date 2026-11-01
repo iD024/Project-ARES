@@ -14,21 +14,25 @@ ARES (Advanced Reconnaissance and Exploration System) is a map-first planetary e
 │  ┌──────────────────────────────────────────────────────────────────┐  │
 │  │                    Zustand Application Store                     │  │
 │  │  - Camera State (Lon, Lat, Altitude, Heading, Tilt)              │  │
+│  │  - Regional Coordinates: { longitude, latitude, scale }          │  │
 │  │  - Exploration Mode: GLOBAL_3D | REGIONAL_2D | LOCAL_ANALYSIS    │  │
 │  │  - Active Layer Stack & Opacities                                │  │
-│  │  - Measurement & Route Tool State                                │  │
+│  │  - Selected Sites & Selected Regions                             │  │
 │  └──────────────────────────────────┬───────────────────────────────┘  │
 │                                     │                                  │
 │  ┌──────────────────────────────────┴───────────────────────────────┐  │
-│  │                      Map Viewport Hierarchy                      │  │
+│  │             ViewportCoordinator (Continuous Transitions)         │  │
 │  │  ┌────────────────────────────────────────────────────────────┐  │  │
-│  │  │ Full-Bleed 3D SceneView (Mars Ellipsoid WKID 104905)       │  │  │
-│  │  │ - 3D Mars Elevation Mesh (MOLA / HRSC)                     │  │  │
-│  │  │ - Surface Imagery (Viking MDIM 2.1, THEMIS IR, CTX Mosaics)│  │  │
+│  │  │ Full-Bleed 3D SceneView (Mars Spheroid WKID 104971)        │  │  │
+│  │  │ - 3D Mars Elevation Mesh (MDEM200M ImageServer)            │  │  │
+│  │  │ - Surface Imagery (Viking MDIM 2.1 Color Mosaic)           │  │  │
+│  │  │ - 3D Landing Sites Graphics & Fly-To Choreography          │  │  │
 │  │  └────────────────────────────────────────────────────────────┘  │  │
 │  │  ┌────────────────────────────────────────────────────────────┐  │  │
-│  │  │ Synchronized 2D MapView (Regional Cartography)             │  │  │
-│  │  │ - Equirectangular / Simple Cylindrical Mars projection     │  │  │
+│  │  │ Synchronized 2D MapView (Regional Cartography WKID 104971) │  │  │
+│  │  │ - Top-down planar planetary cartography                    │  │  │
+│  │  │ - Viking MDIM 2.1 Basemap + Regional Diamonds + Markers    │  │  │
+│  │  │ - MapControls (Zoom, North, Extent, Return to 3D Globe)    │  │  │
 │  │  └────────────────────────────────────────────────────────────┘  │  │
 │  └──────────────────────────────────┬───────────────────────────────┘  │
 │                                     │                                  │
@@ -37,7 +41,7 @@ ARES (Advanced Reconnaissance and Exploration System) is a map-first planetary e
 │  │  - Top: Header Bar & Mode Switcher (Global 3D / Regional 2D)     │  │
 │  │  - Bottom: Live Telemetry Strip (Lon, Lat, Elevation, Scale)     │  │
 │  │  - Left: Layer Manager & Scientific Provenance Drawer            │  │
-│  │  - Right: Measurement Tools / Rover Traverses / Route Planner    │  │
+│  │  - Right: Tools Drawer (Landing Sites, Regions, Route Planner)   │  │
 │  └──────────────────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
@@ -91,3 +95,9 @@ flowchart LR
 - Automatic retry and graceful degradation: if an external tile service fails, the map remains interactive and informs the user with an in-HUD warning pill.
 - CORS policy: Verified that NASA Trek and USGS serve tiles with `Access-Control-Allow-Origin: *`.
 
+---
+
+## 6. Continuous Viewport Architecture (Dual-View Coordination)
+- **Seamless Crossfade & Context Mirroring**: The `ViewportCoordinator` hosts both the 3D `SceneView` and 2D `MapView` in persistent DOM containers. When switching modes, an animated CSS opacity crossfade prevents black-screen flashes or re-instantiation overhead.
+- **Geographic Center Synchronizer**: Target coordinates (`longitude`, `latitude`) and viewing scales are synchronized via `useAppStore` when transitioning from 3D landing site markers or regional bookmarks into the 2D map view.
+- **1-Click Return to Orbit**: In 2D Regional mode, a prominent floating button allows users to return instantly to the 3D Mars globe.
