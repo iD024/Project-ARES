@@ -7,7 +7,7 @@ import {
 import { MARS_LANDING_SITES } from '../../config/mars.ts';
 import { MARS_REGIONS, getRegionById } from '../../config/marsRegions.ts';
 import { MapControls } from './MapControls.tsx';
-import { Radio, AlertCircle, Layers, Map as MapIcon } from 'lucide-react';
+import { Radio, AlertCircle, Map as MapIcon } from 'lucide-react';
 
 export const MarsMapView: React.FC = () => {
   const mapDivRef = useRef<HTMLDivElement>(null);

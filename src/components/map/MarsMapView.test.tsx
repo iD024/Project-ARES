@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import React from 'react';
 import { MarsMapView } from './MarsMapView.tsx';
 import { MapControls } from './MapControls.tsx';
 import { useAppStore } from '../../store/useAppStore.ts';

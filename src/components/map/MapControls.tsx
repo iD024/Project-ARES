@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Home, Plus, Minus, Globe, Maximize2 } from 'lucide-react';
+import { Compass, Plus, Minus, Globe, Maximize2 } from 'lucide-react';
 
 export interface MapControlsProps {
   onResetExtent: () => void;

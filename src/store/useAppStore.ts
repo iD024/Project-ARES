@@ -102,7 +102,7 @@ export const useAppStore = create<AppState>((set) => ({
   setSelectedLandingSiteId: (siteId) => set({ selectedLandingSiteId: siteId }),
 
   setSelectedRegionId: (regionId) =>
-    set((state) => {
+    set(() => {
       if (!regionId) return { selectedRegionId: null };
       const matchedRegion = MARS_REGIONS.find((r) => r.id === regionId);
       if (matchedRegion) {

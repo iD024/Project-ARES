@@ -267,10 +267,10 @@ export const MarsGlobeView: React.FC = () => {
         view.on('click', async (event: any) => {
           try {
             const hitResult = await view.hitTest(event);
-            const siteHit = hitResult.results?.find(
-              (r: any) => r.graphic?.layer?.id === 'mars-landing-sites'
+            const siteHit: any = hitResult.results?.find(
+              (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-landing-sites'
             );
-            if (siteHit?.graphic?.attributes?.siteId) {
+            if (siteHit && siteHit.graphic?.attributes?.siteId) {
               setSelectedLandingSiteId(siteHit.graphic.attributes.siteId);
             }
           } catch {

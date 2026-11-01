@@ -38,7 +38,7 @@ describe('ARES Application Shell & 3D Mars Globe (Phase 02)', () => {
     fireEvent.click(sitesBtn);
 
     expect(screen.getByText('Exploration & Terrain Tools')).toBeInTheDocument();
-    expect(screen.getByText('Perseverance (Jezero Crater)')).toBeInTheDocument();
+    expect(screen.getAllByText('Perseverance (Jezero Crater)').length).toBeGreaterThanOrEqual(1);
   });
 
   it('opens Provenance modal when Catalog trigger is clicked', () => {
