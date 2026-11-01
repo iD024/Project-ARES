@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from '../ui/Modal.tsx';
 import { Badge } from '../ui/Badge.tsx';
-import { ShieldCheck, Database, Info, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Database, Info } from 'lucide-react';
 
 export interface ProvenanceModalProps {
   isOpen: boolean;

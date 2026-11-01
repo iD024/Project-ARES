@@ -1,59 +1,54 @@
 # ARES — Design System & Visual Specification
 
-Inspired by high-agency aerospace interfaces and the immersive scientific feel of Esri Explore Mars, but developed with an original, proprietary ARES visual identity.
+Inspired by high-agency aerospace interfaces and the immersive scientific feel of Esri Explore Mars, built with an original, proprietary ARES visual identity.
 
 ---
 
 ## 1. Aesthetic Direction: Tactical Aerospace Dark Mode
-- **Atmosphere:** Deep Space Obsidian & Carbon Black (`#090D16` / `#0F172A`).
-- **Accent Highlighting:** Mars Rust & Sub-solar Amber (`#F97316` / `#EA580C` / `#F59E0B`).
-- **Telemetry & Science:** Phosphor Cyan / Ice Blue (`#06B6D4` / `#38BDF8` / `#22D3EE`).
-- **Surface Elevation Gradient:** MOLA Hypsometric ramp (Deep Purple $\rightarrow$ Indigo $\rightarrow$ Teal $\rightarrow$ Green $\rightarrow$ Ochre $\rightarrow$ White).
+- **Canvas / Background:** Deep Space Obsidian (`#05070D`).
+- **Surface / Cards:** Cold Carbon Slate (`#0B0F19`, `rgba(15, 23, 42, 0.85)`).
+- **Glassmorphism Panels:** `backdrop-blur-xl bg-slate-900/90 border border-slate-700/60 shadow-2xl`.
+- **Primary Accent:** Martian Rust & Sub-solar Amber (`#EA580C` / `#F97316` / `#F59E0B`).
+- **Telemetry & Science Data:** Phosphor Cyan / Ice Blue (`#06B6D4` / `#22D3EE`).
+- **Surface Elevation Gradient:** MOLA Hypsometric ramp (Deep Purple $\rightarrow$ Teal $\rightarrow$ Green $\rightarrow$ Ochre $\rightarrow$ White).
 
 ---
 
-## 2. Color Palette & Semantic Tokens
-
-```css
-:root {
-  /* Surface & Background */
-  --ares-space-deep: #05070D;
-  --ares-space-surface: #0B0F19;
-  --ares-space-card: rgba(15, 23, 42, 0.75);
-  --ares-space-border: rgba(51, 65, 85, 0.6);
-
-  /* Tactical Accents */
-  --ares-rust: #EA580C;
-  --ares-amber: #F59E0B;
-  --ares-cyan: #06B6D4;
-  --ares-emerald: #10B981;
-  --ares-crimson: #EF4444;
-
-  /* Typography */
-  --ares-text-primary: #F8FAFC;
-  --ares-text-secondary: #94A3B8;
-  --ares-text-muted: #64748B;
-}
-```
+## 2. Typography Hierarchy
+- **Primary Interface Font:** Inter / sans-serif (clean readability for labels and narrative descriptions).
+- **Telemetry & Numbers:** JetBrains Mono / monospace (`font-mono tabular-nums tracking-wider uppercase`).
+- **Scale:**
+  - Headers: `text-sm font-bold font-mono tracking-widest`
+  - Body: `text-xs text-slate-300 font-sans`
+  - Micro-data: `text-[10px]` / `text-[11px] font-mono`
 
 ---
 
-## 3. Typography
-- **Primary Interface Font:** Inter / sans-serif (clean, readable at small scales).
-- **Telemetry & Coordinates:** JetBrains Mono / monospace (aligned figures, tabular numbers `font-mono tracking-wider`).
+## 3. UI Component Inventory (`src/components/`)
 
----
+### Primitives (`src/components/ui/`)
+| Component | Variants / States | Use Case |
+|---|---|---|
+| `Button` | `primary`, `secondary`, `tactical`, `danger`, `ghost` | Action triggers, command buttons |
+| `Badge` | `OBSERVED`, `DERIVED`, `MODELED`, `SIMULATED`, `ACTIVE` | Scientific data classification labels |
+| `Slider` | Continuous `min`, `max`, `step` with `%` readout | Layer opacity and blend adjustments |
+| `Tabs` | Horizontal segmented pills with active highlight | Category filters, tool selector |
+| `Drawer` | `left` (Layers) or `right` (Tools), collapsible, ESC dismiss | Primary lateral HUD control drawers |
+| `Modal` | Centered backdrop-blur dialog, accessible ARIA roles | In-depth scientific catalogs and dossiers |
 
-## 4. Layout & Viewport Hierarchy
-- **Primary Rule:** The map viewport is 100% full-screen (`inset-0 absolute`).
-- **HUD Panels:** All UI containers float over the map with glassmorphism (`backdrop-blur-md bg-slate-900/80 border border-slate-700/60 shadow-2xl`).
-- **Collapsibility:** All floating drawers (layers, elevation profiles, mission lists) can be minimized with a single click or keyboard shortcut.
+### HUD Panels (`src/components/hud/`)
+| Component | Placement | Content |
+|---|---|---|
+| `TopCommandBar` | `fixed top-4 left-4 right-4` | Brand logo, Mode Switcher (`GLOBAL 3D`, `REGIONAL 2D`, `LOCAL`), Drawer buttons |
+| `TelemetryStrip` | `fixed bottom-4 left-4 right-4` | Live Mars Coordinates, Elevation, Subsolar point, CRS (`WKID 104905`) |
+| `ViewportPlaceholder`| `absolute inset-0` | Tactical orbital graticule rings, target reticle, readiness indicator |
+| `LayersDrawer` | `left-4 top-16 bottom-14` | Viking, MOLA, THEMIS, USGS Geologic layers, opacity sliders |
+| `ToolsDrawer` | `right-4 top-16 bottom-14` | Perseverance, Curiosity, InSight landing site selector, tool tabs |
+| `ProvenanceModal` | Centered modal | Full provenance metadata table for all planetary layers |
 
----
-
-## 5. Reusable UI Primitives
-1. `TelemetryPill`: Displays live coordinate readouts (`24.52° N, 77.41° E | Elev: -2,450 m`).
-2. `ModeToggle`: Seamless segmented switch between `GLOBAL 3D` and `REGIONAL 2D`.
-3. `LayerCard`: Displays layer thumbnail, title, data type badge (Observed / Derived), opacity slider, and visibility toggle.
-4. `MissionBadge`: Visual indicator for rover landing sites with sol counters and mission icons.
-
+### Feedback States (`src/components/feedback/`)
+| Component | Function |
+|---|---|
+| `EmptyState` | Rendered when no waypoints, layers, or targets are active |
+| `LoadingOverlay` | Full-screen translucent blur with spinner during heavy data stream |
+| `ErrorBanner` | Alert for network timeouts or missing WMTS tiles with retry action |
