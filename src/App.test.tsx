@@ -4,13 +4,13 @@ import '@testing-library/jest-dom';
 import App from './App.tsx';
 import { useAppStore } from './store/useAppStore.ts';
 
-describe('ARES Application Shell (Phase 01)', () => {
-  it('renders dominant viewport placeholder, top command bar, and telemetry footer', () => {
+describe('ARES Application Shell & 3D Mars Globe (Phase 02)', () => {
+  it('renders dominant 3D globe viewport container, top command bar, and telemetry footer', () => {
     render(<App />);
 
-    // Dominant Viewport Placeholder
-    expect(screen.getByTestId('ares-viewport-placeholder')).toBeInTheDocument();
-    expect(screen.getByText(/PHASE 01 — VIEWPORT READY FOR PHASE 02/i)).toBeInTheDocument();
+    // Dominant 3D Globe Viewport Container
+    expect(screen.getByTestId('ares-globe-container')).toBeInTheDocument();
+    expect(screen.getByText(/3D MARS GLOBE/i)).toBeInTheDocument();
 
     // Top Command Bar
     expect(screen.getByText('ARES')).toBeInTheDocument();

@@ -241,11 +241,18 @@ export const MarsGlobeView: React.FC = () => {
         // Live pointer coordinate telemetry tracking
         view.on('pointer-move', (event: any) => {
           const mapPoint = view.toMap({ x: event.x, y: event.y });
-          if (mapPoint) {
+          if (
+            mapPoint &&
+            typeof mapPoint.latitude === 'number' &&
+            typeof mapPoint.longitude === 'number'
+          ) {
+            const altitude = view.camera?.position?.z
+              ? Math.round(view.camera.position.z / 1000)
+              : 450;
             setTelemetry({
               latitude: Number(mapPoint.latitude.toFixed(2)),
               longitude: Number(mapPoint.longitude.toFixed(2)),
-              altitudeKm: Math.round(view.camera.position.z / 1000),
+              altitudeKm: altitude,
             });
           }
         });

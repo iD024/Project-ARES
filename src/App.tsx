@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppStore } from './store/useAppStore.ts';
-import { ViewportPlaceholder } from './components/hud/ViewportPlaceholder.tsx';
+import MarsGlobeView from './components/map/MarsGlobeView.tsx';
 import { TopCommandBar } from './components/hud/TopCommandBar.tsx';
 import { TelemetryStrip } from './components/hud/TelemetryStrip.tsx';
 import { LayersDrawer } from './components/hud/LayersDrawer.tsx';
@@ -12,9 +12,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative w-full h-full min-h-screen overflow-hidden bg-ares-space text-slate-100 flex flex-col font-sans select-none">
-      {/* 1. Dominant Full-Bleed Map Viewport Placeholder */}
+      {/* 1. Dominant Full-Bleed 3D Mars Globe Viewport */}
       <main className="relative flex-1 w-full h-full">
-        <ViewportPlaceholder />
+        <MarsGlobeView />
       </main>
 
       {/* 2. Top Floating Aerospace Command Bar */}
