@@ -34,3 +34,4 @@ export const MARS_DEFAULT_CAMERA = {
 };
 
 export const MARS_GROUND_COLOR = [144, 106, 100] as [number, number, number]; // Martian rust soil tone
+

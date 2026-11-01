@@ -15,3 +15,4 @@ describe('Landing Sites 3D Graphics Layer', () => {
     expect(perseverance?.attributes.name).toBe('Perseverance (Jezero Crater)');
   });
 });
+

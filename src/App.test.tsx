@@ -28,7 +28,7 @@ describe('ARES Application Shell & 3D Mars Globe (Phase 02)', () => {
     fireEvent.click(layersBtn);
 
     expect(screen.getByText('Planetary Layer Catalog')).toBeInTheDocument();
-    expect(screen.getByText('Viking MDIM 2.1 Color')).toBeInTheDocument();
+    expect(screen.getByText(/Viking MDIM 2.1 Color/i)).toBeInTheDocument();
   });
 
   it('opens Tools drawer when Sites trigger is clicked', () => {

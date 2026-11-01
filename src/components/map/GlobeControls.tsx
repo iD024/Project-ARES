@@ -77,3 +77,4 @@ export const GlobeControls: React.FC<GlobeControlsProps> = ({
     </div>
   );
 };
+

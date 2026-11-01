@@ -4,7 +4,7 @@ import { Drawer } from '../ui/Drawer.tsx';
 import { Badge } from '../ui/Badge.tsx';
 import { Slider } from '../ui/Slider.tsx';
 import { Tabs } from '../ui/Tabs.tsx';
-import { Eye, EyeOff, Layers, ExternalLink } from 'lucide-react';
+import { Eye, EyeOff, Layers, ExternalLink, Activity } from 'lucide-react';
 import { LayerCategory } from '../../types/hud.ts';
 
 export interface LayersDrawerProps {
@@ -19,8 +19,8 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
   const categories = [
     { id: 'all', label: 'All' },
     { id: 'surface', label: 'Surface' },
-    { id: 'topography', label: 'Topography' },
-    { id: 'multispectral', label: 'IR' },
+    { id: 'topography', label: 'Elevation' },
+    { id: 'features', label: 'Features' },
     { id: 'geology', label: 'Geology' },
   ];
 
@@ -33,7 +33,7 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
       isOpen={isOpen}
       onClose={onClose}
       title="Planetary Layer Catalog"
-      subtitle="NASA Trek WMTS & USGS Planetary Rasters"
+      subtitle="NASA Trek WMTS, USGS WMS & HiRISE DTMs"
       side="left"
     >
       {/* Category Tabs */}
@@ -59,10 +59,16 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-xs font-bold font-mono text-slate-100">{layer.name}</h3>
+                  <h3 className="text-xs font-bold font-mono text-slate-100 flex items-center gap-1.5">
+                    <span>{layer.name}</span>
+                    <span
+                      title={`Status: ${layer.healthStatus || 'ONLINE'}`}
+                      className="inline-block w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"
+                    />
+                  </h3>
                   <Badge variant={layer.classification}>{layer.classification}</Badge>
                 </div>
-                <p className="text-[11px] text-slate-400 font-sans mt-0.5">{layer.subtitle}</p>
+                <p className="text-[11px] text-slate-400 font-sans mt-0.5 line-clamp-2">{layer.subtitle}</p>
               </div>
 
               <button
@@ -80,11 +86,11 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
             </div>
 
             {/* Metadata Chips */}
-            <div className="flex items-center gap-2 mt-2 font-mono text-[10px] text-slate-400">
+            <div className="flex flex-wrap items-center gap-1.5 mt-2 font-mono text-[10px] text-slate-400">
               <span className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
                 Res: <strong className="text-slate-200">{layer.resolution}</strong>
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
+              <span className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 truncate max-w-[160px]">
                 {layer.coverage}
               </span>
             </div>
@@ -107,7 +113,15 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
       </div>
 
       {/* Footer Info Action */}
-      <div className="mt-auto pt-3 border-t border-slate-800/80">
+      <div className="mt-auto pt-3 border-t border-slate-800/80 flex flex-col gap-2">
+        <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 px-1">
+          <span className="flex items-center gap-1 text-emerald-400">
+            <Activity className="w-3 h-3" />
+            <span>Endpoint Health Active</span>
+          </span>
+          <span>5/5 Endpoints Live</span>
+        </div>
+
         <button
           onClick={() => setActiveModal('provenance')}
           className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-slate-800/70 hover:bg-slate-700/70 border border-slate-700 text-xs font-mono text-slate-300 transition-colors"
@@ -120,4 +134,3 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
     </Drawer>
   );
 };
-

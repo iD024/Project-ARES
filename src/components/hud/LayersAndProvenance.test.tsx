@@ -11,20 +11,20 @@ describe('LayersDrawer, ToolsDrawer & ProvenanceModal', () => {
     it('renders layers from store and allows toggling visibility and opacity', () => {
       render(<LayersDrawer isOpen={true} onClose={() => {}} />);
 
-      expect(screen.getByText('Viking MDIM 2.1 Color')).toBeInTheDocument();
-      expect(screen.getByText('MOLA Color Shaded Relief')).toBeInTheDocument();
+      expect(screen.getByText('Viking MDIM 2.1 Color Mosaic')).toBeInTheDocument();
+      expect(screen.getByText('HRSC–MOLA Blended Digital Elevation Model')).toBeInTheDocument();
 
       // Toggle visibility while on All
-      const vikingVisibilityBtn = screen.getByLabelText(/Toggle visibility for Viking MDIM 2.1 Color/i);
+      const vikingVisibilityBtn = screen.getByLabelText(/Toggle visibility for Viking MDIM 2.1 Color Mosaic/i);
       fireEvent.click(vikingVisibilityBtn);
       const updatedViking = useAppStore.getState().layers.find(l => l.id === 'mars-viking-mdim21');
       expect(updatedViking?.visible).toBe(false);
 
-      // Check category filtering
-      const topoTab = screen.getByRole('tab', { name: /Topography/i });
+      // Check category filtering (Elevation tab)
+      const topoTab = screen.getByRole('tab', { name: /Elevation/i });
       fireEvent.click(topoTab);
-      expect(screen.getByText('MOLA Color Shaded Relief')).toBeInTheDocument();
-      expect(screen.queryByText('Viking MDIM 2.1 Color')).not.toBeInTheDocument();
+      expect(screen.getByText('HRSC–MOLA Blended Digital Elevation Model')).toBeInTheDocument();
+      expect(screen.queryByText('Viking MDIM 2.1 Color Mosaic')).not.toBeInTheDocument();
     });
   });
 

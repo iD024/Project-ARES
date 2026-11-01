@@ -10,7 +10,7 @@ export type ModalId = 'provenance' | 'mission' | null;
 
 export type DataClassification = 'OBSERVED' | 'DERIVED' | 'MODELED' | 'SIMULATED';
 
-export type LayerCategory = 'surface' | 'topography' | 'multispectral' | 'geology';
+export type LayerCategory = 'surface' | 'topography' | 'multispectral' | 'geology' | 'features';
 
 export interface LayerItem {
   id: string;
@@ -24,6 +24,7 @@ export interface LayerItem {
   visible: boolean;
   opacity: number; // 0.0 to 1.0
   sourceUrl: string;
+  healthStatus?: 'ONLINE' | 'DEGRADED' | 'OFFLINE' | 'UNKNOWN';
 }
 
 export interface TelemetryData {
