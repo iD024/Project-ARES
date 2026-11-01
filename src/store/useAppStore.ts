@@ -1,6 +1,14 @@
 import { create } from 'zustand';
 import { ViewMode, DrawerId, ModalId, LayerItem, TelemetryData } from '../types/hud.ts';
 import { DATASET_REGISTRY } from '../services/data/datasetRegistry.ts';
+import { MARS_REGIONS } from '../config/marsRegions.ts';
+
+export interface RegionalCoordinates {
+  longitude: number;
+  latitude: number;
+  zoom?: number;
+  scale?: number;
+}
 
 export interface AppState {
   viewMode: ViewMode;
@@ -9,6 +17,8 @@ export interface AppState {
   telemetry: TelemetryData;
   layers: LayerItem[];
   selectedLandingSiteId: string | null;
+  selectedRegionId: string | null;
+  regionalCenter: RegionalCoordinates;
 
   // Actions
   setViewMode: (mode: ViewMode) => void;
@@ -19,6 +29,8 @@ export interface AppState {
   setLayerOpacity: (layerId: string, opacity: number) => void;
   setLayerHealth: (layerId: string, health: 'ONLINE' | 'DEGRADED' | 'OFFLINE') => void;
   setSelectedLandingSiteId: (siteId: string | null) => void;
+  setSelectedRegionId: (regionId: string | null) => void;
+  setRegionalCenter: (center: Partial<RegionalCoordinates>) => void;
 }
 
 const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
@@ -41,6 +53,12 @@ export const useAppStore = create<AppState>((set) => ({
   activeDrawer: null,
   activeModal: null,
   selectedLandingSiteId: 'perseverance',
+  selectedRegionId: 'jezero-crater',
+  regionalCenter: {
+    latitude: 18.38,
+    longitude: 77.45,
+    scale: 500000,
+  },
   telemetry: {
     latitude: 18.38,
     longitude: 77.45,
@@ -82,4 +100,26 @@ export const useAppStore = create<AppState>((set) => ({
     })),
 
   setSelectedLandingSiteId: (siteId) => set({ selectedLandingSiteId: siteId }),
+
+  setSelectedRegionId: (regionId) =>
+    set((state) => {
+      if (!regionId) return { selectedRegionId: null };
+      const matchedRegion = MARS_REGIONS.find((r) => r.id === regionId);
+      if (matchedRegion) {
+        return {
+          selectedRegionId: regionId,
+          regionalCenter: {
+            latitude: matchedRegion.centerLatitude,
+            longitude: matchedRegion.centerLongitude,
+            scale: matchedRegion.targetScale,
+          },
+        };
+      }
+      return { selectedRegionId: regionId };
+    }),
+
+  setRegionalCenter: (center) =>
+    set((state) => ({
+      regionalCenter: { ...state.regionalCenter, ...center },
+    })),
 }));

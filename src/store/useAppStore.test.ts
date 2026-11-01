@@ -58,5 +58,30 @@ describe('useAppStore', () => {
     useAppStore.getState().setLayerOpacity(firstLayer.id, 0.45);
     expect(useAppStore.getState().layers.find(l => l.id === firstLayer.id)?.opacity).toBe(0.45);
   });
+
+  it('manages regional center coordinates and selected region ID', () => {
+    // Initial regionalCenter defaults to Jezero Crater coordinates
+    const initial = useAppStore.getState();
+    expect(initial.regionalCenter).toBeDefined();
+    expect(initial.regionalCenter.latitude).toBeCloseTo(18.38, 2);
+    expect(initial.regionalCenter.longitude).toBeCloseTo(77.45, 2);
+
+    // Update regional center
+    useAppStore.getState().setRegionalCenter({
+      latitude: -4.59,
+      longitude: 137.44,
+      scale: 600000,
+    });
+    expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(-4.59, 2);
+    expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(137.44, 2);
+    expect(useAppStore.getState().regionalCenter.scale).toBe(600000);
+
+    // Select region ID and verify state
+    useAppStore.getState().setSelectedRegionId('olympus-mons');
+    expect(useAppStore.getState().selectedRegionId).toBe('olympus-mons');
+    // Selecting olympus mons updates regional center to its coordinates
+    expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(18.65, 2);
+    expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(226.2, 1);
+  });
 });
 
