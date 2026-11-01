@@ -77,7 +77,7 @@ export const MARS_LANDING_SITES: MarsLandingSite[] = [
     roverOrLander: 'Opportunity Rover',
     landingDate: '2004-01-25',
     latitude: -1.95,
-    longitude: 354.47,
+    longitude: -5.53, // 354.47° E normalized to GIS [-180, 180] (5.53° W)
     elevationMeters: -1400,
     targetFeatures: ['Eagle Crater', 'Endurance Crater', 'Victoria Crater', 'Endeavour Crater'],
   },

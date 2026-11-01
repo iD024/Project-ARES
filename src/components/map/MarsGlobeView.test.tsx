@@ -39,6 +39,25 @@ describe('MarsGlobeView & GlobeControls', () => {
       expect(screen.getByTestId('ares-globe-container')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Reset orbital view/i })).toBeInTheDocument();
     });
+
+    it('renders target landing site callout with 2D exploration action', async () => {
+      const { useAppStore } = await import('../../store/useAppStore.ts');
+      useAppStore.setState({
+        selectedLandingSiteId: 'opportunity',
+        viewMode: 'GLOBAL_3D',
+      });
+
+      render(<MarsGlobeView />);
+      expect(screen.getByText(/Opportunity \(Meridiani Planum\)/i)).toBeInTheDocument();
+
+      const exploreBtn = screen.getByRole('button', { name: /Enter 2D Regional Map/i });
+      expect(exploreBtn).toBeInTheDocument();
+
+      fireEvent.click(exploreBtn);
+      expect(useAppStore.getState().viewMode).toBe('REGIONAL_2D');
+      expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(-1.95, 2);
+      expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(-5.53, 2);
+    });
   });
 });
 

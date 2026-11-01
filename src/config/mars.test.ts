@@ -30,6 +30,12 @@ describe('Mars Geodetic Reference & Constants', () => {
     expect(curiosity?.name).toBe('Curiosity (Gale Crater)');
     expect(curiosity?.latitude).toBeCloseTo(-4.59, 1);
     expect(curiosity?.longitude).toBeCloseTo(137.44, 1);
+
+    // All landing sites must be within valid GIS tile bounds [-180, 180]
+    MARS_LANDING_SITES.forEach((site) => {
+      expect(site.longitude).toBeGreaterThanOrEqual(-180);
+      expect(site.longitude).toBeLessThanOrEqual(180);
+    });
   });
 
   it('formats Mars coordinates into clean planetary strings', () => {

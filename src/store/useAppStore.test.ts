@@ -81,7 +81,7 @@ describe('useAppStore', () => {
     expect(useAppStore.getState().selectedRegionId).toBe('olympus-mons');
     // Selecting olympus mons updates regional center to its coordinates
     expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(18.65, 2);
-    expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(226.2, 1);
+    expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(-133.8, 1);
   });
 });
 

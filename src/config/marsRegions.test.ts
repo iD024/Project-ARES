@@ -19,13 +19,15 @@ describe('marsRegions configuration', () => {
       expect(region.name).toBeTruthy();
       expect(region.centerLatitude).toBeGreaterThanOrEqual(-90);
       expect(region.centerLatitude).toBeLessThanOrEqual(90);
+      // Valid GIS tile coordinate bounds strictly within [-180, 180]
       expect(region.centerLongitude).toBeGreaterThanOrEqual(-180);
-      expect(region.centerLongitude).toBeLessThanOrEqual(360);
+      expect(region.centerLongitude).toBeLessThanOrEqual(180);
 
       // Bounding box validation
       expect(region.extent.minLatitude).toBeLessThan(region.extent.maxLatitude);
-      expect(region.extent.minLongitude).toBeDefined();
-      expect(region.extent.maxLongitude).toBeDefined();
+      expect(region.extent.minLongitude).toBeGreaterThanOrEqual(-180);
+      expect(region.extent.maxLongitude).toBeLessThanOrEqual(180);
+      expect(region.extent.minLongitude).toBeLessThan(region.extent.maxLongitude);
 
       // Target scale and geological features
       expect(region.targetScale).toBeGreaterThan(0);

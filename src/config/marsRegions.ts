@@ -86,13 +86,13 @@ export const MARS_REGIONS: MarsRegion[] = [
     quadrangle: 'MC-09 Tharsis',
     type: 'VOLCANO',
     centerLatitude: 18.65,
-    centerLongitude: 226.2,
+    centerLongitude: -133.8, // 226.2° E normalized to GIS bounds (133.8° W)
     elevationMeters: 21287,
     targetScale: 2000000,
     extent: {
-      minLongitude: 223.0,
+      minLongitude: -137.0,
       minLatitude: 15.0,
-      maxLongitude: 230.0,
+      maxLongitude: -130.0,
       maxLatitude: 22.0,
     },
     missionContext: 'Global Planetary Geomorphology Benchmark',
@@ -111,13 +111,13 @@ export const MARS_REGIONS: MarsRegion[] = [
     quadrangle: 'MC-18 Coprates',
     type: 'CANYON',
     centerLatitude: -6.53,
-    centerLongitude: 284.1,
+    centerLongitude: -75.9, // 284.1° E normalized to GIS bounds (75.9° W)
     elevationMeters: -3800,
     targetScale: 1500000,
     extent: {
-      minLongitude: 280.0,
+      minLongitude: -80.0,
       minLatitude: -10.0,
-      maxLongitude: 288.0,
+      maxLongitude: -72.0,
       maxLatitude: -4.0,
     },
     missionContext: 'Tectonic Rift & Hydrological Stratigraphy Corridor',

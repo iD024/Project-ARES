@@ -59,15 +59,28 @@ export const MarsGlobeView: React.FC = () => {
   const handleZoomIn = useCallback(() => {
     if (!viewRef.current) return;
     const currentCamera = viewRef.current.camera.clone();
-    currentCamera.position.z *= 0.6;
-    viewRef.current.goTo(currentCamera, { duration: 500 });
-  }, []);
+    if (currentCamera.position.z <= 1200000) {
+      // Zooming in from low orbit auto-transitions directly into 2D Regional Map
+      const target = viewRef.current.center || viewRef.current.camera?.target;
+      if (target) {
+        setRegionalCenter({
+          longitude: target.longitude ?? target.x,
+          latitude: target.latitude ?? target.y,
+          scale: 500000,
+        });
+      }
+      setViewMode('REGIONAL_2D');
+      return;
+    }
+    currentCamera.position.z *= 0.4; // Responsive zoom
+    viewRef.current.goTo(currentCamera, { duration: 400 });
+  }, [setRegionalCenter, setViewMode]);
 
   const handleZoomOut = useCallback(() => {
     if (!viewRef.current) return;
     const currentCamera = viewRef.current.camera.clone();
-    currentCamera.position.z *= 1.4;
-    viewRef.current.goTo(currentCamera, { duration: 500 });
+    currentCamera.position.z *= 2.0;
+    viewRef.current.goTo(currentCamera, { duration: 400 });
   }, []);
 
   // Listen to selected landing site changes to execute camera fly-to
@@ -87,13 +100,13 @@ export const MarsGlobeView: React.FC = () => {
         position: {
           x: site.longitude,
           y: site.latitude - 1.2, // Offset for perspective tilt
-          z: 320000, // 320 km regional altitude
+          z: 500000, // 500 km regional approach altitude
           spatialReference: { wkid: MARS_PLANETARY_SR.wkid },
         },
         heading: 0,
-        tilt: 45,
+        tilt: 35,
       },
-      { duration: 2500 }
+      { duration: 2000 }
     );
   }, [selectedLandingSiteId]);
 
@@ -101,6 +114,7 @@ export const MarsGlobeView: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     let viewInstance: any = null;
+    let cameraWatchHandle: any = null;
 
     async function initMarsGlobe() {
       if (!mapDivRef.current) return;
@@ -127,6 +141,7 @@ export const MarsGlobeView: React.FC = () => {
           { default: GraphicsLayer },
           { default: Graphic },
           { default: Point },
+          reactiveUtils,
         ] = await Promise.all([
           import('@arcgis/core/Map'),
           import('@arcgis/core/views/SceneView'),
@@ -136,6 +151,7 @@ export const MarsGlobeView: React.FC = () => {
           import('@arcgis/core/layers/GraphicsLayer'),
           import('@arcgis/core/Graphic'),
           import('@arcgis/core/geometry/Point'),
+          import('@arcgis/core/core/reactiveUtils'),
         ]);
 
         if (!isMounted || !mapDivRef.current) return;
@@ -213,6 +229,15 @@ export const MarsGlobeView: React.FC = () => {
           map,
           spatialReference: marsSR,
           qualityProfile: 'high',
+          constraints: {
+            altitude: {
+              min: 400000, // 400 km orbital threshold: prevents clipping into terrain mesh & low-res blur
+              max: 25000000,
+            },
+            tilt: {
+              max: 65,
+            },
+          },
           environment: {
             background: {
               type: 'color',
@@ -243,6 +268,50 @@ export const MarsGlobeView: React.FC = () => {
         if (isMounted) {
           setIsGlobeReady(true);
         }
+
+        // Auto-switch to 2D Regional Map when user zooms in below 550 km threshold
+        cameraWatchHandle = reactiveUtils.watch(
+          () => view.camera?.position?.z,
+          (altitude: number) => {
+            if (
+              useAppStore.getState().viewMode === 'GLOBAL_3D' &&
+              typeof altitude === 'number' &&
+              altitude <= 550000
+            ) {
+              const centerPoint = view.center || view.camera?.target;
+              if (
+                centerPoint &&
+                typeof centerPoint.latitude === 'number' &&
+                typeof centerPoint.longitude === 'number'
+              ) {
+                setRegionalCenter({
+                  longitude: Number(centerPoint.longitude.toFixed(4)),
+                  latitude: Number(centerPoint.latitude.toFixed(4)),
+                  scale: 500000,
+                });
+              }
+              setViewMode('REGIONAL_2D');
+            }
+          }
+        );
+
+        // Double-click anywhere on the Mars surface to directly dive into 2D Regional Cartography
+        view.on('double-click', (event: any) => {
+          event.stopPropagation();
+          const mapPoint = view.toMap({ x: event.x, y: event.y });
+          if (
+            mapPoint &&
+            typeof mapPoint.latitude === 'number' &&
+            typeof mapPoint.longitude === 'number'
+          ) {
+            setRegionalCenter({
+              longitude: Number(mapPoint.longitude.toFixed(4)),
+              latitude: Number(mapPoint.latitude.toFixed(4)),
+              scale: 500000,
+            });
+            setViewMode('REGIONAL_2D');
+          }
+        });
 
         // Live pointer coordinate telemetry tracking
         view.on('pointer-move', (event: any) => {
@@ -289,6 +358,13 @@ export const MarsGlobeView: React.FC = () => {
 
     return () => {
       isMounted = false;
+      if (cameraWatchHandle) {
+        try {
+          cameraWatchHandle.remove();
+        } catch {
+          // ignore cleanup errors
+        }
+      }
       if (viewInstance) {
         try {
           viewInstance.destroy();

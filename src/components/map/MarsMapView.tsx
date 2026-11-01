@@ -79,6 +79,7 @@ export const MarsMapView: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     let viewInstance: any = null;
+    let scaleWatchHandle: any = null;
 
     async function initMarsMap() {
       if (!mapDivRef.current) return;
@@ -104,6 +105,7 @@ export const MarsMapView: React.FC = () => {
           { default: GraphicsLayer },
           { default: Graphic },
           { default: Point },
+          reactiveUtils,
         ] = await Promise.all([
           import('@arcgis/core/Map'),
           import('@arcgis/core/views/MapView'),
@@ -112,6 +114,7 @@ export const MarsMapView: React.FC = () => {
           import('@arcgis/core/layers/GraphicsLayer'),
           import('@arcgis/core/Graphic'),
           import('@arcgis/core/geometry/Point'),
+          import('@arcgis/core/core/reactiveUtils'),
         ]);
 
         if (!isMounted || !mapDivRef.current) return;
@@ -215,6 +218,10 @@ export const MarsMapView: React.FC = () => {
           spatialReference: marsSR,
           center: [activeCenter.longitude, activeCenter.latitude],
           scale: activeCenter.scale ?? 500000,
+          constraints: {
+            minScale: 25000000,
+            maxScale: 25000,
+          },
           ui: {
             components: [], // Custom ARES HUD controls
           },
@@ -228,6 +235,20 @@ export const MarsMapView: React.FC = () => {
         if (isMounted) {
           setIsMapReady(true);
         }
+
+        // Auto-switch back to 3D Globe when user zooms out past regional scale (scale >= 12,000,000)
+        scaleWatchHandle = reactiveUtils.watch(
+          () => view.scale,
+          (scale: number) => {
+            if (
+              useAppStore.getState().viewMode === 'REGIONAL_2D' &&
+              typeof scale === 'number' &&
+              scale >= 12000000
+            ) {
+              setViewMode('GLOBAL_3D');
+            }
+          }
+        );
 
         // Live pointer coordinate telemetry tracking
         view.on('pointer-move', (event: any) => {
@@ -261,6 +282,13 @@ export const MarsMapView: React.FC = () => {
 
     return () => {
       isMounted = false;
+      if (scaleWatchHandle) {
+        try {
+          scaleWatchHandle.remove();
+        } catch {
+          // ignore cleanup errors
+        }
+      }
       if (viewInstance) {
         viewInstance.destroy();
       }
