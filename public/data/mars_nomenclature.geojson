@@ -1,0 +1,390 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_IAU_Mars_Nomenclature",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jezero",
+        "type": "Crater",
+        "diameterKm": 47.5,
+        "origin": "Town in Bosnia and Herzegovina",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.45,
+          18.38
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gale",
+        "type": "Crater",
+        "diameterKm": 154.0,
+        "origin": "Walter F. Gale, Australian astronomer",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.44,
+          -4.59
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gusev",
+        "type": "Crater",
+        "diameterKm": 166.0,
+        "origin": "Matvey Gusev, Russian astronomer",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.47,
+          -14.57
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Victoria",
+        "type": "Crater",
+        "diameterKm": 0.8,
+        "origin": "Ship of Ferdinand Magellan",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          354.49,
+          -2.05
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Endeavour",
+        "type": "Crater",
+        "diameterKm": 22.0,
+        "origin": "HMS Endeavour, Captain James Cook",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          354.77,
+          -2.28
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Schiaparelli",
+        "type": "Crater",
+        "diameterKm": 461.0,
+        "origin": "Giovanni Schiaparelli, Italian astronomer",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.7,
+          -2.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cassini",
+        "type": "Crater",
+        "diameterKm": 412.0,
+        "origin": "Giovanni Cassini, Italian-French astronomer",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.2,
+          23.8
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hellas Planitia",
+        "type": "Impact Basin",
+        "diameterKm": 2300.0,
+        "origin": "Classical Greek name for Greece",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          70.0,
+          -42.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Argyre Planitia",
+        "type": "Impact Basin",
+        "diameterKm": 800.0,
+        "origin": "Mythical silver island",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          316.0,
+          -49.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Olympus Mons",
+        "type": "Mons",
+        "diameterKm": 624.0,
+        "origin": "Mount Olympus, home of the Greek gods",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -133.8,
+          18.65
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ascraeus Mons",
+        "type": "Mons",
+        "diameterKm": 462.0,
+        "origin": "Ascraea fountain in Boeotia",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -104.5,
+          11.9
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pavonis Mons",
+        "type": "Mons",
+        "diameterKm": 375.0,
+        "origin": "Peacock constellation",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -112.8,
+          0.8
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Arsia Mons",
+        "type": "Mons",
+        "diameterKm": 435.0,
+        "origin": "Legendary Roman forest Arsia Silva",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.1,
+          -8.4
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Elysium Mons",
+        "type": "Mons",
+        "diameterKm": 240.0,
+        "origin": "Elysian Fields, Greek mythology",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          147.2,
+          25.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Valles Marineris",
+        "type": "Chasma",
+        "diameterKm": 4000.0,
+        "origin": "Named after Mariner 9 orbiter",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -59.2,
+          -13.9
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ares Vallis",
+        "type": "Vallis",
+        "diameterKm": 1700.0,
+        "origin": "Greek god of war, Mars equivalent",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -25.8,
+          10.4
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kasei Valles",
+        "type": "Vallis",
+        "diameterKm": 1780.0,
+        "origin": "Japanese word for Mars (\u706b\u661f)",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -65.0,
+          24.6
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Neretva Vallis",
+        "type": "Vallis",
+        "diameterKm": 17.0,
+        "origin": "Neretva River in Herzegovina",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.2,
+          18.5
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Isidis Planitia",
+        "type": "Planitia",
+        "diameterKm": 1500.0,
+        "origin": "Egyptian goddess Isis",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          87.0,
+          12.9
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Elysium Planitia",
+        "type": "Planitia",
+        "diameterKm": 3000.0,
+        "origin": "Classical Greek mythology",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          155.0,
+          3.0
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Meridiani Planum",
+        "type": "Planum",
+        "diameterKm": 1100.0,
+        "origin": "Mars Prime Meridian location",
+        "classification": "OBSERVED",
+        "authority": "IAU WGPSN / USGS Gazetteer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          357.5,
+          0.2
+        ]
+      }
+    }
+  ]
+}

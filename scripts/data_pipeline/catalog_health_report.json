@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-11-01T21:10:50Z",
+  "totalEndpoints": 5,
+  "onlineEndpoints": 5,
+  "results": [
+    {
+      "id": "mars-viking-mdim",
+      "name": "Viking MDIM 2.1 MapServer",
+      "status": "ONLINE",
+      "statusCode": 200,
+      "latencyMs": 1170,
+      "corsAllowed": true,
+      "corsHeader": "*",
+      "error": null
+    },
+    {
+      "id": "mars-mdem200m",
+      "name": "HRSC-MOLA MDEM 200m Elevation ImageServer",
+      "status": "ONLINE",
+      "statusCode": 200,
+      "latencyMs": 1078,
+      "corsAllowed": true,
+      "corsHeader": "*",
+      "error": null
+    },
+    {
+      "id": "mars-mcolordem",
+      "name": "Mars MColorDEM Shaded Relief MapServer",
+      "status": "ONLINE",
+      "statusCode": 200,
+      "latencyMs": 916,
+      "corsAllowed": true,
+      "corsHeader": "*",
+      "error": null
+    },
+    {
+      "id": "nasa-trek-wmts",
+      "name": "NASA Mars Trek MOLA Shaded Relief WMTS",
+      "status": "ONLINE",
+      "statusCode": 200,
+      "latencyMs": 1028,
+      "corsAllowed": true,
+      "corsHeader": "*",
+      "error": null
+    },
+    {
+      "id": "usgs-planetary-wms",
+      "name": "USGS Astrogeology Planetary WMS",
+      "status": "ONLINE",
+      "statusCode": 200,
+      "latencyMs": 947,
+      "corsAllowed": true,
+      "corsHeader": "*",
+      "error": null
+    }
+  ]
+}
