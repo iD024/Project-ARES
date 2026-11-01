@@ -59,3 +59,4 @@ describe('useAppStore', () => {
     expect(useAppStore.getState().layers.find(l => l.id === firstLayer.id)?.opacity).toBe(0.45);
   });
 });
+

@@ -64,3 +64,4 @@ export const TelemetryStrip: React.FC = () => {
     </footer>
   );
 };
+

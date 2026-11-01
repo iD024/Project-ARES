@@ -44,3 +44,4 @@ export const Slider: React.FC<SliderProps> = ({
     </div>
   );
 };
+

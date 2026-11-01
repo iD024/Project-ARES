@@ -35,3 +35,4 @@ export interface TelemetryData {
   scale: string;
   crs: string;
 }
+
