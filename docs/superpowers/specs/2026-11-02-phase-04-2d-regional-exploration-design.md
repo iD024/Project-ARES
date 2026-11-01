@@ -95,3 +95,4 @@ Authoritative scientific regions with verified bounding boxes, center coordinate
    - Vitest suite run (all tests pass).
    - TypeScript build check (`npm run build`).
    - Browser verification via Playwright if needed.
+

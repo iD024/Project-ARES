@@ -44,3 +44,4 @@ describe('marsRegions configuration', () => {
     expect(nonexistent).toBeUndefined();
   });
 });
+

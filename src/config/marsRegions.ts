@@ -162,3 +162,4 @@ export const MARS_REGIONS: MarsRegion[] = [
 export function getRegionById(id: string): MarsRegion | undefined {
   return MARS_REGIONS.find((r) => r.id === id);
 }
+
