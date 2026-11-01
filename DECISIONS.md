@@ -49,3 +49,4 @@ The map viewport occupies 100% of the screen (`fixed inset-0`). All UI component
 - Uncompromised visual immersion.
 - Maximized screen real estate for planetary observation and route evaluation.
 - Clean separation between map rendering lifecycle and UI state.
+

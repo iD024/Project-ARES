@@ -21,3 +21,4 @@ describe('MarsHarness Component', () => {
     expect(screen.getByText(/3,396\.19 km/i)).toBeInTheDocument();
   });
 });
+

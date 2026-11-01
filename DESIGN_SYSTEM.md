@@ -56,3 +56,4 @@ Inspired by high-agency aerospace interfaces and the immersive scientific feel o
 2. `ModeToggle`: Seamless segmented switch between `GLOBAL 3D` and `REGIONAL 2D`.
 3. `LayerCard`: Displays layer thumbnail, title, data type badge (Observed / Derived), opacity slider, and visibility toggle.
 4. `MissionBadge`: Visual indicator for rover landing sites with sol counters and mission icons.
+

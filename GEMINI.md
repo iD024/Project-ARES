@@ -29,3 +29,4 @@ ARES (Advanced Reconnaissance and Exploration System) is an interactive Mars exp
 - **Icons & Styling:** Lucide React, Tailwind CSS custom ARES dark palette (`ares-space`, `ares-panel`, `ares-rust`, `ares-cyan`).
 - **Data Pipeline:** Python 3 (GDAL, Rasterio, GeoPandas) for offline processing and vector formatting.
 - **Testing:** Vitest + React Testing Library. All components and utility math must have automated tests.
+

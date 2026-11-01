@@ -37,3 +37,4 @@ describe('Mars Geodetic Reference & Constants', () => {
     expect(formatMarsCoordinates(-4.59, -120.5)).toBe('4.59° S, 120.50° W');
   });
 });
+

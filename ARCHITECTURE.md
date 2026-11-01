@@ -90,3 +90,4 @@ flowchart LR
 - All client-side requests to NASA Mars Trek and USGS are standard OGC WMTS/WMS requests requiring no proprietary credentials.
 - Automatic retry and graceful degradation: if an external tile service fails, the map remains interactive and informs the user with an in-HUD warning pill.
 - CORS policy: Verified that NASA Trek and USGS serve tiles with `Access-Control-Allow-Origin: *`.
+

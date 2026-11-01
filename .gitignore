@@ -43,3 +43,4 @@ data/downloads/
 .coverage
 htmlcov/
 .vitest/
+

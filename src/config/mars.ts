@@ -106,3 +106,4 @@ export function formatMarsCoordinates(latitude: number, longitude: number): stri
 
   return `${latStr}° ${latCard}, ${lonStr}° ${lonCard}`;
 }
+
