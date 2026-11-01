@@ -8,7 +8,7 @@ import {
 } from '../../config/marsLayers.ts';
 import { MARS_LANDING_SITES } from '../../config/mars.ts';
 import { GlobeControls } from './GlobeControls.tsx';
-import { Radio, AlertCircle } from 'lucide-react';
+import { Radio, AlertCircle, Map } from 'lucide-react';
 
 export const MarsGlobeView: React.FC = () => {
   const mapDivRef = useRef<HTMLDivElement>(null);
@@ -16,7 +16,13 @@ export const MarsGlobeView: React.FC = () => {
   const [isGlobeReady, setIsGlobeReady] = useState(false);
   const [initNotice, setInitNotice] = useState<string | null>(null);
 
-  const { selectedLandingSiteId, setTelemetry } = useAppStore();
+  const {
+    selectedLandingSiteId,
+    setSelectedLandingSiteId,
+    setRegionalCenter,
+    setViewMode,
+    setTelemetry,
+  } = useAppStore();
 
   // Camera action handlers
   const handleResetView = useCallback(() => {
@@ -256,6 +262,21 @@ export const MarsGlobeView: React.FC = () => {
             });
           }
         });
+
+        // Click on 3D pin to select site
+        view.on('click', async (event: any) => {
+          try {
+            const hitResult = await view.hitTest(event);
+            const siteHit = hitResult.results?.find(
+              (r: any) => r.graphic?.layer?.id === 'mars-landing-sites'
+            );
+            if (siteHit?.graphic?.attributes?.siteId) {
+              setSelectedLandingSiteId(siteHit.graphic.attributes.siteId);
+            }
+          } catch {
+            // ignore hit-test errors
+          }
+        });
       } catch (err: any) {
         console.warn('Mars globe initialization warning:', err);
         if (isMounted) {
@@ -310,6 +331,36 @@ export const MarsGlobeView: React.FC = () => {
           </span>
         )}
       </div>
+
+      {/* Target Site Callout Banner with Quick Dive to 2D Regional Map */}
+      {selectedLandingSiteId && (
+        <div className="absolute bottom-20 left-4 z-10 flex items-center gap-3 px-4 py-2.5 rounded-xl backdrop-blur-xl bg-slate-900/90 border border-slate-700/80 shadow-2xl font-mono text-xs text-slate-200">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-slate-400 uppercase tracking-wider">TARGET LANDING SITE</span>
+            <span className="font-bold text-slate-100">
+              {MARS_LANDING_SITES.find((s) => s.id === selectedLandingSiteId)?.name}
+            </span>
+          </div>
+          <button
+            onClick={() => {
+              const site = MARS_LANDING_SITES.find((s) => s.id === selectedLandingSiteId);
+              if (site) {
+                setRegionalCenter({
+                  latitude: site.latitude,
+                  longitude: site.longitude,
+                  scale: 500000,
+                });
+                setViewMode('REGIONAL_2D');
+              }
+            }}
+            aria-label="Enter 2D Regional Map"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-ares-rust to-orange-600 text-white shadow-md shadow-orange-950/40 hover:from-orange-600 hover:to-orange-500 transition-all cursor-pointer"
+          >
+            <Map className="w-3.5 h-3.5" />
+            <span>EXPLORE 2D &rarr;</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
