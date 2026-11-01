@@ -25,6 +25,14 @@ export interface LayerItem {
   opacity: number; // 0.0 to 1.0
   sourceUrl: string;
   healthStatus?: 'ONLINE' | 'DEGRADED' | 'OFFLINE' | 'UNKNOWN';
+  minScale?: number;
+  maxScale?: number;
+  extent?: {
+    minLon: number;
+    maxLon: number;
+    minLat: number;
+    maxLat: number;
+  };
 }
 
 export interface TelemetryData {

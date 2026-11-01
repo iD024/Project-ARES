@@ -7,7 +7,7 @@
 
 import { DatasetEntry } from './datasetRegistry.ts';
 
-export type ArcGISLayerType = 'tile' | 'elevation' | 'geojson' | 'wms' | 'unknown';
+export type ArcGISLayerType = 'tile' | 'webtile' | 'elevation' | 'geojson' | 'wms' | 'unknown';
 
 export interface ResolvedLayerConfig {
   layerType: ArcGISLayerType;
@@ -17,6 +17,8 @@ export interface ResolvedLayerConfig {
   opacity: number;
   copyright: string;
   customParameters?: Record<string, any>;
+  minScale?: number;
+  maxScale?: number;
 }
 
 export function resolveLayerConfig(dataset: DatasetEntry): ResolvedLayerConfig {
@@ -24,8 +26,10 @@ export function resolveLayerConfig(dataset: DatasetEntry): ResolvedLayerConfig {
 
   switch (dataset.format) {
     case 'TILE_SERVER':
-    case 'WMTS':
       layerType = 'tile';
+      break;
+    case 'WMTS':
+      layerType = 'webtile';
       break;
     case 'IMAGE_SERVER':
       layerType = 'elevation';
@@ -47,6 +51,8 @@ export function resolveLayerConfig(dataset: DatasetEntry): ResolvedLayerConfig {
     url: dataset.endpointUrl,
     opacity: dataset.defaultOpacity ?? 1.0,
     copyright: `${dataset.provider} (${dataset.license})`,
+    minScale: dataset.minScale,
+    maxScale: dataset.maxScale,
   };
 }
 
@@ -66,7 +72,39 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
         title: config.title,
         opacity: config.opacity,
         copyright: config.copyright,
+        minScale: config.minScale,
+        maxScale: config.maxScale,
       });
+    }
+    case 'webtile': {
+      try {
+        const { default: WebTileLayer } = await import('@arcgis/core/layers/WebTileLayer');
+        const urlTemplate = config.url.includes('{')
+          ? config.url
+          : `${config.url.replace(/\/+$/, '')}/{level}/{col}/{row}.png`;
+
+        return new WebTileLayer({
+          id: config.id,
+          urlTemplate,
+          title: config.title,
+          opacity: config.opacity,
+          copyright: config.copyright,
+          minScale: config.minScale,
+          maxScale: config.maxScale,
+          subDomains: ['a', 'b', 'c', 'd'],
+        });
+      } catch {
+        const { default: TileLayer } = await import('@arcgis/core/layers/TileLayer');
+        return new TileLayer({
+          id: config.id,
+          url: config.url,
+          title: config.title,
+          opacity: config.opacity,
+          copyright: config.copyright,
+          minScale: config.minScale,
+          maxScale: config.maxScale,
+        });
+      }
     }
     case 'elevation': {
       const { default: ElevationLayer } = await import('@arcgis/core/layers/ElevationLayer');
@@ -85,6 +123,8 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
         title: config.title,
         opacity: config.opacity,
         copyright: config.copyright,
+        minScale: config.minScale,
+        maxScale: config.maxScale,
       });
     }
     case 'wms': {
@@ -95,6 +135,8 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
         title: config.title,
         opacity: config.opacity,
         copyright: config.copyright,
+        minScale: config.minScale,
+        maxScale: config.maxScale,
       });
     }
     default:

@@ -2,6 +2,8 @@ import React from 'react';
 import { useAppStore } from '../../store/useAppStore.ts';
 import { MarsGlobeView } from './MarsGlobeView.tsx';
 import { MarsMapView } from './MarsMapView.tsx';
+import { MapAttributionOverlay } from '../hud/MapAttributionOverlay.tsx';
+import { ExtentCoverageBanner } from '../hud/ExtentCoverageBanner.tsx';
 import { clsx } from 'clsx';
 
 export const ViewportCoordinator: React.FC = () => {
@@ -37,6 +39,12 @@ export const ViewportCoordinator: React.FC = () => {
       >
         <MarsMapView />
       </div>
+
+      {/* 3. Floating Viewport Attribution Overlay */}
+      <MapAttributionOverlay />
+
+      {/* 4. Floating Extent & Scale Coverage Banner */}
+      <ExtentCoverageBanner />
     </div>
   );
 };

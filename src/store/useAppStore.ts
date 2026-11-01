@@ -46,6 +46,9 @@ const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
   opacity: dataset.defaultOpacity ?? 1.0,
   sourceUrl: dataset.endpointUrl,
   healthStatus: 'ONLINE',
+  minScale: dataset.minScale,
+  maxScale: dataset.maxScale,
+  extent: dataset.extent,
 }));
 
 export const useAppStore = create<AppState>((set) => ({

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useAppStore } from '../../store/useAppStore.ts';
+import { useMarsLayerSync } from '../../hooks/useMarsLayerSync.ts';
 import {
   MARS_SERVICE_ENDPOINTS,
   MARS_PLANETARY_SR,
@@ -14,6 +15,9 @@ export const MarsMapView: React.FC = () => {
   const viewRef = useRef<any>(null);
   const [isMapReady, setIsMapReady] = useState(false);
   const [initNotice, setInitNotice] = useState<string | null>(null);
+
+  // Synchronize scientific layers with 2D Regional MapView
+  useMarsLayerSync(viewRef.current, isMapReady);
 
   const {
     regionalCenter,
@@ -234,12 +238,23 @@ export const MarsMapView: React.FC = () => {
 
         if (isMounted) {
           setIsMapReady(true);
+          if (typeof view.scale === 'number' && !isNaN(view.scale) && view.scale > 0) {
+            setTelemetry({
+              scale: `1:${Math.round(view.scale).toLocaleString()}`,
+            });
+          }
         }
 
         // Auto-switch back to 3D Globe when user zooms out past regional scale (scale >= 12,000,000)
+        // and track live scale changes in telemetry
         scaleWatchHandle = reactiveUtils.watch(
           () => view.scale,
           (scale: number) => {
+            if (typeof scale === 'number' && !isNaN(scale) && scale > 0) {
+              setTelemetry({
+                scale: `1:${Math.round(scale).toLocaleString()}`,
+              });
+            }
             if (
               useAppStore.getState().viewMode === 'REGIONAL_2D' &&
               typeof scale === 'number' &&

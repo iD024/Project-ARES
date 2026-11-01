@@ -47,4 +47,33 @@ describe('Dataset Registry & Scientific Provenance', () => {
     const featureDatasets = getDatasetsByCategory('features');
     expect(featureDatasets.some((d) => d.id === 'mars-hirise-footprints')).toBe(true);
   });
+
+  it('registers high-resolution localized dataset mars-hirise-jezero-dtm with scale and extent bounds', () => {
+    const jezeroDtm = getDatasetById('mars-hirise-jezero-dtm');
+    expect(jezeroDtm, 'mars-hirise-jezero-dtm must be registered in DATASET_REGISTRY').toBeDefined();
+    expect(jezeroDtm?.classification).toBe('DERIVED');
+    expect(jezeroDtm?.extent).toBeDefined();
+    expect(jezeroDtm?.extent?.minLon).toBeLessThanOrEqual(77.5);
+    expect(jezeroDtm?.extent?.maxLon).toBeGreaterThanOrEqual(77.5);
+    expect(jezeroDtm?.extent?.minLat).toBeLessThanOrEqual(18.5);
+    expect(jezeroDtm?.extent?.maxLat).toBeGreaterThanOrEqual(18.5);
+    expect(jezeroDtm?.minScale).toBeDefined();
+    expect(jezeroDtm?.minScale).toBeLessThanOrEqual(2500000);
+    expect(jezeroDtm?.maxScale).toBeDefined();
+    expect(jezeroDtm?.maxScale).toBeLessThanOrEqual(1000);
+  });
+
+  it('defines multi-resolution scale boundaries for CTX mosaic, USGS quads, and HiRISE footprints', () => {
+    const ctx = getDatasetById('mars-ctx-mosaic');
+    expect(ctx?.minScale).toBe(2500000);
+    expect(ctx?.maxScale).toBe(25000);
+
+    const quads = getDatasetById('mars-geologic-quads');
+    expect(quads?.minScale).toBe(25000000);
+    expect(quads?.maxScale).toBe(500000);
+
+    const footprints = getDatasetById('mars-hirise-footprints');
+    expect(footprints?.minScale).toBe(10000000);
+    expect(footprints?.maxScale).toBe(1000);
+  });
 });

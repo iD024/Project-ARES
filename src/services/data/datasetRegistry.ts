@@ -40,6 +40,13 @@ export interface DatasetEntry {
   defaultOpacity?: number;
   minScale?: number;
   maxScale?: number;
+  extent?: {
+    minLon: number;
+    maxLon: number;
+    minLat: number;
+    maxLat: number;
+  };
+  nasaTrekId?: string;
 }
 
 export const DATASET_REGISTRY: DatasetEntry[] = [
@@ -96,6 +103,8 @@ export const DATASET_REGISTRY: DatasetEntry[] = [
     citation: 'Dickson, J. L. et al. (2023). A Global 5.0m/pixel Context Camera (CTX) Mosaic of Mars. Earth and Space Science.',
     description: 'Sub-decameter global baseline mosaic assembled from 110,000+ MRO CTX images for regional exploration.',
     defaultOpacity: 0.9,
+    minScale: 2500000,
+    maxScale: 25000,
   },
   {
     id: 'mars-geologic-quads',
@@ -114,6 +123,8 @@ export const DATASET_REGISTRY: DatasetEntry[] = [
     citation: 'Tanaka, K. L. et al. (2014). Geologic Map of Mars. USGS Scientific Investigations Map 3292.',
     description: 'Stratigraphic geologic mapping synthesizing Viking, MGS, Odyssey, and MRO data into chronostratigraphic Martian units.',
     defaultOpacity: 0.65,
+    minScale: 25000000,
+    maxScale: 500000,
   },
   {
     id: 'mars-hirise-footprints',
@@ -132,6 +143,35 @@ export const DATASET_REGISTRY: DatasetEntry[] = [
     citation: 'McEwen, A. S. et al. (2007). Mars Reconnaissance Orbiter\'s High Resolution Imaging Science Experiment (HiRISE). JGR Planets.',
     description: 'Vector polygon index representing validated sub-meter digital terrain model coverage from the HiRISE experiment.',
     defaultOpacity: 1.0,
+    minScale: 10000000,
+    maxScale: 1000,
+  },
+  {
+    id: 'mars-hirise-jezero-dtm',
+    name: 'HiRISE Jezero Crater Delta DTM',
+    mission: 'Mars Reconnaissance Orbiter (MRO)',
+    provider: 'NASA / JPL / University of Arizona / USGS',
+    category: 'topography',
+    classification: 'DERIVED',
+    spatialReference: 'GCS_Mars_2000 (WKID 104971)',
+    resolution: '0.25–1.0 m/px',
+    coverage: 'Jezero Crater Delta (77°–78°E, 18°–19°N)',
+    accessProtocol: 'NASA Trek WMTS / XYZ',
+    format: 'WMTS',
+    endpointUrl: 'https://trek.nasa.gov/tiles/Mars/EQ/Mars_MRO_HiRISE_JezeroDelta_DTM/1.0.0/{level}/{col}/{row}.png',
+    license: 'NASA / JPL / University of Arizona Open Science',
+    citation: 'NASA/JPL/University of Arizona/USGS (2020). HiRISE Digital Terrain Model of Jezero Crater Western Delta.',
+    description: 'Sub-meter digital elevation model and shaded relief for Jezero Crater western fan delta.',
+    defaultOpacity: 1.0,
+    minScale: 100000,
+    maxScale: 1000,
+    extent: {
+      minLon: 77.0,
+      maxLon: 78.5,
+      minLat: 18.0,
+      maxLat: 19.0,
+    },
+    nasaTrekId: 'Mars_MRO_HiRISE_JezeroDelta_DTM',
   },
   {
     id: 'mars-nomenclature',
@@ -150,6 +190,8 @@ export const DATASET_REGISTRY: DatasetEntry[] = [
     citation: 'Gazetteer of Planetary Nomenclature. IAU Working Group for Planetary System Nomenclature (WGPSN).',
     description: 'Authoritative nomenclature for Martian landing sites, mountains, chasms, and verified impact craters.',
     defaultOpacity: 1.0,
+    minScale: 20000000,
+    maxScale: 5000,
   },
 ];
 

@@ -1,6 +1,6 @@
 # ARES — Engineering Progress & Verification Log
 
-## Overall Status: Phase 04 (COMPLETED & VERIFIED)
+## Overall Status: Phase 05 (COMPLETED & VERIFIED)
 
 ---
 
@@ -13,13 +13,26 @@
 | **Phase 02** | Global 3D Mars Environment | 2026-11-02 | 2026-11-02 | **PASSED** (40/40 tests pass, 3D Mars globe running on GCS_Mars_2000, MDEM200M elevation, landing graphics, clean build). |
 | **Phase 03** | Mars Data Infrastructure | 2026-11-02 | 2026-11-02 | **PASSED** (50/50 tests pass, Python ETL pipelines, HiRISE footprints & IAU nomenclature GeoJSON, layer factory, health monitor, clean build). |
 | **Phase 04** | 2D Regional Exploration | 2026-11-02 | 2026-11-02 | **PASSED** (62/62 tests pass, 2D MapView on GCS_Mars_2000, continuous ViewportCoordinator, verified regional bookmarks, HUD navigation, clean build). |
-| **Phase 05** | Multi-Resolution Imagery & Layers | — | — | Pending Phase 04 sign-off. |
+| **Phase 05** | Multi-Resolution Imagery & Layers | 2026-11-02 | 2026-11-02 | **PASSED** (114/114 tests pass, dual-viewport useMarsLayerSync coordinator, NASA Trek WMTS & WebTileLayer, scale/extent evaluation, honest coverage indicators, clean build). |
 | **Phase 06** | Terrain Intelligence & Analysis | — | — | Pending Phase 05 sign-off. |
 | **Phase 07** | Location Intelligence & Measurement| — | — | Pending Phase 06 sign-off. |
 | **Phase 08** | Mission & Rover Intelligence | — | — | Pending Phase 07 sign-off. |
 | **Phase 09** | Terrain-Aware Route Planning | — | — | Pending Phase 08 sign-off. |
 | **Phase 10** | Scientific Intelligence Interface | — | — | Pending Phase 09 sign-off. |
 | **Phase 11** | Integration, Optimization & Release | — | — | Pending Phase 10 sign-off. |
+
+---
+
+## Phase 05 Checklist
+- [x] Implemented `src/services/data/layerResolutionService.ts` pure scale and extent evaluator distinguishing `ACTIVE`, `SCALE_INACTIVE`, `OUT_OF_EXTENT`, and `OFFLINE` with circular Martian longitude arithmetic.
+- [x] Upgraded `src/services/data/datasetRegistry.ts` with explicit `minScale`, `maxScale`, and localized extents for CTX Mosaic, HiRISE Targeted Jezero DTM, Geologic Quads, and IAU nomenclature.
+- [x] Upgraded `src/services/data/layerService.ts` to support NASA Trek WMTS (`WebTileLayer`/`TileLayer`) and forward scale constraints to ArcGIS layers.
+- [x] Implemented `src/hooks/useMarsLayerSync.ts` dual-viewport reactive coordinator hook, dynamically applying atomic visibility and opacity mutations without WebGL context recreation.
+- [x] Integrated `useMarsLayerSync` into both `src/components/map/MarsGlobeView.tsx` (3D SceneView) and `src/components/map/MarsMapView.tsx` (2D MapView) with reactive telemetry scale tracking.
+- [x] Upgraded `src/components/hud/LayersDrawer.tsx` with real-time status pills (🟢 Active, 🟡 Scale Inactive, ⚪ Out of Extent), formatted scale range chips, live numeric opacity percentages, and one-click "Solo Layer" isolation.
+- [x] Implemented floating viewport HUD components: `src/components/hud/MapAttributionOverlay.tsx` (active layer attribution + provenance shortcut) and `src/components/hud/ExtentCoverageBanner.tsx` (honest coverage/scale bounds guidance).
+- [x] Automated test suite: 21 test files, 114 unit/integration tests passing with 100% green status.
+- [x] Production build: Clean compilation in 26.06s with zero TypeScript or bundling errors.
 
 ---
 

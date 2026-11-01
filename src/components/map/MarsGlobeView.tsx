@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useAppStore } from '../../store/useAppStore.ts';
+import { useMarsLayerSync } from '../../hooks/useMarsLayerSync.ts';
 import {
   MARS_SERVICE_ENDPOINTS,
   MARS_PLANETARY_SR,
@@ -15,6 +16,9 @@ export const MarsGlobeView: React.FC = () => {
   const viewRef = useRef<any>(null);
   const [isGlobeReady, setIsGlobeReady] = useState(false);
   const [initNotice, setInitNotice] = useState<string | null>(null);
+
+  // Synchronize scientific layers with 3D Globe SceneView
+  useMarsLayerSync(viewRef.current, isGlobeReady);
 
   const {
     selectedLandingSiteId,
@@ -61,7 +65,7 @@ export const MarsGlobeView: React.FC = () => {
     const currentCamera = viewRef.current.camera.clone();
     if (currentCamera.position.z <= 1200000) {
       // Zooming in from low orbit auto-transitions directly into 2D Regional Map
-      const target = viewRef.current.center || viewRef.current.camera?.target;
+      const target = viewRef.current.center || (viewRef.current.camera as any)?.target;
       if (target) {
         setRegionalCenter({
           longitude: target.longitude ?? target.x,
@@ -115,6 +119,7 @@ export const MarsGlobeView: React.FC = () => {
     let isMounted = true;
     let viewInstance: any = null;
     let cameraWatchHandle: any = null;
+    let scaleWatchHandle: any = null;
 
     async function initMarsGlobe() {
       if (!mapDivRef.current) return;
@@ -267,18 +272,23 @@ export const MarsGlobeView: React.FC = () => {
 
         if (isMounted) {
           setIsGlobeReady(true);
+          if (typeof view.scale === 'number' && !isNaN(view.scale) && view.scale > 0) {
+            setTelemetry({
+              scale: `1:${Math.round(view.scale).toLocaleString()}`,
+            });
+          }
         }
 
         // Auto-switch to 2D Regional Map when user zooms in below 550 km threshold
         cameraWatchHandle = reactiveUtils.watch(
-          () => view.camera?.position?.z,
-          (altitude: number) => {
+          () => (view.camera?.position?.z as number | undefined),
+          (altitude?: number) => {
             if (
               useAppStore.getState().viewMode === 'GLOBAL_3D' &&
               typeof altitude === 'number' &&
               altitude <= 550000
             ) {
-              const centerPoint = view.center || view.camera?.target;
+              const centerPoint = view.center || (view.camera as any)?.target;
               if (
                 centerPoint &&
                 typeof centerPoint.latitude === 'number' &&
@@ -291,6 +301,18 @@ export const MarsGlobeView: React.FC = () => {
                 });
               }
               setViewMode('REGIONAL_2D');
+            }
+          }
+        );
+
+        // Live camera scale telemetry tracking
+        scaleWatchHandle = reactiveUtils.watch(
+          () => view.scale,
+          (scale: number) => {
+            if (typeof scale === 'number' && !isNaN(scale) && scale > 0) {
+              setTelemetry({
+                scale: `1:${Math.round(scale).toLocaleString()}`,
+              });
             }
           }
         );
@@ -361,6 +383,13 @@ export const MarsGlobeView: React.FC = () => {
       if (cameraWatchHandle) {
         try {
           cameraWatchHandle.remove();
+        } catch {
+          // ignore cleanup errors
+        }
+      }
+      if (scaleWatchHandle) {
+        try {
+          scaleWatchHandle.remove();
         } catch {
           // ignore cleanup errors
         }

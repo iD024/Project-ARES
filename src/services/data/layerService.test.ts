@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveLayerConfig } from './layerService.ts';
+import { resolveLayerConfig, createArcGISLayerInstance } from './layerService.ts';
 import { getDatasetById } from './datasetRegistry.ts';
 
 describe('ArcGIS Layer Factory & Resolver', () => {
@@ -40,5 +40,45 @@ describe('ArcGIS Layer Factory & Resolver', () => {
     const config = resolveLayerConfig(geology!);
     expect(config.layerType).toBe('wms');
     expect(config.url).toBe(geology?.endpointUrl);
+  });
+
+  it('resolves scale constraints (minScale and maxScale) onto ResolvedLayerConfig', () => {
+    const ctx = getDatasetById('mars-ctx-mosaic');
+    expect(ctx).toBeDefined();
+
+    const config = resolveLayerConfig(ctx!);
+    expect(config.minScale).toBe(2500000);
+    expect(config.maxScale).toBe(25000);
+  });
+
+  it('resolves WMTS format dataset into webtile layer configuration with urlTemplate', () => {
+    const jezeroDtm = getDatasetById('mars-hirise-jezero-dtm');
+    expect(jezeroDtm).toBeDefined();
+
+    const config = resolveLayerConfig(jezeroDtm!);
+    expect(config.layerType).toBe('webtile');
+    expect(config.minScale).toBeDefined();
+    expect(config.maxScale).toBeDefined();
+    expect(config.url).toContain('https://trek.nasa.gov');
+  });
+
+  it('creates ArcGIS TileLayer instance with minScale and maxScale configured', async () => {
+    const ctx = getDatasetById('mars-ctx-mosaic');
+    expect(ctx).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(ctx!);
+    expect(layer).toBeDefined();
+    expect(layer.minScale).toBe(2500000);
+    expect(layer.maxScale).toBe(25000);
+  });
+
+  it('creates ArcGIS WebTileLayer instance for WMTS dataset with scale constraints', async () => {
+    const jezeroDtm = getDatasetById('mars-hirise-jezero-dtm');
+    expect(jezeroDtm).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(jezeroDtm!);
+    expect(layer).toBeDefined();
+    expect(layer.minScale).toBe(jezeroDtm?.minScale);
+    expect(layer.maxScale).toBe(jezeroDtm?.maxScale);
   });
 });

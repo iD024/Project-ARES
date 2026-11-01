@@ -45,4 +45,28 @@ describe('ViewportCoordinator component', () => {
     expect(globeContainer).toHaveClass('opacity-0', 'pointer-events-none');
     expect(mapContainer).toHaveClass('opacity-100', 'pointer-events-auto');
   });
+
+  it('mounts floating MapAttributionOverlay overlay', () => {
+    useAppStore.setState({
+      layers: [
+        {
+          id: 'mars-viking-mdim21',
+          name: 'Viking MDIM 2.1 Color Mosaic',
+          subtitle: 'Mosaic',
+          category: 'surface',
+          classification: 'OBSERVED',
+          provider: 'USGS',
+          resolution: '232 m/px',
+          coverage: 'Global',
+          visible: true,
+          opacity: 1,
+          sourceUrl: 'https://...',
+        },
+      ],
+    });
+
+    render(<ViewportCoordinator />);
+
+    expect(screen.getByTestId('map-attribution-overlay')).toBeInTheDocument();
+  });
 });
