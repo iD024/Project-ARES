@@ -1,0 +1,428 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_ZHURONG_Traverse_PDS",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "zhurong-traverse-path",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "ROVER_TRAVERSE_PATH",
+        "totalDistanceKm": 1.92,
+        "totalSols": 347,
+        "startSite": "Utopia Planitia Touchdown Platform",
+        "latestSite": "Northern Winter Dormancy Station",
+        "datum": "Mars 2000 Sphere / Spheroid (WKID 104971)",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            109.925,
+            25.066
+          ],
+          [
+            109.9248,
+            25.0652
+          ],
+          [
+            109.924,
+            25.0635
+          ],
+          [
+            109.922,
+            25.058
+          ],
+          [
+            109.92,
+            25.051
+          ],
+          [
+            109.9175,
+            25.042
+          ],
+          [
+            109.917,
+            25.04
+          ],
+          [
+            109.915,
+            25.033
+          ],
+          [
+            109.913,
+            25.026
+          ],
+          [
+            109.911,
+            25.019
+          ],
+          [
+            109.909,
+            25.013
+          ],
+          [
+            109.9075,
+            25.008
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-0",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 0,
+        "earthDate": "2021-05-15",
+        "elevationMeters": -4100,
+        "distanceKm": 0.0,
+        "siteName": "Utopia Planitia Touchdown Platform",
+        "formation": "Vastitas Borealis Lowland Plains",
+        "instrumentTargets": [
+          "NaTeCam Lander Panorama",
+          "RoPeR Calibration"
+        ],
+        "discoverySummary": "China's first Mars landing: Tianwen-1 lander and Zhurong rover touchdown safely in southern Utopia Planitia.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Ground Research Application System",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.925,
+          25.066
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-8",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 8,
+        "earthDate": "2021-05-22",
+        "elevationMeters": -4100,
+        "distanceKm": 0.02,
+        "siteName": "Ramp Ingress onto Martian Soil",
+        "formation": "Regolith Soil Mantle",
+        "instrumentTargets": [
+          "Front Hazcam Ramp View",
+          "Wheel Odometry Sensor"
+        ],
+        "discoverySummary": "Successfully rolled down boarding ramps onto Martian soil, officially initiating surface mobility operations.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.9248,
+          25.0652
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-19",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 19,
+        "earthDate": "2021-06-03",
+        "elevationMeters": -4101,
+        "distanceKm": 0.06,
+        "siteName": "Remote Selfie Site",
+        "formation": "Smooth Lowland Inter-Dune",
+        "instrumentTargets": [
+          "Deployable Wi-Fi Remote Camera",
+          "MSCam Multispectral"
+        ],
+        "discoverySummary": "Deployed detachable wireless mini-camera on the ground and backed away to capture historic dual selfie with lander.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.924,
+          25.0635
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-42",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 42,
+        "earthDate": "2021-06-27",
+        "elevationMeters": -4102,
+        "distanceKm": 0.24,
+        "siteName": "Transverse Aeolian Ridge (TAR) Field #1",
+        "formation": "Bright Asymmetrical Sand Ripples",
+        "instrumentTargets": [
+          "NaTeCam Stereo 3D",
+          "MCS Weather Wind Pressure"
+        ],
+        "discoverySummary": "Detailed close-up imaging and laser spectroscopy of bright dust-mantled Transverse Aeolian Ridges.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.922,
+          25.058
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-63",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 63,
+        "earthDate": "2021-07-18",
+        "elevationMeters": -4103,
+        "distanceKm": 0.51,
+        "siteName": "Bright Duricrust Outcrop",
+        "formation": "Cemented Sulfate Duricrust",
+        "instrumentTargets": [
+          "MarSCoDe LIBS Laser",
+          "Micro-Imager Salt Crust"
+        ],
+        "discoverySummary": "Laser ablation spectroscopy revealed hydrated sulfate/silica cement in duricrust formed by liquid water activity during the Amazonian epoch.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.92,
+          25.051
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-90",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 90,
+        "earthDate": "2021-08-15",
+        "elevationMeters": -4105,
+        "distanceKm": 0.89,
+        "siteName": "Primary Mission Milestone",
+        "formation": "Lowland Impact Ejecta Regolith",
+        "instrumentTargets": [
+          "RoPeR Subsurface Echoes",
+          "RoMAG Magnetic Dipole Survey"
+        ],
+        "discoverySummary": "Completed designated 90-sol primary design life, surpassing 889 meters traversed with all 6 scientific instruments fully operational.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.9175,
+          25.042
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-120",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 120,
+        "earthDate": "2021-09-15",
+        "elevationMeters": -4105,
+        "distanceKm": 1.02,
+        "siteName": "Solar Conjunction Park Site",
+        "formation": "Quiet Plains Haven",
+        "instrumentTargets": [
+          "Autonomous Telemetry Monitor",
+          "RoMAG Low-Noise Background"
+        ],
+        "discoverySummary": "Parked safely during solar conjunction when communication blackout occurred as Mars passed behind the Sun.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.917,
+          25.04
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-165",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 165,
+        "earthDate": "2021-11-01",
+        "elevationMeters": -4107,
+        "distanceKm": 1.25,
+        "siteName": "Deep Ground-Penetrating Radar Survey",
+        "formation": "Multi-Layered Sedimentary Basin",
+        "instrumentTargets": [
+          "RoPeR Channel 1 & 2 Soundings",
+          "NaTeCam Obstacle Avoidance"
+        ],
+        "discoverySummary": "RoPeR ground radar probed down to 80 meters depth, revealing multi-layered sedimentary sequences from ancient flooding episodes.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.915,
+          25.033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-210",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 210,
+        "earthDate": "2021-12-18",
+        "elevationMeters": -4108,
+        "distanceKm": 1.45,
+        "siteName": "Giant Polygonal Terrain Zone",
+        "formation": "Thermal Contraction Wedge Polygons",
+        "instrumentTargets": [
+          "RoPeR Wedge Geometry",
+          "MSCam Color Mosaic"
+        ],
+        "discoverySummary": "Identified subsurface giant polygon structures beneath Utopia Planitia, indicative of thermal contraction crack polygons and paleoclimate change.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.913,
+          25.026
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-260",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 260,
+        "earthDate": "2022-02-08",
+        "elevationMeters": -4110,
+        "distanceKm": 1.63,
+        "siteName": "Etched Bedrock Trough",
+        "formation": "Laminated Water-Laid Siltstone",
+        "instrumentTargets": [
+          "MarSCoDe Elemental Composition",
+          "NaTeCam Micro-Topography"
+        ],
+        "discoverySummary": "Analyzed laminated bedrock exposed in local shallow depression, confirming episodic aqueous deposition in the northern lowlands.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.911,
+          25.019
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-305",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 305,
+        "earthDate": "2022-03-26",
+        "elevationMeters": -4111,
+        "distanceKm": 1.78,
+        "siteName": "TAR Field #2 Crossing",
+        "formation": "Active Megaripples",
+        "instrumentTargets": [
+          "Wheel Sinkage Geometry",
+          "RoMAG Local Anomalies"
+        ],
+        "discoverySummary": "Crossed second major ripple field, testing crawler steering and wheel traction against Martian dust-covered dunes.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.909,
+          25.013
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "zhurong-sol-347",
+      "properties": {
+        "roverId": "zhurong",
+        "roverName": "Zhurong Rover (Tianwen-1)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 347,
+        "earthDate": "2022-05-01",
+        "elevationMeters": -4112,
+        "distanceKm": 1.92,
+        "siteName": "Northern Winter Dormancy Station",
+        "formation": "Sheltered Plains Depression",
+        "instrumentTargets": [
+          "Final Pre-Hibernation Health Check",
+          "MCS Thermal Baseline"
+        ],
+        "discoverySummary": "Entered planned winter dormancy mode on Sol 347 to endure northern winter dust storms and extreme sub-zero cold after 1,921 meters traversed.",
+        "pdsCitation": "CNSA/GRAS Tianwen-1 Science Release",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.9075,
+          25.008
+        ]
+      }
+    }
+  ]
+}

@@ -29,6 +29,8 @@ describe('MissionControlDrawer', () => {
     expect(screen.getByRole('button', { name: /Curiosity/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Opportunity/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Spirit/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Zhurong/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /InSight/i })).toBeInTheDocument();
 
     // Default tab should be Perseverance
     expect(screen.getByText(/Perseverance Rover \(Mars 2020\)/i)).toBeInTheDocument();
@@ -46,6 +48,16 @@ describe('MissionControlDrawer', () => {
     expect(screen.getAllByText(/SAM/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/ChemCam/i)).toBeInTheDocument();
     expect(screen.getByText(/CheMin/i)).toBeInTheDocument();
+  });
+
+  it('switches tabs to Zhurong and displays CNSA instruments and details', () => {
+    render(<MissionControlDrawer isOpen={true} onClose={() => {}} />);
+    const zhurongTab = screen.getByRole('button', { name: /Zhurong/i });
+    fireEvent.click(zhurongTab);
+
+    expect(screen.getByText(/Zhurong Rover \(Tianwen-1\)/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/RoPeR/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/NaTeCam/i).length).toBeGreaterThanOrEqual(1);
   });
 
   it('activates rover tracking and updates store when Track Rover button is clicked', () => {

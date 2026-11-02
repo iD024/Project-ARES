@@ -98,4 +98,30 @@ describe('Dataset Registry & Scientific Provenance', () => {
     expect(regionalSlope?.classification).toBe('DERIVED');
     expect(regionalSlope?.description).toMatch(/regional.*derived/i);
   });
+
+  it('registers Phase 08.5 planetary exploration datasets (seismic catalog, minerals, subsurface ice, settlement sites)', () => {
+    const seismic = getDatasetById('mars-seismic-catalog');
+    expect(seismic, 'mars-seismic-catalog must be registered').toBeDefined();
+    expect(seismic?.category).toBe('geology');
+    expect(seismic?.classification).toBe('OBSERVED');
+    expect(seismic?.endpointUrl).toBe('/data/mars_seismic_events.geojson');
+
+    const minerals = getDatasetById('mars-crism-minerals');
+    expect(minerals, 'mars-crism-minerals must be registered').toBeDefined();
+    expect(minerals?.category).toBe('geology');
+    expect(minerals?.classification).toBe('DERIVED');
+    expect(minerals?.endpointUrl).toBe('/data/mars_hydrated_minerals.geojson');
+
+    const ice = getDatasetById('mars-swim-subsurface-ice');
+    expect(ice, 'mars-swim-subsurface-ice must be registered').toBeDefined();
+    expect(ice?.category).toBe('geology');
+    expect(ice?.classification).toBe('DERIVED');
+    expect(ice?.endpointUrl).toBe('/data/mars_subsurface_ice.geojson');
+
+    const settlements = getDatasetById('mars-settlement-sites');
+    expect(settlements, 'mars-settlement-sites must be registered').toBeDefined();
+    expect(settlements?.category).toBe('features');
+    expect(settlements?.classification).toBe('MODELED');
+    expect(settlements?.endpointUrl).toBe('/data/mars_settlement_sites.geojson');
+  });
 });

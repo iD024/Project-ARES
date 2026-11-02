@@ -7,6 +7,10 @@ import {
   ElevationTransectResult,
 } from '../services/data/measurementService.ts';
 import { RoverMissionId } from '../services/data/roverMissionService.ts';
+import {
+  CandidateRouteResult,
+  VehicleProfileType,
+} from '../services/data/routePlanningService.ts';
 
 export type MeasurementToolType = 'distance' | 'area' | 'profile' | null;
 
@@ -69,6 +73,25 @@ export interface AppState {
   setActiveSol: (sol: number | null) => void;
   setRoverTraverseVisible: (visible: boolean) => void;
   setIsMissionControlOpen: (open: boolean) => void;
+
+  // Phase 09 Route Planning State
+  routeOrigin: GeodesicCoordinate | null;
+  routeDestination: GeodesicCoordinate | null;
+  activeVehicleProfile: VehicleProfileType;
+  candidateRoutes: CandidateRouteResult[];
+  selectedRouteIndex: number;
+  isRoutePlannerOpen: boolean;
+  isPickingRoutePoint: 'origin' | 'destination' | null;
+
+  // Phase 09 Route Planning Actions
+  setRouteOrigin: (coord: GeodesicCoordinate | null) => void;
+  setRouteDestination: (coord: GeodesicCoordinate | null) => void;
+  setActiveVehicleProfile: (profile: VehicleProfileType) => void;
+  setCandidateRoutes: (routes: CandidateRouteResult[]) => void;
+  setSelectedRouteIndex: (index: number) => void;
+  setIsRoutePlannerOpen: (open: boolean) => void;
+  setIsPickingRoutePoint: (point: 'origin' | 'destination' | null) => void;
+  clearRoutePlanning: () => void;
 }
 
 const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
@@ -123,6 +146,15 @@ export const useAppStore = create<AppState>((set) => ({
   activeSol: 1150,
   isRoverTraverseVisible: true,
   isMissionControlOpen: false,
+
+  // Phase 09 Route Planning State
+  routeOrigin: null,
+  routeDestination: null,
+  activeVehicleProfile: 'HEAVY_ROVER',
+  candidateRoutes: [],
+  selectedRouteIndex: 0,
+  isRoutePlannerOpen: false,
+  isPickingRoutePoint: null,
   regionalCenter: {
     latitude: 18.38,
     longitude: 77.45,
@@ -233,4 +265,33 @@ export const useAppStore = create<AppState>((set) => ({
   setActiveSol: (sol) => set({ activeSol: sol }),
   setRoverTraverseVisible: (visible) => set({ isRoverTraverseVisible: visible }),
   setIsMissionControlOpen: (open) => set({ isMissionControlOpen: open }),
+
+  // Phase 09 Actions
+  setRouteOrigin: (coord) => set({ routeOrigin: coord }),
+  setRouteDestination: (coord) => set({ routeDestination: coord }),
+  setActiveVehicleProfile: (profile) => set({ activeVehicleProfile: profile }),
+  setCandidateRoutes: (routes) =>
+    set({
+      candidateRoutes: routes,
+      selectedRouteIndex: 0,
+      elevationTransect: routes.length > 0 ? routes[0].elevationTransect : null,
+    }),
+  setSelectedRouteIndex: (index) =>
+    set((state) => {
+      const selected = state.candidateRoutes[index];
+      return {
+        selectedRouteIndex: index,
+        elevationTransect: selected ? selected.elevationTransect : state.elevationTransect,
+      };
+    }),
+  setIsRoutePlannerOpen: (open) => set({ isRoutePlannerOpen: open }),
+  setIsPickingRoutePoint: (point) => set({ isPickingRoutePoint: point }),
+  clearRoutePlanning: () =>
+    set({
+      routeOrigin: null,
+      routeDestination: null,
+      candidateRoutes: [],
+      selectedRouteIndex: 0,
+      isPickingRoutePoint: null,
+    }),
 }));

@@ -1,0 +1,566 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_SPIRIT_Traverse_PDS",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "spirit-traverse-path",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "ROVER_TRAVERSE_PATH",
+        "totalDistanceKm": 7.73,
+        "totalSols": 1892,
+        "startSite": "Columbia Memorial Station",
+        "latestSite": "Troy Sand Trap",
+        "datum": "Mars 2000 Sphere / Spheroid (WKID 104971)",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            175.4729,
+            -14.5684
+          ],
+          [
+            175.475,
+            -14.5695
+          ],
+          [
+            175.48,
+            -14.571
+          ],
+          [
+            175.487,
+            -14.575
+          ],
+          [
+            175.495,
+            -14.582
+          ],
+          [
+            175.505,
+            -14.591
+          ],
+          [
+            175.51,
+            -14.595
+          ],
+          [
+            175.515,
+            -14.6
+          ],
+          [
+            175.52,
+            -14.604
+          ],
+          [
+            175.525,
+            -14.608
+          ],
+          [
+            175.528,
+            -14.612
+          ],
+          [
+            175.532,
+            -14.618
+          ],
+          [
+            175.534,
+            -14.622
+          ],
+          [
+            175.536,
+            -14.625
+          ],
+          [
+            175.5345,
+            -14.62
+          ],
+          [
+            175.538,
+            -14.628
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-0",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 0,
+        "earthDate": "2004-01-04",
+        "elevationMeters": -1900,
+        "distanceKm": 0.0,
+        "siteName": "Columbia Memorial Station",
+        "formation": "Gusev Crater Plains Regolith",
+        "instrumentTargets": [
+          "Pancam First Light",
+          "Mini-TES Ground Temperature"
+        ],
+        "discoverySummary": "Flawless landing inside 160-kilometer Gusev Crater, named in tribute to the Space Shuttle Columbia crew.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.4729,
+          -14.5684
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-35",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 35,
+        "earthDate": "2004-02-08",
+        "elevationMeters": -1901,
+        "distanceKm": 0.12,
+        "siteName": "Adirondack Rock",
+        "formation": "Vesicular Basalt Bedrock",
+        "instrumentTargets": [
+          "RAT First Rock Abrasion",
+          "Microscopic Imager Basalt Crystals",
+          "APXS Olivine Assay"
+        ],
+        "discoverySummary": "Performed first rock grind on Mars; discovered unweathered olivine-rich volcanic basalt.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.475,
+          -14.5695
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-65",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 65,
+        "earthDate": "2004-03-10",
+        "elevationMeters": -1898,
+        "distanceKm": 0.38,
+        "siteName": "Bonneville Crater Rim",
+        "formation": "Impact Rim Boulder Field",
+        "instrumentTargets": [
+          "Pancam 360 Horizon Mosaic",
+          "Mini-TES Crater Floor Sounding"
+        ],
+        "discoverySummary": "Reached rim of 200-meter Bonneville Crater; viewed heat shield on floor and Columbia Hills on the eastern horizon.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.48,
+          -14.571
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-105",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 105,
+        "earthDate": "2004-04-20",
+        "elevationMeters": -1896,
+        "distanceKm": 0.75,
+        "siteName": "Missoula Crater Outcrop",
+        "formation": "Plains Inter-Crater Soils",
+        "instrumentTargets": [
+          "Pancam Color Filter",
+          "Microscopic Imager Soil Grains"
+        ],
+        "discoverySummary": "Characterized eolian sand drifts and dark pebble lags during long cross-country sprint to the hills.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.487,
+          -14.575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-150",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 150,
+        "earthDate": "2004-06-06",
+        "elevationMeters": -1893,
+        "distanceKm": 1.4,
+        "siteName": "Lahontan Crater",
+        "formation": "Basaltic Plains Dune",
+        "instrumentTargets": [
+          "Hazcam Drive Tracking",
+          "AutoNav High-Speed Odometry"
+        ],
+        "discoverySummary": "Circumnavigated small impact depression Lahontan while sustaining peak drive distances per sol.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.495,
+          -14.582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-180",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 180,
+        "earthDate": "2004-07-07",
+        "elevationMeters": -1885,
+        "distanceKm": 2.1,
+        "siteName": "West Spur Base (Columbia Hills)",
+        "formation": "Basal Hill Sediments",
+        "instrumentTargets": [
+          "Pancam Slopes Panorama",
+          "Mini-TES Altered Rock Scan"
+        ],
+        "discoverySummary": "Arrived at base of Columbia Hills; encountered bedrock distinctly different from the basaltic plains.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.505,
+          -14.591
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-260",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 260,
+        "earthDate": "2004-09-27",
+        "elevationMeters": -1870,
+        "distanceKm": 2.85,
+        "siteName": "Clovis Rock Outcrop",
+        "formation": "Altered Soft Volcanic Tuff",
+        "instrumentTargets": [
+          "RAT Grinding Hole",
+          "APXS High Sulfur/Phosphorus",
+          "M\u00f6ssbauer Goethite"
+        ],
+        "discoverySummary": "Discovered goethite mineral indicating ancient water chemically altered the volcanic rocks of Columbia Hills.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.51,
+          -14.595
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-370",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 370,
+        "earthDate": "2005-01-18",
+        "elevationMeters": -1855,
+        "distanceKm": 3.5,
+        "siteName": "Cumberland Ridge",
+        "formation": "Layered Volcaniclastic Strata",
+        "instrumentTargets": [
+          "Microscopic Imager Vesicles",
+          "APXS Elemental Profiling"
+        ],
+        "discoverySummary": "Identified dense layered volcaniclastic rocks pointing to explosive hydromagmatic eruptions.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.515,
+          -14.6
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-480",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 480,
+        "earthDate": "2005-05-10",
+        "elevationMeters": -1835,
+        "distanceKm": 4.15,
+        "siteName": "Larry's Lookout",
+        "formation": "Summit Ridge Slope",
+        "instrumentTargets": [
+          "Pancam Tennessee Valley Panorama",
+          "Mini-TES Dust Devils"
+        ],
+        "discoverySummary": "Spectacular vantage point overlooking Gusev Crater floor; observed multiple active dust devils cleansing solar panels.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.52,
+          -14.604
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-580",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 580,
+        "earthDate": "2005-08-21",
+        "elevationMeters": -1820,
+        "distanceKm": 4.81,
+        "siteName": "Husband Hill Summit",
+        "formation": "Summit Peak Crest",
+        "instrumentTargets": [
+          "Pancam 360 Summit Panorama",
+          "Mini-TES Thermal Sounding",
+          "APXS Outcrop Assay"
+        ],
+        "discoverySummary": "Reached summit of Husband Hill (80 meters above plain), surveying the Inner Basin and Home Plate plateau.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.525,
+          -14.608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-660",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 660,
+        "earthDate": "2005-11-12",
+        "elevationMeters": -1845,
+        "distanceKm": 5.35,
+        "siteName": "Hillary Outcrop",
+        "formation": "South Ridge Bedrock",
+        "instrumentTargets": [
+          "Microscopic Imager Granules",
+          "Pancam Southern Descent"
+        ],
+        "discoverySummary": "Traversed steep southern ridge descent toward the geological formations of the Inner Basin.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.528,
+          -14.612
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-750",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 750,
+        "earthDate": "2006-02-12",
+        "elevationMeters": -1885,
+        "distanceKm": 6.1,
+        "siteName": "Home Plate Arrival",
+        "formation": "Volcanic Pyroclastic Apron",
+        "instrumentTargets": [
+          "Pancam Home Plate Facies",
+          "Microscopic Imager Bomb Sag",
+          "APXS High Alkaline"
+        ],
+        "discoverySummary": "Discovered volcanic bomb-sag structure proving explosive phreatomagmatic volcanic eruptions.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.532,
+          -14.618
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-850",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 850,
+        "earthDate": "2006-05-26",
+        "elevationMeters": -1888,
+        "distanceKm": 6.7,
+        "siteName": "Tyrrhenian Plateau / Low Ridge Haven",
+        "formation": "Layered Basaltic Tephra",
+        "instrumentTargets": [
+          "Winter Station Solar Tilt",
+          "Pancam McMurdo Panorama"
+        ],
+        "discoverySummary": "Parked on northward tilted slope at Low Ridge Haven to survive second Martian winter.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.534,
+          -14.622
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-1150",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1150,
+        "earthDate": "2007-04-01",
+        "elevationMeters": -1886,
+        "distanceKm": 7.15,
+        "siteName": "Gertrude Weil (Hydrothermal Opaline Silica)",
+        "formation": "Hydrothermal Spring Fumarole Deposits",
+        "instrumentTargets": [
+          "APXS 90% Opaline Silica",
+          "Mini-TES Hydrated Silica",
+          "Microscopic Imager Silica Nodules"
+        ],
+        "discoverySummary": "Jammed right-front wheel dragged a trench uncovering pure bright opaline silica; conclusive evidence of past hydrothermal hot springs or fumaroles.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.536,
+          -14.625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-1400",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1400,
+        "earthDate": "2007-12-12",
+        "elevationMeters": -1885,
+        "distanceKm": 7.5,
+        "siteName": "Home Plate Winter Haven",
+        "formation": "North Face Slope",
+        "instrumentTargets": [
+          "Pancam Bonestell Panorama",
+          "APXS Soil Drag"
+        ],
+        "discoverySummary": "Positioned on northern slope of Home Plate for maximum winter solar angle.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.5345,
+          -14.62
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spirit-sol-1892",
+      "properties": {
+        "roverId": "spirit",
+        "roverName": "Spirit Rover (MER-A)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1892,
+        "earthDate": "2009-05-01",
+        "elevationMeters": -1890,
+        "distanceKm": 7.73,
+        "siteName": "Troy Sand Trap",
+        "formation": "Subsurface Sulfate Sinking Crust",
+        "instrumentTargets": [
+          "Hazcam Spin Diagnostic",
+          "APXS Ferric Sulfate Core",
+          "M\u00f6ssbauer Iron Sulfate"
+        ],
+        "discoverySummary": "Broke through thin crust into concealed soft iron sulfate sand at 'Troy'; operated as stationary planetary science station until March 2010 (Sol 2210).",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MER Spirit Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          175.538,
+          -14.628
+        ]
+      }
+    }
+  ]
+}

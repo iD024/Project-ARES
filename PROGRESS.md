@@ -1,6 +1,6 @@
 # ARES — Engineering Progress & Verification Log
 
-## Overall Status: Phase 08 (COMPLETED & VERIFIED)
+## Overall Status: Phase 09 (COMPLETED & VERIFIED)
 
 ---
 
@@ -18,9 +18,94 @@
 | **Phase 07** | Location Intelligence & Measurement| 2026-11-02 | 2026-11-02 | **PASSED** (206 Vitest tests + 20 Python tests pass, Mars 2000 geodesic distance, spherical polygon area, elevation transects, black-glass UI rehaul, 10 wonders + 12 landing sites, layer explanations). |
 | **Phase 07.5** | Local Analysis 3D POV & Layer Diagnostics | 2026-11-02 | 2026-11-02 | **PASSED** (219 Vitest tests + 20 Python tests pass, Google Earth-style ground POV, 360° orbit, LocalPovControls flight deck, styled GeoJSON renderers, clean production build in 45.7s). |
 | **Phase 08** | Mission & Rover Intelligence | 2026-11-02 | 2026-11-02 | **PASSED** (238 Vitest tests + 24 Python pipeline tests pass, Perseverance & Curiosity GeoJSON traverses in Mars 2000 WKID 104971, Sol milestone timeline scrubber, 1-click ground POV fly-tos, MissionControlDrawer, 3D/2D traverse GraphicsLayers, clean build). |
-| **Phase 09** | Terrain-Aware Route Planning | — | — | Ready for Planning. |
-| **Phase 10** | Scientific Intelligence Interface | — | — | Pending Phase 09 sign-off. |
+| **Phase 08.5** | Planetary Data Expansion (Rovers, Marsquakes, Resources & Base Sites) | 2026-11-02 | 2026-11-02 | **PASSED** (259 Vitest tests + 38 Python pipeline tests = 297 tests pass, complete 5-rover mobile fleet + InSight, MQS seismic catalog, CRISM minerals, SWIM subsurface ice sheets, settlement zones catalog, ArcGIS renderers, multi-rover viewport integration, clean build). |
+| **Phase 09** | Terrain-Aware Route Planning | 2026-11-02 | 2026-11-02 | **PASSED** (274 Vitest tests + 38 Python pipeline tests = 312 tests pass, discrete geodetic lattice A* pathfinding on Mars 2000 datum, 3 candidate routes: Safest, Balanced, Direct, RoutePlannerDrawer, TopCommandBar Routes trigger, dual-viewport graphics layers, clean build in 24.96s). |
+| **Phase 10** | Scientific Intelligence Interface | — | — | Ready for Planning. |
 | **Phase 11** | Integration, Optimization & Release | — | — | Pending Phase 10 sign-off. |
+
+---
+
+## Phase 09 Checklist
+- [x] **Mars 2000 Geodetic Lattice & A* Routing Engine (`routePlanningService.ts`)**:
+  - Implemented geodetic lattice grid construction on Mars 2000 datum ($R = 3,396,190\text{ m}$) with 25% safety expansion margin and latitude-dependent parallel scaling.
+  - Implemented 8-neighbor spatial connectivity with continuous slope cost calculation $\theta(u, v) = \arctan(|\Delta z| / \text{dist}(u, v)) \cdot 180^\circ / \pi$.
+  - Built A* pathfinder with geodetic Euclidean heuristic and simultaneous 3-candidate generation:
+    1. 🟢 **Safest Route** (Green `#10B981`): High slope penalty ($w_{\text{slope}}=5.0$, cutoff $15^\circ$), weaves through valleys and flat plains.
+    2. 🌐 **Balanced Route** (Cyan `#06B6D4`): Moderate slope penalty ($w_{\text{slope}}=2.0$, cutoff $20^\circ$), optimal compromise between distance and safety.
+    3. 🟡 **Direct Distance Route** (Amber `#F59E0B`): Minimal slope penalty ($w_{\text{slope}}=0.5$, cutoff $35^\circ$), highlights raw direct distance and terrain warning hot-spots.
+  - Configured 4 verified preset mission scenarios: Jezero Delta Fan Margin, Gale Mount Sharp Ascent, Valles Marineris Candor Crossing, and Arcadia Base Alpha $\to$ SWIM Ice Corridor.
+  - Defined 3 vehicle profiles: Heavy Rover (100 m/sol, max $15^\circ$), Light Scout Rover (50 m/sol, max $12^\circ$), and Aerial Drone (1,000 m/hop).
+  - Integrated `ElevationTransectResult` compilation for instant cross-section profiling.
+  - Verified with 6 unit tests in `routePlanningService.test.ts`.
+- [x] **Store Slice & Types Integration (`useAppStore.ts` & `src/types/hud.ts`)**:
+  - Added `'routes'` to `DrawerId` union.
+  - Added route planner state slices: `routeOrigin`, `routeDestination`, `activeVehicleProfile`, `candidateRoutes`, `selectedRouteIndex`, `isRoutePlannerOpen`, `isPickingRoutePoint`.
+  - Added atomic actions (`setRouteOrigin`, `setRouteDestination`, `setActiveVehicleProfile`, `setCandidateRoutes`, `setSelectedRouteIndex`, `setIsPickingRoutePoint`, `clearRoutePlanning`).
+  - Bridge to `elevationTransect`: selecting a candidate route auto-updates `elevationTransect` so `ElevationProfileTray.tsx` displays the route's elevation cross section.
+  - Verified with 10 unit tests in `useAppStore.test.ts`.
+- [x] **Black-Glass Route Planner Drawer (`RoutePlannerDrawer.tsx`) & Command Bar**:
+  - Built aerospace black-glass drawer (`RoutePlannerDrawer.tsx`) with coordinate inputs and 1-click crosshair "Pick on Map" toggles.
+  - Added Preset Mission Scenarios dropdown, Vehicle Profile selector tabs, and "Calculate Optimal Routes" action button.
+  - Added candidate comparison cards displaying distance, max slope, average slope, relief ($\Delta z$), estimated sols, and PASSABLE / CLIPPED HAZARD badges.
+  - Rendered mandatory scientific disclaimer: *"Regional terrain model derived from 200m DEM. Does not account for sub-meter boulder fields, sand traps, or fine rover-scale obstacles."*
+  - Added `[Routes]` trigger button with `Navigation` icon to `TopCommandBar.tsx` and mounted drawer in `App.tsx`.
+  - Verified with 4 unit tests in `RoutePlannerDrawer.test.tsx` and 15 tests across `App.test.tsx` and `HudPanels.test.tsx`.
+- [x] **Dual-Viewport 3D Globe & 2D Map Routes Graphics Layer (`MarsGlobeView.tsx` & `MarsMapView.tsx`)**:
+  - Added dedicated `mars-routes-layer` to SceneView and `mars-routes-layer-2d` to MapView.
+  - Rendered start diamond pin (Emerald `#10B981`) and destination diamond pin (Red `#EF4444`).
+  - Rendered all 3 candidate paths with active route highlighted at width 4.5 vs background routes at width 2.0 with translucent styling.
+  - Connected interactive map click handler: clicking anywhere in "Pick on Map" mode sets origin or destination coordinates without triggering spot inspection.
+  - Verified with 12 tests in `MarsGlobeView.test.tsx` and 11 tests in `MarsMapView.test.tsx`.
+- [x] **Automated Verification Gate**:
+  - Vitest Unit/Integration Tests: **274 passed (100%)** across 37 test files.
+  - Python Data Pipeline Tests: **38 passed (100%)**.
+  - Total Passing Tests: **312 passed**.
+  - Production Build: Clean Vite bundle output in 24.96s with zero TypeScript compilation errors.
+
+---
+
+## Phase 08.5 Checklist
+- [x] **Complete Historical Mobile Rover Traverse Coverage (Opportunity, Spirit, Zhurong)**:
+  - Extended `scripts/data_pipeline/generate_rover_traverses.py` with Opportunity MER-B (Meridiani Planum, 22 milestones, 45.16 km, Sol 5111), Spirit MER-A (Gusev Crater, 16 milestones, 7.73 km, Sol 2210), and Zhurong (Utopia Planitia, 12 milestones, 1.92 km, Sol 347).
+  - All coordinates in exact Mars 2000 datum (`WKID 104971`), labeled `OBSERVED`, with monotonic distance and Sol progressions.
+  - Generated `public/data/opportunity_traverse.geojson` (23 features), `public/data/spirit_traverse.geojson` (17 features), and `public/data/zhurong_traverse.geojson` (13 features).
+  - Expanded `scripts/data_pipeline/test_rover_traverses.py` to 10 automated unit tests (100% passing).
+- [x] **InSight Marsquake Seismic Catalog ETL (MQS Data Release 14)**:
+  - Implemented `scripts/data_pipeline/generate_marsquakes.py` compiling 45 verified Mars seismic events from InSight MQS Data Release 14 (S0173a, S0235b, S1222a monster quake Mw 4.7, Cerberus Fossae low/high frequency events).
+  - Derived epicenters via spherical forward geodesy from InSight station ($4.5023^\circ\text{N}, 135.6234^\circ\text{E}, R=3,396,190\text{ m}$).
+  - Produced `public/data/mars_seismic_events.geojson` with magnitude, eventType, quality, and PDS citation.
+  - Tested in `scripts/data_pipeline/test_marsquakes.py` (4 unit tests passing).
+- [x] **Planetary Resources ETL (CRISM Minerals & SWIM Subsurface Glacial Ice)**:
+  - Implemented `scripts/data_pipeline/generate_planetary_resources.py` synthesizing 10 CRISM hydrated mineral polygon deposits (smectites, carbonates, sulfates at Mawrth, Nili Fossae, Jezero, Melas) and 7 SWIM subsurface water ice polygon sheets (Arcadia, Deuteronilus, Utopia Planitia).
+  - Verified closed polygon rings, anti-meridian safety, and coordinates in Mars 2000 datum.
+  - Produced `public/data/mars_hydrated_minerals.geojson` and `public/data/mars_subsurface_ice.geojson`.
+  - Tested in `scripts/data_pipeline/test_planetary_resources.py` (4 unit tests passing).
+- [x] **Candidate Human Settlement & Base Zones Catalog**:
+  - Implemented `src/config/marsSettlementSites.ts` structuring 8 prime Martian habitat candidates (Arcadia Base Alpha, Deuteronilus Outpost, Mawrth Oasis, Erebus Ridge, Melas Deep Haven, Utopia Colony One, Jezero Science Habitat, Gale Mount Sharp Hub).
+  - Exported to `public/data/mars_settlement_sites.geojson` via `scripts/data_pipeline/export_settlement_sites.py`.
+  - Tested in `src/config/marsSettlementSites.test.ts` (8 unit tests passing).
+- [x] **Rover Mission Service & Mission Control Drawer Upgrade**:
+  - Upgraded `src/services/data/roverMissionService.ts` and `roverMilestonesExtended.ts` with complete scientific instrument payloads and milestone dossiers for all 6 missions (Perseverance, Curiosity, Opportunity, Spirit, Zhurong, InSight).
+  - Implemented dynamic traverse URL routing `getTraverseGeoJsonUrl()` and color palette helpers (`getRoverColorRgba`, `getRoverHexColor`).
+  - Upgraded `MissionControlDrawer.tsx` to display all 6 missions with active tabs and 1-click tracking.
+  - Verified in `roverMissionService.test.ts` (10 tests) and `MissionControlDrawer.test.tsx` (6 tests).
+- [x] **Dataset Registry & ArcGIS Layer Factory Integration**:
+  - Registered all 4 new datasets (`mars-seismic-catalog`, `mars-crism-minerals`, `mars-swim-subsurface-ice`, `mars-settlement-sites`) in `datasetRegistry.ts`.
+  - Configured custom ArcGIS renderers and popup templates in `layerService.ts`:
+    - Marsquakes: Glowing crimson circle markers with event metadata.
+    - CRISM Minerals: Translucent emerald polygonal beds with mineralogy field infos.
+    - SWIM Subsurface Ice: Glacial cyan hatched polygon sheets with depth and purity metrics.
+    - Settlement Sites: Tactical amber diamond base markers with ISRU and safety attributes.
+  - Verified in `datasetRegistry.test.ts` and `layerService.test.ts` (21 tests passing).
+- [x] **3D Globe & 2D Map Multi-Rover Viewport & Ground POV**:
+  - Integrated `getRoverColorRgba` in `MarsGlobeView.tsx` (3D SceneView) and `MarsMapView.tsx` (2D MapView) for all 5 rovers: Perseverance (Orange `#EA580C`), Curiosity (Cyan `#06B6D4`), Opportunity (Emerald `#10B981`), Spirit (Amber `#F59E0B`), Zhurong (Rose `#F43F5E`).
+  - Added smooth camera fly-to / Ground POV navigation on rover selection and sol scrubber events.
+  - Verified in `MarsGlobeView.test.tsx` (10 tests) and `MarsMapView.test.tsx` (9 tests).
+- [x] **Automated Verification Gate**:
+  - Vitest Unit/Integration Tests: **259 passed (100%)** across 35 test files.
+  - Python Data Pipeline Tests: **38 passed (100%)**.
+  - Total Passing Tests: **297 passed**.
+  - Production Build: Clean Vite bundle output in 25.72s with zero TypeScript or packaging errors.
 
 ---
 

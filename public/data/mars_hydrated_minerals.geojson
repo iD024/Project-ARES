@@ -1,0 +1,442 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_Mars_Hydrated_Minerals_CRISM",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "crism-mawrth-vallis-smectite",
+      "properties": {
+        "id": "crism-mawrth-vallis-smectite",
+        "name": "Mawrth Vallis Fe/Mg Phyllosilicate Bedrock",
+        "mineralType": "Phyllosilicates",
+        "targetRegion": "Mawrth Vallis",
+        "concentrationGrade": "VERY_HIGH",
+        "geologicalContext": "Extensive Noachian-aged Fe/Mg smectite (nontronite) stratigraphic sequence exposed by ancient catastrophic flooding, representing prolonged benign aqueous habitability.",
+        "citation": "Poulet et al. (2005) Nature; Loizeau et al. (2012) Icarus; NASA PDS CRISM spectral library.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -19.8,
+              23.4
+            ],
+            [
+              -18.1,
+              23.5
+            ],
+            [
+              -17.6,
+              24.6
+            ],
+            [
+              -18.4,
+              25.4
+            ],
+            [
+              -20.0,
+              24.9
+            ],
+            [
+              -19.8,
+              23.4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-mawrth-vallis-al-clays",
+      "properties": {
+        "id": "crism-mawrth-vallis-al-clays",
+        "name": "Mawrth Vallis Al-Phyllosilicates & Hydrated Silica Cap",
+        "mineralType": "Hydrated Silica",
+        "targetRegion": "Mawrth Vallis",
+        "concentrationGrade": "HIGH",
+        "geologicalContext": "Topmost leached alteration horizon characterized by Al-clays (kaolinite, montmorillonite) and opaline hydrated silica formed by acidic or intensive leaching.",
+        "citation": "Bishop et al. (2008) Science; McKeown et al. (2009) JGR Planets.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -19.3,
+              24.0
+            ],
+            [
+              -18.0,
+              24.1
+            ],
+            [
+              -18.2,
+              25.1
+            ],
+            [
+              -19.1,
+              25.3
+            ],
+            [
+              -19.6,
+              24.8
+            ],
+            [
+              -19.3,
+              24.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-nili-fossae-smectite",
+      "properties": {
+        "id": "crism-nili-fossae-smectite",
+        "name": "Nili Fossae Smectite Clay Belts",
+        "mineralType": "Phyllosilicates",
+        "targetRegion": "Nili Fossae",
+        "concentrationGrade": "VERY_HIGH",
+        "geologicalContext": "Crustal fractures radiating from Isidis impact basin exposing deep ancient crustal stratigraphy with smectite clays and chlorite.",
+        "citation": "Mustard et al. (2008) Nature; Ehlmann et al. (2009) JGR Planets.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              74.6,
+              21.0
+            ],
+            [
+              77.4,
+              21.2
+            ],
+            [
+              78.3,
+              22.9
+            ],
+            [
+              76.6,
+              23.4
+            ],
+            [
+              74.4,
+              22.2
+            ],
+            [
+              74.6,
+              21.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-nili-fossae-carbonate",
+      "properties": {
+        "id": "crism-nili-fossae-carbonate",
+        "name": "Nili Fossae Olivine-Carbonate Alteration Complex",
+        "mineralType": "Carbonates",
+        "targetRegion": "Nili Fossae",
+        "concentrationGrade": "HIGH",
+        "geologicalContext": "Regional unit displaying Mg-carbonate signatures associated with altered olivine-rich lithologies, signaling neutral to alkaline hydrothermal fluid interactions.",
+        "citation": "Ehlmann et al. (2008) Science; Brown et al. (2010) EPSL.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.7,
+              21.5
+            ],
+            [
+              77.9,
+              21.6
+            ],
+            [
+              78.4,
+              22.5
+            ],
+            [
+              76.8,
+              22.9
+            ],
+            [
+              75.4,
+              22.2
+            ],
+            [
+              75.7,
+              21.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-oxia-planum-clay",
+      "properties": {
+        "id": "crism-oxia-planum-clay",
+        "name": "Oxia Planum Clay-Bearing Plains",
+        "mineralType": "Phyllosilicates",
+        "targetRegion": "Oxia Planum",
+        "concentrationGrade": "VERY_HIGH",
+        "geologicalContext": "ESA ExoMars Rosalind Franklin landing site featuring extensive continuous vermiculite and Fe/Mg-rich smectite deposits formed in a circum-Chryse lacustrine delta environment.",
+        "citation": "Quantin-Nataf et al. (2021) Astrobiology; Carter et al. (2019) LPSC L.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -24.9,
+              17.7
+            ],
+            [
+              -23.7,
+              17.8
+            ],
+            [
+              -23.8,
+              18.7
+            ],
+            [
+              -24.8,
+              18.6
+            ],
+            [
+              -24.9,
+              17.7
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-jezero-delta-carbonates",
+      "properties": {
+        "id": "crism-jezero-delta-carbonates",
+        "name": "Jezero Crater Western Delta Carbonates & Smectites",
+        "mineralType": "Carbonates",
+        "targetRegion": "Jezero Crater Delta",
+        "concentrationGrade": "VERY_HIGH",
+        "geologicalContext": "Fluvial-deltaic sedimentary fan bearing abundant orbital and in-situ PIXL/SHERLOC confirmed Mg-carbonates and Fe/Mg smectites with high biosignature preservation potential.",
+        "citation": "Horgan et al. (2020) Icarus; Farley et al. (2022) Science; NASA Mars 2020 Mission Archive.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.36,
+              18.37
+            ],
+            [
+              77.47,
+              18.38
+            ],
+            [
+              77.49,
+              18.47
+            ],
+            [
+              77.39,
+              18.48
+            ],
+            [
+              77.34,
+              18.42
+            ],
+            [
+              77.36,
+              18.37
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-jezero-northern-fan-clays",
+      "properties": {
+        "id": "crism-jezero-northern-fan-clays",
+        "name": "Jezero Crater Fan Phyllosilicates",
+        "mineralType": "Phyllosilicates",
+        "targetRegion": "Jezero Crater Delta",
+        "concentrationGrade": "HIGH",
+        "geologicalContext": "Detrital smectite clay layers washed into paleolake Jezero from the upstream catchment basin of Neretva Vallis.",
+        "citation": "Goudge et al. (2015) JGR Planets; Stack et al. (2020) Space Sci Rev.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.41,
+              18.41
+            ],
+            [
+              77.53,
+              18.43
+            ],
+            [
+              77.55,
+              18.51
+            ],
+            [
+              77.43,
+              18.49
+            ],
+            [
+              77.41,
+              18.41
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-candor-chasma-sulfates",
+      "properties": {
+        "id": "crism-candor-chasma-sulfates",
+        "name": "Candor Chasma Polyhydrated Sulfates",
+        "mineralType": "Sulfates",
+        "targetRegion": "Valles Marineris walls",
+        "concentrationGrade": "VERY_HIGH",
+        "geologicalContext": "Kilometer-thick Interior Layered Deposits (ILDs) in Central Candor Chasma rich in polyhydrated sulfates, kieserite, and gypsum precipitated in Hesperian evaporative basins.",
+        "citation": "Mangold et al. (2008) JGR Planets; Roach et al. (2010) Icarus.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -76.4,
+              -6.9
+            ],
+            [
+              -74.4,
+              -6.6
+            ],
+            [
+              -74.1,
+              -5.1
+            ],
+            [
+              -76.1,
+              -5.3
+            ],
+            [
+              -76.4,
+              -6.9
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-melas-chasma-sulfates",
+      "properties": {
+        "id": "crism-melas-chasma-sulfates",
+        "name": "Melas Chasma Layered Sulfate Complex",
+        "mineralType": "Sulfates",
+        "targetRegion": "Valles Marineris walls",
+        "concentrationGrade": "VERY_HIGH",
+        "geologicalContext": "Basal mounds along the deepest floors of Valles Marineris exhibiting strong monohydrated and polyhydrated magnesium sulfate signatures.",
+        "citation": "Quantin et al. (2005) JGR; Weitz et al. (2015) Icarus.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -77.6,
+              -10.6
+            ],
+            [
+              -75.4,
+              -10.3
+            ],
+            [
+              -75.7,
+              -8.7
+            ],
+            [
+              -77.9,
+              -9.1
+            ],
+            [
+              -77.6,
+              -10.6
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "crism-coprates-chasma-jarosite",
+      "properties": {
+        "id": "crism-coprates-chasma-jarosite",
+        "name": "Coprates Chasma Wall Hydrated Jarosite",
+        "mineralType": "Sulfates",
+        "targetRegion": "Valles Marineris walls",
+        "concentrationGrade": "HIGH",
+        "geologicalContext": "Steep canyon walls and tiered spur crests hosting ferric hydroxy sulfate (jarosite), indicating localized acidic oxidative groundwater alteration.",
+        "citation": "Milliken et al. (2008) Geology; Flahaut et al. (2010) JGR Planets.",
+        "classification": "DERIVED (CRISM/OMEGA)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -61.6,
+              -13.9
+            ],
+            [
+              -58.1,
+              -13.1
+            ],
+            [
+              -58.4,
+              -11.7
+            ],
+            [
+              -62.1,
+              -12.3
+            ],
+            [
+              -61.6,
+              -13.9
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

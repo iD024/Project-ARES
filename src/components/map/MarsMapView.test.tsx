@@ -311,5 +311,112 @@ describe('MarsMapView component', () => {
 
     expect(useAppStore.getState().activeSol).toBe(1200);
   });
+
+  it('renders Zhurong traverse with rose palette and 12 milestones in 2D view', async () => {
+    (window as any).WebGLRenderingContext = vi.fn();
+    useAppStore.setState({
+      selectedRoverId: 'zhurong',
+      isRoverTraverseVisible: true,
+      activeSol: null,
+    });
+
+    render(<MarsMapView />);
+
+    await waitFor(() => {
+      expect(mockMapView.when).toHaveBeenCalled();
+    });
+
+    const traverseLayer = (mockMapView.map.layers as any).find(
+      (l: any) => l.id === 'mars-rover-traverse-layer-2d'
+    );
+    expect(traverseLayer).toBeDefined();
+
+    await waitFor(() => {
+      expect(traverseLayer.graphics.length).toBeGreaterThanOrEqual(12);
+    });
+
+    const lineGraphic = traverseLayer.graphics.find((g: any) => g.symbol?.type === 'simple-line');
+    expect(lineGraphic).toBeDefined();
+    expect(lineGraphic.symbol.color).toMatchObject({ r: 244, g: 63, b: 94, a: 0.95 });
+  });
+
+  it('synchronizes Phase 09 route planning candidate paths on 2D map', async () => {
+    (window as any).WebGLRenderingContext = vi.fn();
+    useAppStore.setState({
+      routeOrigin: { lon: 77.45, lat: 18.38 },
+      routeDestination: { lon: 77.38, lat: 18.42 },
+      candidateRoutes: [
+        {
+          id: 'BALANCED',
+          name: 'Balanced Route',
+          description: 'Balanced',
+          colorHex: '#06B6D4',
+          colorRgba: [6, 182, 212, 0.95],
+          waypoints: [
+            { longitude: 77.45, latitude: 18.38, elevationMeters: -2560, distanceFromStartKm: 0, segmentSlopeDegrees: 0 },
+            { longitude: 77.38, latitude: 18.42, elevationMeters: -2500, distanceFromStartKm: 2.5, segmentSlopeDegrees: 1.5 },
+          ],
+          totalDistanceKm: 2.5,
+          maxSlopeDegrees: 2.5,
+          averageSlopeDegrees: 1.5,
+          elevationChangeMeters: 60,
+          totalAscentMeters: 60,
+          totalDescentMeters: 0,
+          estimatedSols: 25,
+          isTraversable: true,
+          elevationTransect: {
+            points: [],
+            totalDistanceKm: 2.5,
+            minElevationMeters: -2560,
+            maxElevationMeters: -2500,
+            elevationChangeMeters: 60,
+            averageSlopeDegrees: 1.5,
+          },
+        },
+      ],
+      selectedRouteIndex: 0,
+    });
+
+    render(<MarsMapView />);
+
+    await waitFor(() => {
+      expect(mockMapView.when).toHaveBeenCalled();
+    });
+
+    const routesLayer = (mockMapView.map.layers as any).find(
+      (l: any) => l.id === 'mars-routes-layer-2d'
+    );
+    expect(routesLayer).toBeDefined();
+
+    await waitFor(() => {
+      expect(routesLayer.graphics.length).toBeGreaterThanOrEqual(3);
+    });
+  });
+
+  it('intercepts map click when isPickingRoutePoint is destination to record coordinates', async () => {
+    (window as any).WebGLRenderingContext = vi.fn();
+    useAppStore.setState({
+      isPickingRoutePoint: 'destination',
+      routeDestination: null,
+    });
+
+    render(<MarsMapView />);
+
+    await waitFor(() => {
+      expect(mockMapView.when).toHaveBeenCalled();
+    });
+
+    const clickHandler = mockMapViewHandlers['click'];
+    expect(clickHandler).toBeDefined();
+
+    await act(async () => {
+      await clickHandler({
+        mapPoint: { longitude: 191.2, latitude: 40.5 },
+      });
+    });
+
+    expect(useAppStore.getState().routeDestination).toEqual({ lon: 191.2, lat: 40.5 });
+    expect(useAppStore.getState().isPickingRoutePoint).toBeNull();
+  });
 });
 

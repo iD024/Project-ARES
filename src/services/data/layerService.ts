@@ -187,6 +187,122 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
             },
           ],
         };
+      } else if (dataset.id === 'mars-seismic-catalog') {
+        geojsonProps.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-marker',
+            style: 'circle',
+            color: [239, 68, 68, 0.85], // Crimson red
+            size: 10,
+            outline: {
+              color: [255, 255, 255, 0.95],
+              width: 1.5,
+            },
+          },
+        };
+        geojsonProps.popupTemplate = {
+          title: 'Marsquake {eventId} (Sol {sol})',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                { fieldName: 'magnitude', label: 'Magnitude (Mw)' },
+                { fieldName: 'eventType', label: 'Wave Type' },
+                { fieldName: 'quality', label: 'Signal Quality' },
+                { fieldName: 'epicenterRegion', label: 'Epicenter Region' },
+                { fieldName: 'distanceDeg', label: 'Epicentral Distance (°)' },
+                { fieldName: 'backAzimuthDeg', label: 'Back Azimuth (°)' },
+                { fieldName: 'pdsCitation', label: 'Data Provenance' },
+              ],
+            },
+          ],
+        };
+      } else if (dataset.id === 'mars-crism-minerals') {
+        geojsonProps.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-fill',
+            color: [16, 185, 129, 0.35], // Translucent emerald
+            outline: {
+              color: [52, 211, 153, 0.95], // Emerald border
+              width: 2,
+            },
+          },
+        };
+        geojsonProps.popupTemplate = {
+          title: '{name}',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                { fieldName: 'mineralType', label: 'Mineral Classification' },
+                { fieldName: 'concentrationGrade', label: 'Abundance Grade' },
+                { fieldName: 'targetRegion', label: 'Target Region' },
+                { fieldName: 'geologicalContext', label: 'Geological Formation' },
+                { fieldName: 'citation', label: 'Science Citation' },
+              ],
+            },
+          ],
+        };
+      } else if (dataset.id === 'mars-swim-subsurface-ice') {
+        geojsonProps.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-fill',
+            color: [6, 182, 212, 0.35], // Glacial Cyan
+            outline: {
+              color: [34, 211, 238, 0.95],
+              width: 2,
+            },
+          },
+        };
+        geojsonProps.popupTemplate = {
+          title: '{name}',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                { fieldName: 'depthRangeMeters', label: 'Estimated Depth' },
+                { fieldName: 'icePurityPercentage', label: 'Ice Purity (%)' },
+                { fieldName: 'consistencyScore', label: 'SWIM Radar Consistency' },
+                { fieldName: 'isruSuitability', label: 'ISRU Extraction Rating' },
+                { fieldName: 'targetRegion', label: 'Target Region' },
+                { fieldName: 'citation', label: 'Citation' },
+              ],
+            },
+          ],
+        };
+      } else if (dataset.id === 'mars-settlement-sites') {
+        geojsonProps.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-marker',
+            style: 'diamond',
+            color: [245, 158, 11, 0.9], // Tactical gold
+            size: 11,
+            outline: {
+              color: [255, 255, 255, 0.95],
+              width: 1.5,
+            },
+          },
+        };
+        geojsonProps.popupTemplate = {
+          title: '{name}',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                { fieldName: 'targetRegion', label: 'Target Region' },
+                { fieldName: 'elevationMeters', label: 'Elevation (m)' },
+                { fieldName: 'waterIceProximityKm', label: 'Water Ice Proximity (km)' },
+                { fieldName: 'slopeSafetyRating', label: 'Slope Safety Rating' },
+                { fieldName: 'primarySuitabilityFactor', label: 'Primary Suitability' },
+                { fieldName: 'missionArchitecture', label: 'Mission Architecture' },
+              ],
+            },
+          ],
+        };
       }
 
       return new GeoJSONLayer(geojsonProps);

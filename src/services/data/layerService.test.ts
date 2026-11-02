@@ -105,4 +105,52 @@ describe('ArcGIS Layer Factory & Resolver', () => {
     expect(layer.renderer.type).toBe('simple');
     expect(layer.renderer.symbol).toBeDefined();
   });
+
+  it('creates GeoJSONLayer with crimson circle marker renderer and popup for Marsquake Seismic Catalog', async () => {
+    const quakes = getDatasetById('mars-seismic-catalog');
+    expect(quakes).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(quakes!);
+    expect(layer).toBeDefined();
+    expect(layer.declaredClass || layer.type).toMatch(/GeoJSONLayer|geojson/i);
+    expect(layer.renderer?.type).toBe('simple');
+    expect(layer.renderer?.symbol?.style).toBe('circle');
+    expect(layer.popupTemplate?.title).toContain('Marsquake');
+  });
+
+  it('creates GeoJSONLayer with emerald fill renderer and popup for CRISM Hydrated Minerals', async () => {
+    const minerals = getDatasetById('mars-crism-minerals');
+    expect(minerals).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(minerals!);
+    expect(layer).toBeDefined();
+    expect(layer.declaredClass || layer.type).toMatch(/GeoJSONLayer|geojson/i);
+    expect(layer.renderer?.type).toBe('simple');
+    expect(layer.renderer?.symbol?.type).toBe('simple-fill');
+    expect(layer.popupTemplate?.content).toBeDefined();
+  });
+
+  it('creates GeoJSONLayer with cyan fill renderer and popup for SWIM Subsurface Ice', async () => {
+    const ice = getDatasetById('mars-swim-subsurface-ice');
+    expect(ice).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(ice!);
+    expect(layer).toBeDefined();
+    expect(layer.declaredClass || layer.type).toMatch(/GeoJSONLayer|geojson/i);
+    expect(layer.renderer?.type).toBe('simple');
+    expect(layer.renderer?.symbol?.type).toBe('simple-fill');
+    expect(layer.popupTemplate?.content).toBeDefined();
+  });
+
+  it('creates GeoJSONLayer with tactical diamond marker renderer and popup for Settlement Sites', async () => {
+    const settlements = getDatasetById('mars-settlement-sites');
+    expect(settlements).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(settlements!);
+    expect(layer).toBeDefined();
+    expect(layer.declaredClass || layer.type).toMatch(/GeoJSONLayer|geojson/i);
+    expect(layer.renderer?.type).toBe('simple');
+    expect(layer.renderer?.symbol?.style).toBe('diamond');
+    expect(layer.popupTemplate?.content).toBeDefined();
+  });
 });

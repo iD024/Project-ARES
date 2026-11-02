@@ -340,6 +340,120 @@ describe('MarsGlobeView & GlobeControls', () => {
 
       expect(useAppStore.getState().activeSol).toBe(174);
     });
+
+    it('renders Opportunity traverse with emerald palette and 22 milestones', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({
+        selectedRoverId: 'opportunity',
+        isRoverTraverseVisible: true,
+        activeSol: null,
+      });
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      const traverseLayer = (mockSceneView.map.layers as any).find(
+        (l: any) => l.id === 'mars-rover-traverse-layer'
+      );
+      expect(traverseLayer).toBeDefined();
+
+      await waitFor(() => {
+        expect(traverseLayer.graphics.length).toBeGreaterThanOrEqual(20);
+      });
+
+      // Verify line graphic has emerald color
+      const lineGraphic = traverseLayer.graphics.find((g: any) => g.symbol?.type === 'simple-line');
+      expect(lineGraphic).toBeDefined();
+      expect(lineGraphic.symbol.color).toMatchObject({ r: 16, g: 185, b: 129, a: 0.95 });
+    });
+
+    it('synchronizes Phase 09 route planning candidate paths and origin/dest pins', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({
+        routeOrigin: { lon: 77.45, lat: 18.38 },
+        routeDestination: { lon: 77.38, lat: 18.42 },
+        candidateRoutes: [
+          {
+            id: 'SAFEST',
+            name: 'Safest Route',
+            description: 'Safest',
+            colorHex: '#10B981',
+            colorRgba: [16, 185, 129, 0.95],
+            waypoints: [
+              { longitude: 77.45, latitude: 18.38, elevationMeters: -2560, distanceFromStartKm: 0, segmentSlopeDegrees: 0 },
+              { longitude: 77.38, latitude: 18.42, elevationMeters: -2500, distanceFromStartKm: 2.5, segmentSlopeDegrees: 1.5 },
+            ],
+            totalDistanceKm: 2.5,
+            maxSlopeDegrees: 2.5,
+            averageSlopeDegrees: 1.5,
+            elevationChangeMeters: 60,
+            totalAscentMeters: 60,
+            totalDescentMeters: 0,
+            estimatedSols: 25,
+            isTraversable: true,
+            elevationTransect: {
+              points: [],
+              totalDistanceKm: 2.5,
+              minElevationMeters: -2560,
+              maxElevationMeters: -2500,
+              elevationChangeMeters: 60,
+              averageSlopeDegrees: 1.5,
+            },
+          },
+        ],
+        selectedRouteIndex: 0,
+      });
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      const routesLayer = (mockSceneView.map.layers as any).find(
+        (l: any) => l.id === 'mars-routes-layer'
+      );
+      expect(routesLayer).toBeDefined();
+
+      await waitFor(() => {
+        expect(routesLayer.graphics.length).toBeGreaterThanOrEqual(3); // origin pin + dest pin + route line
+      });
+
+      // Verify origin diamond pin
+      const originPin = routesLayer.graphics.find(
+        (g: any) => g.geometry?.x === 77.45 && g.symbol?.style === 'diamond'
+      );
+      expect(originPin).toBeDefined();
+    });
+
+    it('intercepts map click when isPickingRoutePoint is active to record coordinates', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({
+        isPickingRoutePoint: 'origin',
+        routeOrigin: null,
+      });
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      const clickHandler = mockSceneViewHandlers['click'];
+      expect(clickHandler).toBeDefined();
+
+      await act(async () => {
+        await clickHandler({
+          mapPoint: { longitude: 189.7, latitude: 39.3 },
+        });
+      });
+
+      expect(useAppStore.getState().routeOrigin).toEqual({ lon: 189.7, lat: 39.3 });
+      expect(useAppStore.getState().isPickingRoutePoint).toBeNull();
+    });
   });
 });
 

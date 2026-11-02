@@ -140,5 +140,78 @@ describe('useAppStore', () => {
     useAppStore.getState().setIsMissionControlOpen(true);
     expect(useAppStore.getState().isMissionControlOpen).toBe(true);
   });
+
+  it('manages Phase 09 route planning state, origin/destination, candidates, and elevation bridge', () => {
+    // Initial state
+    expect(useAppStore.getState().routeOrigin).toBeNull();
+    expect(useAppStore.getState().routeDestination).toBeNull();
+    expect(useAppStore.getState().activeVehicleProfile).toBe('HEAVY_ROVER');
+    expect(useAppStore.getState().candidateRoutes).toEqual([]);
+    expect(useAppStore.getState().selectedRouteIndex).toBe(0);
+    expect(useAppStore.getState().isPickingRoutePoint).toBeNull();
+
+    // Set origin and destination
+    useAppStore.getState().setRouteOrigin({ lon: 77.45, lat: 18.38 });
+    expect(useAppStore.getState().routeOrigin).toEqual({ lon: 77.45, lat: 18.38 });
+
+    useAppStore.getState().setRouteDestination({ lon: 77.38, lat: 18.42 });
+    expect(useAppStore.getState().routeDestination).toEqual({ lon: 77.38, lat: 18.42 });
+
+    // Set vehicle profile
+    useAppStore.getState().setActiveVehicleProfile('AERIAL_DRONE');
+    expect(useAppStore.getState().activeVehicleProfile).toBe('AERIAL_DRONE');
+
+    // Set picking point mode
+    useAppStore.getState().setIsPickingRoutePoint('origin');
+    expect(useAppStore.getState().isPickingRoutePoint).toBe('origin');
+
+    // Mock candidate routes with elevation transects
+    const mockTransect = {
+      points: [
+        { fraction: 0, distanceKm: 0, longitude: 77.45, latitude: 18.38, elevationMeters: -2560 },
+        { fraction: 1, distanceKm: 2.5, longitude: 77.38, latitude: 18.42, elevationMeters: -2500 },
+      ],
+      totalDistanceKm: 2.5,
+      minElevationMeters: -2560,
+      maxElevationMeters: -2500,
+      elevationChangeMeters: 60,
+      averageSlopeDegrees: 1.8,
+    };
+
+    const mockCandidates = [
+      {
+        id: 'SAFEST' as const,
+        name: 'Safest Route',
+        description: 'Safest path',
+        colorHex: '#10B981',
+        colorRgba: [16, 185, 129, 0.95] as [number, number, number, number],
+        waypoints: [],
+        totalDistanceKm: 2.5,
+        maxSlopeDegrees: 3.2,
+        averageSlopeDegrees: 1.8,
+        elevationChangeMeters: 60,
+        totalAscentMeters: 60,
+        totalDescentMeters: 0,
+        estimatedSols: 25,
+        isTraversable: true,
+        elevationTransect: mockTransect,
+      },
+    ];
+
+    useAppStore.getState().setCandidateRoutes(mockCandidates as any);
+    expect(useAppStore.getState().candidateRoutes.length).toBe(1);
+
+    // Selecting candidate index bridges to elevationTransect in store
+    useAppStore.getState().setSelectedRouteIndex(0);
+    expect(useAppStore.getState().selectedRouteIndex).toBe(0);
+    expect(useAppStore.getState().elevationTransect).toEqual(mockTransect);
+
+    // Clear route planning resets coordinates and candidates
+    useAppStore.getState().clearRoutePlanning();
+    expect(useAppStore.getState().routeOrigin).toBeNull();
+    expect(useAppStore.getState().routeDestination).toBeNull();
+    expect(useAppStore.getState().candidateRoutes).toEqual([]);
+    expect(useAppStore.getState().isPickingRoutePoint).toBeNull();
+  });
 });
 

@@ -1,0 +1,313 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_Mars_Subsurface_Ice_SWIM",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "swim-arcadia-shallow-ice-sheet",
+      "properties": {
+        "id": "swim-arcadia-shallow-ice-sheet",
+        "name": "Arcadia Planitia Vast Shallow Ice Sheet",
+        "targetRegion": "Arcadia Planitia",
+        "depthRangeMeters": "0-1m",
+        "icePurityPercentage": 92.0,
+        "consistencyScore": 0.96,
+        "isruSuitability": "EXCELLENT",
+        "citation": "Bramson et al. (2015) GRL; Morgan et al. (2021) Nature Astronomy (NASA/PSI SWIM Project).",
+        "geologicalContext": "Widespread excess sheet ice preserved within decimeters of the surface beneath a thin protective regolith lag, verified by thermal inertia and impact crater excavations.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -172.0,
+              39.0
+            ],
+            [
+              -158.0,
+              39.5
+            ],
+            [
+              -156.0,
+              47.0
+            ],
+            [
+              -170.0,
+              46.5
+            ],
+            [
+              -172.0,
+              39.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "swim-arcadia-permafrost-margin",
+      "properties": {
+        "id": "swim-arcadia-permafrost-margin",
+        "name": "Arcadia Southern Permafrost Marginal Belt",
+        "targetRegion": "Arcadia Planitia",
+        "depthRangeMeters": "1-5m",
+        "icePurityPercentage": 78.0,
+        "consistencyScore": 0.84,
+        "isruSuitability": "GOOD",
+        "citation": "Putzig et al. (2018) LPSC; SWIM Team (2020) Subsurface Water Ice Mapping on Mars.",
+        "geologicalContext": "Pore-filling and interstitial permafrost transition zone at the southern climatic stability threshold of mid-latitude ground ice.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -173.5,
+              36.5
+            ],
+            [
+              -157.0,
+              37.0
+            ],
+            [
+              -157.5,
+              39.3
+            ],
+            [
+              -173.0,
+              38.8
+            ],
+            [
+              -173.5,
+              36.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "swim-deuteronilus-glacial-aprons",
+      "properties": {
+        "id": "swim-deuteronilus-glacial-aprons",
+        "name": "Deuteronilus Mensae Lobate Debris Aprons",
+        "targetRegion": "Deuteronilus Mensae",
+        "depthRangeMeters": "1-5m",
+        "icePurityPercentage": 90.0,
+        "consistencyScore": 0.92,
+        "isruSuitability": "EXCELLENT",
+        "citation": "Holt et al. (2008) Science; Baker et al. (2010) Icarus; Morgan et al. (2021) Nature Astronomy.",
+        "geologicalContext": "Debris-covered glaciers and lobate debris aprons (LDAs) surrounding fretted terrain massifs, containing hundreds of meters of high-purity water ice.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              22.0,
+              41.5
+            ],
+            [
+              31.5,
+              41.8
+            ],
+            [
+              32.0,
+              46.8
+            ],
+            [
+              22.5,
+              46.5
+            ],
+            [
+              22.0,
+              41.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "swim-deuteronilus-valley-glaciers",
+      "properties": {
+        "id": "swim-deuteronilus-valley-glaciers",
+        "name": "Deuteronilus Concentric Crater Fill & Valley Glaciers",
+        "targetRegion": "Deuteronilus Mensae",
+        "depthRangeMeters": "1-5m",
+        "icePurityPercentage": 85.0,
+        "consistencyScore": 0.88,
+        "isruSuitability": "GOOD",
+        "citation": "Plaut et al. (2009) GRL; Dickson et al. (2012) Icarus.",
+        "geologicalContext": "Lineated valley fill (LVF) and concentric crater fill exhibiting clear viscous flow features characteristic of buried Martian glaciers.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              26.0,
+              43.0
+            ],
+            [
+              34.5,
+              43.2
+            ],
+            [
+              35.0,
+              48.0
+            ],
+            [
+              26.5,
+              47.8
+            ],
+            [
+              26.0,
+              43.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "swim-utopia-subsurface-slab",
+      "properties": {
+        "id": "swim-utopia-subsurface-slab",
+        "name": "Utopia Planitia Massive Subsurface Ice Slab",
+        "targetRegion": "Utopia Planitia",
+        "depthRangeMeters": "1-5m",
+        "icePurityPercentage": 82.0,
+        "consistencyScore": 0.91,
+        "isruSuitability": "GOOD",
+        "citation": "Stuurman et al. (2016) GRL; Bramson et al. (2017) JGR Planets.",
+        "geologicalContext": "Vast radar-detected underground ice deposit 80-170m thick with volume equivalent to Lake Superior, shielded beneath 1-10 meters of regolith.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              81.0,
+              42.5
+            ],
+            [
+              93.5,
+              43.0
+            ],
+            [
+              94.0,
+              48.5
+            ],
+            [
+              81.5,
+              48.2
+            ],
+            [
+              81.0,
+              42.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "swim-utopia-scalloped-ice",
+      "properties": {
+        "id": "swim-utopia-scalloped-ice",
+        "name": "Utopia Planitia Scalloped Depression Sublimation Field",
+        "targetRegion": "Utopia Planitia",
+        "depthRangeMeters": "0-1m",
+        "icePurityPercentage": 80.0,
+        "consistencyScore": 0.86,
+        "isruSuitability": "GOOD",
+        "citation": "Lefort et al. (2009) JGR; Ulrich et al. (2010) JGR Planets.",
+        "geologicalContext": "Geomorphically active periglacial scalloped depressions demonstrating active sublimation of near-surface massive ground ice.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.0,
+              44.0
+            ],
+            [
+              92.0,
+              44.2
+            ],
+            [
+              92.5,
+              47.5
+            ],
+            [
+              85.5,
+              47.3
+            ],
+            [
+              85.0,
+              44.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "swim-erebus-montes-glacial-aprons",
+      "properties": {
+        "id": "swim-erebus-montes-glacial-aprons",
+        "name": "Erebus Montes Glacial Lobate Apron Complex",
+        "targetRegion": "Erebus Montes",
+        "depthRangeMeters": "1-5m",
+        "icePurityPercentage": 76.0,
+        "consistencyScore": 0.83,
+        "isruSuitability": "GOOD",
+        "citation": "Head et al. (2006) EPSL; Morgan et al. (2021) Nature Astronomy.",
+        "geologicalContext": "Steep isolated volcanic/impact relief preserving thick lobate debris aprons and debris-mantled glacier flow lobes in northern Amazonis-Arcadia margin.",
+        "classification": "DERIVED (SWIM/SHARAD)"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -177.5,
+              35.5
+            ],
+            [
+              -172.5,
+              35.8
+            ],
+            [
+              -173.0,
+              39.8
+            ],
+            [
+              -178.0,
+              39.5
+            ],
+            [
+              -177.5,
+              35.5
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

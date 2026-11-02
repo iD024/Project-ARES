@@ -21,7 +21,19 @@ class TestRoverTraverseGeoJSON(unittest.TestCase):
         filepath = os.path.join(DATA_DIR, "curiosity_traverse.geojson")
         self.assertTrue(os.path.exists(filepath), f"File {filepath} must exist")
 
-    def _validate_traverse_geojson(self, filename: str, expected_min_waypoints: int = 15):
+    def test_opportunity_traverse_file_exists(self):
+        filepath = os.path.join(DATA_DIR, "opportunity_traverse.geojson")
+        self.assertTrue(os.path.exists(filepath), f"File {filepath} must exist")
+
+    def test_spirit_traverse_file_exists(self):
+        filepath = os.path.join(DATA_DIR, "spirit_traverse.geojson")
+        self.assertTrue(os.path.exists(filepath), f"File {filepath} must exist")
+
+    def test_zhurong_traverse_file_exists(self):
+        filepath = os.path.join(DATA_DIR, "zhurong_traverse.geojson")
+        self.assertTrue(os.path.exists(filepath), f"File {filepath} must exist")
+
+    def _validate_traverse_geojson(self, filename: str, expected_min_waypoints: int = 15, expected_final_sol: int = None, expected_final_distance: float = None):
         filepath = os.path.join(DATA_DIR, filename)
         if not os.path.exists(filepath):
             self.fail(f"Missing required dataset: {filepath}")
@@ -81,15 +93,33 @@ class TestRoverTraverseGeoJSON(unittest.TestCase):
         self.assertTrue(has_linestring, "Dataset must include a LineString traverse geometry")
         self.assertGreaterEqual(len(point_features), expected_min_waypoints)
 
-        # Validate monotonic Sol progression
+        # Validate monotonic Sol progression and cumulative distance
         sols = [p["properties"]["sol"] for p in point_features]
         self.assertEqual(sols, sorted(sols), "Waypoint sols must be non-decreasing")
+
+        distances = [p["properties"]["distanceKm"] for p in point_features]
+        self.assertEqual(distances, sorted(distances), "Waypoint distanceKm must be non-decreasing")
+
+        if expected_final_sol is not None:
+            self.assertEqual(sols[-1], expected_final_sol, f"Final sol should be {expected_final_sol}, got {sols[-1]}")
+
+        if expected_final_distance is not None:
+            self.assertAlmostEqual(distances[-1], expected_final_distance, places=1, msg=f"Final distanceKm should be ~{expected_final_distance}")
 
     def test_perseverance_traverse_schema_and_geodesy(self):
         self._validate_traverse_geojson("perseverance_traverse.geojson", expected_min_waypoints=20)
 
     def test_curiosity_traverse_schema_and_geodesy(self):
         self._validate_traverse_geojson("curiosity_traverse.geojson", expected_min_waypoints=20)
+
+    def test_opportunity_traverse_schema_and_geodesy(self):
+        self._validate_traverse_geojson("opportunity_traverse.geojson", expected_min_waypoints=22, expected_final_sol=5111, expected_final_distance=45.16)
+
+    def test_spirit_traverse_schema_and_geodesy(self):
+        self._validate_traverse_geojson("spirit_traverse.geojson", expected_min_waypoints=16, expected_final_sol=1892, expected_final_distance=7.73)
+
+    def test_zhurong_traverse_schema_and_geodesy(self):
+        self._validate_traverse_geojson("zhurong_traverse.geojson", expected_min_waypoints=12, expected_final_sol=347, expected_final_distance=1.92)
 
 
 if __name__ == "__main__":

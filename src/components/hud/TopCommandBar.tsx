@@ -11,6 +11,7 @@ import {
   Ruler,
   Mountain,
   Radio,
+  Navigation,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
@@ -142,6 +143,21 @@ export const TopCommandBar: React.FC = () => {
         >
           <Radio className="w-4 h-4 text-orange-400" />
           <span className="hidden sm:inline">Missions</span>
+        </button>
+
+        {/* Phase 09 Surface Route Planner Toggle */}
+        <button
+          onClick={() => setActiveDrawer('routes')}
+          aria-label="Route Planner"
+          className={clsx(
+            'flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all cursor-pointer border font-semibold',
+            activeDrawer === 'routes'
+              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40 shadow-md shadow-emerald-950/50'
+              : 'text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border-white/5'
+          )}
+        >
+          <Navigation className="w-4 h-4 text-emerald-400" />
+          <span className="hidden sm:inline">Routes</span>
         </button>
 
         {/* Hypsometry & Slope Legend Toggle */}

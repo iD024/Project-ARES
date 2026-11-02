@@ -5,6 +5,16 @@
  * sol milestones, and NASA Planetary Data System (PDS) archive provenance.
  */
 
+import {
+  MER_INSTRUMENTS,
+  ZHURONG_INSTRUMENTS,
+  INSIGHT_INSTRUMENTS,
+  OPPORTUNITY_MILESTONES,
+  SPIRIT_MILESTONES,
+  ZHURONG_MILESTONES,
+  INSIGHT_MILESTONES,
+} from './roverMilestonesExtended.ts';
+
 export type RoverMissionId = 'perseverance' | 'curiosity' | 'opportunity' | 'spirit' | 'zhurong' | 'insight';
 
 export type RoverStatus = 'ACTIVE' | 'COMPLETED' | 'RETIRED';
@@ -298,8 +308,8 @@ export const ROVER_MISSIONS: RoverMission[] = [
       'Search for and characterize rocks and soils that hold clues to past water activity',
       'Determine the distribution and composition of minerals, rocks, and soils',
     ],
-    instruments: [],
-    milestones: [],
+    instruments: MER_INSTRUMENTS,
+    milestones: OPPORTUNITY_MILESTONES,
   },
   {
     id: 'spirit',
@@ -322,8 +332,61 @@ export const ROVER_MISSIONS: RoverMission[] = [
     primaryObjectives: [
       'Search for and characterize water-related minerals and past volcanic history in Gusev Crater',
     ],
-    instruments: [],
-    milestones: [],
+    instruments: MER_INSTRUMENTS,
+    milestones: SPIRIT_MILESTONES,
+  },
+  {
+    id: 'zhurong',
+    name: 'Zhurong Rover (Tianwen-1)',
+    missionName: 'Tianwen-1 Mars Mission',
+    organization: 'China National Space Administration (CNSA)',
+    launchDate: '2020-07-23',
+    landingDate: '2021-05-15',
+    roverModel: 'Tianwen-1 Six-Wheeled Rover',
+    massKg: 240,
+    powerSource: 'Solar Panels (Aerodynamic Foldable Wings)',
+    status: 'COMPLETED',
+    landingSiteId: 'zhurong',
+    landingSiteName: 'Zhurong Landing Platform (Utopia Planitia)',
+    targetRegion: 'Southern Utopia Planitia (MC-07 Cebrenia)',
+    totalDistanceKm: 1.92,
+    totalSols: 347,
+    pdsArchiveUrl: 'https://moon.bao.ac.cn/',
+    description: 'First Chinese rover on Mars; explored southern Utopia Planitia, discovering multi-layered subsurface flood strata and ancient giant polygonal wedges.',
+    primaryObjectives: [
+      'Map topography and geological structure of southern Utopia Planitia',
+      'Analyze soil characteristics and water-ice distribution using ground-penetrating radar',
+      'Investigate surface material composition, mineralogy, and paleoclimate',
+    ],
+    instruments: ZHURONG_INSTRUMENTS,
+    milestones: ZHURONG_MILESTONES,
+  },
+  {
+    id: 'insight',
+    name: 'InSight Lander (SEIS / HP3)',
+    missionName: 'Interior Exploration using Seismic Investigations, Geodesy and Heat Transport',
+    organization: 'NASA JPL / CNES / DLR',
+    launchDate: '2018-05-05',
+    landingDate: '2018-11-26',
+    roverModel: 'Stationary Planetary Geophysical Station',
+    massKg: 358,
+    powerSource: 'Dual Solar Arrays (UltraFlex Decagonal Panels)',
+    status: 'COMPLETED',
+    landingSiteId: 'insight',
+    landingSiteName: 'Homestead Hollow (Elysium Planitia)',
+    targetRegion: 'Elysium Planitia (MC-15 Elysium)',
+    totalDistanceKm: 0.0,
+    totalSols: 1456,
+    pdsArchiveUrl: 'https://pds-geosciences.wustl.edu/missions/insight/',
+    description: 'Decoded the internal structure of Mars using the SEIS seismometer, discovering crustal layering, mantle structure, and a large liquid metallic core.',
+    primaryObjectives: [
+      'Determine the thickness and structure of the Martian crust',
+      'Determine the composition and structure of the mantle',
+      'Determine the size, composition, and physical state of the core',
+      'Measure the rate of Martian tectonic activity and meteorite impact rate',
+    ],
+    instruments: INSIGHT_INSTRUMENTS,
+    milestones: INSIGHT_MILESTONES,
   },
 ];
 
@@ -359,6 +422,48 @@ export function getPrevMilestone(id: string, currentSol: number): RoverMilestone
 export function getTraverseGeoJsonUrl(id: string): string | null {
   if (id === 'perseverance') return '/data/perseverance_traverse.geojson';
   if (id === 'curiosity') return '/data/curiosity_traverse.geojson';
+  if (id === 'opportunity') return '/data/opportunity_traverse.geojson';
+  if (id === 'spirit') return '/data/spirit_traverse.geojson';
+  if (id === 'zhurong') return '/data/zhurong_traverse.geojson';
   return null;
 }
+
+export function getRoverColorRgba(id: string): [number, number, number, number] {
+  switch (id) {
+    case 'perseverance':
+      return [234, 88, 12, 0.95]; // Mars Orange
+    case 'curiosity':
+      return [6, 182, 212, 0.95]; // High-tech Cyan
+    case 'opportunity':
+      return [16, 185, 129, 0.95]; // Veteran Emerald
+    case 'spirit':
+      return [245, 158, 11, 0.95]; // Columbia Amber
+    case 'zhurong':
+      return [244, 63, 94, 0.95]; // Fire God Rose
+    case 'insight':
+      return [139, 92, 246, 0.95]; // Seismic Violet
+    default:
+      return [234, 88, 12, 0.95];
+  }
+}
+
+export function getRoverHexColor(id: string): string {
+  switch (id) {
+    case 'perseverance':
+      return '#EA580C';
+    case 'curiosity':
+      return '#06B6D4';
+    case 'opportunity':
+      return '#10B981';
+    case 'spirit':
+      return '#F59E0B';
+    case 'zhurong':
+      return '#F43F5E';
+    case 'insight':
+      return '#8B5CF6';
+    default:
+      return '#EA580C';
+  }
+}
+
 

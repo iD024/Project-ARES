@@ -12,7 +12,10 @@ import {
   queryPointElevation,
   inspectMartianTerrain,
 } from '../../services/data/terrainElevationService.ts';
-import { getRoverMilestones } from '../../services/data/roverMissionService.ts';
+import {
+  getRoverMilestones,
+  getRoverColorRgba,
+} from '../../services/data/roverMissionService.ts';
 import { Radio, AlertCircle, Map as MapIcon } from 'lucide-react';
 
 export const MarsMapView: React.FC = () => {
@@ -39,6 +42,10 @@ export const MarsMapView: React.FC = () => {
     activeSol,
     setActiveSol,
     isRoverTraverseVisible,
+    candidateRoutes,
+    selectedRouteIndex,
+    routeOrigin,
+    routeDestination,
   } = useAppStore();
 
   // Sync measurement graphics onto 2D regional map
@@ -206,8 +213,7 @@ export const MarsMapView: React.FC = () => {
       import('@arcgis/core/geometry/SpatialReference'),
     ]).then(([{ default: Graphic }, { default: Point }, { default: Polyline }, { default: SpatialReference }]) => {
       const marsSR = new SpatialReference({ wkid: MARS_PLANETARY_SR.wkid });
-      const isPerseverance = selectedRoverId === 'perseverance';
-      const primaryColor = isPerseverance ? [234, 88, 12, 0.95] : [6, 182, 212, 0.95];
+      const primaryColor = getRoverColorRgba(selectedRoverId);
 
       // 1. Draw Polyline traverse track
       const pathCoords = milestones.map((m) => [m.longitude, m.latitude]);
@@ -259,6 +265,107 @@ export const MarsMapView: React.FC = () => {
       });
     }).catch(() => {});
   }, [selectedRoverId, activeSol, isRoverTraverseVisible, isMapReady]);
+
+  // Sync Phase 09 Surface Route Planning Graphics onto 2D Map
+  useEffect(() => {
+    if (!viewRef.current || !viewRef.current.map) return;
+    const routesLayer = viewRef.current.map.layers?.find
+      ? viewRef.current.map.layers.find((l: any) => l.id === 'mars-routes-layer-2d')
+      : null;
+    if (!routesLayer) return;
+
+    if (typeof routesLayer.removeAll === 'function') {
+      routesLayer.removeAll();
+    }
+
+    Promise.all([
+      import('@arcgis/core/Graphic'),
+      import('@arcgis/core/geometry/Point'),
+      import('@arcgis/core/geometry/Polyline'),
+      import('@arcgis/core/geometry/SpatialReference'),
+    ]).then(([{ default: Graphic }, { default: Point }, { default: Polyline }, { default: SpatialReference }]) => {
+      const marsSR = new SpatialReference({ wkid: MARS_PLANETARY_SR.wkid });
+
+      // 1. Draw Origin and Destination Pins
+      if (routeOrigin) {
+        const originPoint = new Point({
+          x: routeOrigin.lon,
+          y: routeOrigin.lat,
+          spatialReference: marsSR,
+        });
+        const originMarker = new Graphic({
+          geometry: originPoint,
+          symbol: {
+            type: 'simple-marker',
+            style: 'diamond',
+            color: [16, 185, 129, 1.0], // Emerald
+            size: 12,
+            outline: {
+              color: [255, 255, 255, 1.0],
+              width: 2,
+            },
+          } as any,
+        });
+        routesLayer.add(originMarker);
+      }
+
+      if (routeDestination) {
+        const destPoint = new Point({
+          x: routeDestination.lon,
+          y: routeDestination.lat,
+          spatialReference: marsSR,
+        });
+        const destMarker = new Graphic({
+          geometry: destPoint,
+          symbol: {
+            type: 'simple-marker',
+            style: 'diamond',
+            color: [239, 68, 68, 1.0], // Red
+            size: 12,
+            outline: {
+              color: [255, 255, 255, 1.0],
+              width: 2,
+            },
+          } as any,
+        });
+        routesLayer.add(destMarker);
+      }
+
+      // 2. Draw Candidate Routes
+      if (candidateRoutes && candidateRoutes.length > 0) {
+        candidateRoutes.forEach((route, idx) => {
+          if (!route.waypoints || route.waypoints.length < 2) return;
+          const isSelected = selectedRouteIndex === idx;
+
+          const pathCoords = route.waypoints.map((w) => [w.longitude, w.latitude]);
+          const routePolyline = new Polyline({
+            paths: [pathCoords],
+            spatialReference: marsSR,
+          });
+
+          const lineColor = isSelected
+            ? route.colorRgba
+            : [route.colorRgba[0], route.colorRgba[1], route.colorRgba[2], 0.45];
+
+          const lineGraphic = new Graphic({
+            geometry: routePolyline,
+            attributes: {
+              routeId: route.id,
+              name: route.name,
+              totalDistanceKm: route.totalDistanceKm,
+              maxSlopeDegrees: route.maxSlopeDegrees,
+            },
+            symbol: {
+              type: 'simple-line',
+              color: lineColor,
+              width: isSelected ? 4.5 : 2.0,
+            } as any,
+          });
+          routesLayer.add(lineGraphic);
+        });
+      }
+    }).catch(() => {});
+  }, [candidateRoutes, selectedRouteIndex, routeOrigin, routeDestination, isMapReady]);
 
   // Reset Extent back to selected region or default regional extent
   const handleResetExtent = useCallback(() => {
@@ -312,6 +419,29 @@ export const MarsMapView: React.FC = () => {
       { duration: 1200 }
     );
   }, [regionalCenter]);
+
+  // Sync rover and sol selection to 2D MapView extent
+  useEffect(() => {
+    if (!viewRef.current || !selectedRoverId) return;
+
+    const milestones = getRoverMilestones(selectedRoverId);
+    if (!milestones || milestones.length === 0) return;
+
+    const targetMilestone =
+      activeSol !== null
+        ? milestones.find((m) => m.sol === activeSol) || milestones[milestones.length - 1]
+        : milestones[milestones.length - 1];
+
+    if (!targetMilestone) return;
+
+    viewRef.current.goTo(
+      {
+        center: [targetMilestone.longitude, targetMilestone.latitude],
+        scale: activeSol !== null ? 25000 : 75000,
+      },
+      { duration: 1200 }
+    );
+  }, [selectedRoverId, activeSol]);
 
   // Mount ArcGIS MapView
   useEffect(() => {
@@ -456,6 +586,12 @@ export const MarsMapView: React.FC = () => {
           title: 'Rover Traverses & Sol Milestones',
         });
 
+        // 7. Phase 09 Surface Route Planning Graphics Layer
+        const routesGraphicsLayer = new GraphicsLayer({
+          id: 'mars-routes-layer-2d',
+          title: 'Surface Route Planning',
+        });
+
         // Assemble Mars 2D Map
         const map = new EsriMap({
           layers: [
@@ -465,6 +601,7 @@ export const MarsMapView: React.FC = () => {
             inspectionGraphicsLayer,
             measurementGraphicsLayer,
             roverTraverseGraphicsLayer,
+            routesGraphicsLayer,
           ],
         });
 
@@ -592,6 +729,24 @@ export const MarsMapView: React.FC = () => {
             typeof mapPoint.latitude === 'number' &&
             typeof mapPoint.longitude === 'number'
           ) {
+            // When route point picking mode is active, record origin or destination and reset picker
+            const pickingPoint = useAppStore.getState().isPickingRoutePoint;
+            if (pickingPoint === 'origin') {
+              useAppStore.getState().setRouteOrigin({
+                lon: Number(mapPoint.longitude.toFixed(4)),
+                lat: Number(mapPoint.latitude.toFixed(4)),
+              });
+              useAppStore.getState().setIsPickingRoutePoint(null);
+              return;
+            } else if (pickingPoint === 'destination') {
+              useAppStore.getState().setRouteDestination({
+                lon: Number(mapPoint.longitude.toFixed(4)),
+                lat: Number(mapPoint.latitude.toFixed(4)),
+              });
+              useAppStore.getState().setIsPickingRoutePoint(null);
+              return;
+            }
+
             // When measurement tool is active, record point and avoid triggering terrain inspection
             if (useAppStore.getState().activeMeasurementTool !== null) {
               useAppStore.getState().addMeasurementPoint({

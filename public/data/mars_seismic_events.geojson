@@ -1,0 +1,1013 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_InSight_Marsquake_Catalog",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "metadata": {
+    "station": "InSight (SEIS)",
+    "stationCoordinates": {
+      "latitude": 4.5023,
+      "longitude": 135.6234,
+      "elevationMeters": -2610.0
+    },
+    "pdsDataRelease": "Data Release 14 (MQS)",
+    "eventCount": 45,
+    "generatedBy": "ARES Data Pipeline generate_marsquakes.py"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0173a",
+        "sol": 173,
+        "earthDate": "2019-05-23",
+        "magnitude": 3.7,
+        "eventType": "LF",
+        "quality": "A",
+        "distanceDeg": 28.9,
+        "backAzimuthDeg": 91.0,
+        "epicenterRegion": "Cerberus Fossae Graben",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          164.5763,
+          3.4579
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0183a",
+        "sol": 183,
+        "earthDate": "2019-06-03",
+        "magnitude": 2.1,
+        "eventType": "HF",
+        "quality": "B",
+        "distanceDeg": 15.0,
+        "backAzimuthDeg": 120.0,
+        "epicenterRegion": "Elysium Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          148.5946,
+          -3.0488
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0185a",
+        "sol": 185,
+        "earthDate": "2019-06-05",
+        "magnitude": 1.9,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 12.0,
+        "backAzimuthDeg": 110.0,
+        "epicenterRegion": "Elysium Planitia Local",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          146.8901,
+          0.3377
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0189a",
+        "sol": 189,
+        "earthDate": "2019-06-09",
+        "magnitude": 2.0,
+        "eventType": "HF",
+        "quality": "B",
+        "distanceDeg": 18.0,
+        "backAzimuthDeg": 75.0,
+        "epicenterRegion": "Orcus Patera",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.2078,
+          8.8814
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0235b",
+        "sol": 235,
+        "earthDate": "2019-07-26",
+        "magnitude": 3.5,
+        "eventType": "LF",
+        "quality": "A",
+        "distanceDeg": 27.8,
+        "backAzimuthDeg": 74.0,
+        "epicenterRegion": "Cerberus Fossae Central",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          162.8388,
+          11.3964
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0325a",
+        "sol": 325,
+        "earthDate": "2019-10-26",
+        "magnitude": 3.7,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 38.4,
+        "backAzimuthDeg": 82.0,
+        "epicenterRegion": "Cerberus Fossae North",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          174.0802,
+          8.4936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0325b",
+        "sol": 325,
+        "earthDate": "2019-10-26",
+        "magnitude": 2.4,
+        "eventType": "HF",
+        "quality": "B",
+        "distanceDeg": 19.5,
+        "backAzimuthDeg": 95.0,
+        "epicenterRegion": "Elysium Planitia East",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          155.0667,
+          2.5788
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0407a",
+        "sol": 407,
+        "earthDate": "2020-01-19",
+        "magnitude": 2.3,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 29.8,
+        "backAzimuthDeg": 90.0,
+        "epicenterRegion": "Cerberus Fossae South",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          165.4998,
+          3.9059
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0409d",
+        "sol": 409,
+        "earthDate": "2020-01-21",
+        "magnitude": 1.8,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 11.2,
+        "backAzimuthDeg": 85.0,
+        "epicenterRegion": "InSight Nearfield",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          146.8304,
+          5.3869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0484b",
+        "sol": 484,
+        "earthDate": "2020-04-07",
+        "magnitude": 2.8,
+        "eventType": "BB",
+        "quality": "B",
+        "distanceDeg": 26.2,
+        "backAzimuthDeg": 78.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          161.5765,
+          9.3198
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0501a",
+        "sol": 501,
+        "earthDate": "2020-04-24",
+        "magnitude": 2.1,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 14.5,
+        "backAzimuthDeg": 130.0,
+        "epicenterRegion": "Aeolis Planum",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          146.7215,
+          -4.8442
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0583a",
+        "sol": 583,
+        "earthDate": "2020-07-18",
+        "magnitude": 2.2,
+        "eventType": "HF",
+        "quality": "B",
+        "distanceDeg": 16.0,
+        "backAzimuthDeg": 105.0,
+        "epicenterRegion": "Elysium Planitia",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.0645,
+          0.2486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0697a",
+        "sol": 697,
+        "earthDate": "2020-11-11",
+        "magnitude": 2.5,
+        "eventType": "LF",
+        "quality": "C",
+        "distanceDeg": 32.0,
+        "backAzimuthDeg": 88.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          167.7316,
+          4.8765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0784a",
+        "sol": 784,
+        "earthDate": "2021-02-12",
+        "magnitude": 3.4,
+        "eventType": "BB",
+        "quality": "A",
+        "distanceDeg": 31.0,
+        "backAzimuthDeg": 85.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          166.7097,
+          6.4327
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0794a",
+        "sol": 794,
+        "earthDate": "2021-02-22",
+        "magnitude": 2.7,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 28.5,
+        "backAzimuthDeg": 77.0,
+        "epicenterRegion": "Cerberus Fossae Central",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          163.8072,
+          10.1364
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0809a",
+        "sol": 809,
+        "earthDate": "2021-03-07",
+        "magnitude": 3.3,
+        "eventType": "LF",
+        "quality": "A",
+        "distanceDeg": 29.2,
+        "backAzimuthDeg": 88.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          164.9215,
+          4.9046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0820a",
+        "sol": 820,
+        "earthDate": "2021-03-18",
+        "magnitude": 3.0,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 30.5,
+        "backAzimuthDeg": 92.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          166.145,
+          2.8648
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0864a",
+        "sol": 864,
+        "earthDate": "2021-05-03",
+        "magnitude": 2.9,
+        "eventType": "BB",
+        "quality": "B",
+        "distanceDeg": 27.0,
+        "backAzimuthDeg": 80.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          162.5024,
+          8.542
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0898a",
+        "sol": 898,
+        "earthDate": "2021-06-07",
+        "magnitude": 2.3,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 13.8,
+        "backAzimuthDeg": 60.0,
+        "epicenterRegion": "Hecates Tholus Flank",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          147.7824,
+          11.2524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0916a",
+        "sol": 916,
+        "earthDate": "2021-06-25",
+        "magnitude": 3.2,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 34.0,
+        "backAzimuthDeg": 96.0,
+        "epicenterRegion": "Cerberus Fossae East",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          169.4128,
+          0.39
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0976a",
+        "sol": 976,
+        "earthDate": "2021-08-25",
+        "magnitude": 4.2,
+        "eventType": "LF",
+        "quality": "A",
+        "distanceDeg": 146.0,
+        "backAzimuthDeg": 210.0,
+        "epicenterRegion": "Valles Marineris Deep Mantle",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -24.8516,
+          -33.2203
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S0986c",
+        "sol": 986,
+        "earthDate": "2021-09-04",
+        "magnitude": 2.4,
+        "eventType": "HF",
+        "quality": "B",
+        "distanceDeg": 17.5,
+        "backAzimuthDeg": 115.0,
+        "epicenterRegion": "Elysium Southeast",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.4602,
+          -2.9707
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1000a",
+        "sol": 1000,
+        "earthDate": "2021-09-18",
+        "magnitude": 4.1,
+        "eventType": "IMPACT",
+        "quality": "A",
+        "distanceDeg": 29.5,
+        "backAzimuthDeg": 294.0,
+        "epicenterRegion": "Amazonis Impact Crater",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.7881,
+          15.5447
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1015f",
+        "sol": 1015,
+        "earthDate": "2021-10-03",
+        "magnitude": 3.8,
+        "eventType": "LF",
+        "quality": "A",
+        "distanceDeg": 116.0,
+        "backAzimuthDeg": 225.0,
+        "epicenterRegion": "Thaumasia Highlands",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.2765,
+          -41.9124
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1022a",
+        "sol": 1022,
+        "earthDate": "2021-10-11",
+        "magnitude": 3.5,
+        "eventType": "BB",
+        "quality": "B",
+        "distanceDeg": 35.5,
+        "backAzimuthDeg": 89.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          171.2296,
+          4.2444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1034b",
+        "sol": 1034,
+        "earthDate": "2021-10-23",
+        "magnitude": 2.6,
+        "eventType": "HF",
+        "quality": "B",
+        "distanceDeg": 18.2,
+        "backAzimuthDeg": 85.0,
+        "epicenterRegion": "Cerberus Plains",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.8495,
+          5.8376
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1048d",
+        "sol": 1048,
+        "earthDate": "2021-11-08",
+        "magnitude": 3.4,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 32.8,
+        "backAzimuthDeg": 91.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          168.477,
+          3.2423
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1071a",
+        "sol": 1071,
+        "earthDate": "2021-12-01",
+        "magnitude": 2.8,
+        "eventType": "BB",
+        "quality": "C",
+        "distanceDeg": 25.0,
+        "backAzimuthDeg": 70.0,
+        "epicenterRegion": "Elysium Mons Foothills",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          159.6188,
+          12.4297
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1079a",
+        "sol": 1079,
+        "earthDate": "2021-12-09",
+        "magnitude": 2.1,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 15.2,
+        "backAzimuthDeg": 135.0,
+        "epicenterRegion": "Aeolis Mensae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          146.3725,
+          -6.2617
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1094b",
+        "sol": 1094,
+        "earthDate": "2021-12-24",
+        "magnitude": 4.0,
+        "eventType": "IMPACT",
+        "quality": "A",
+        "distanceDeg": 59.7,
+        "backAzimuthDeg": 286.0,
+        "epicenterRegion": "Amazonis Planitia Impact",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.8877,
+          16.0726
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1113a",
+        "sol": 1113,
+        "earthDate": "2022-01-13",
+        "magnitude": 3.1,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 28.7,
+        "backAzimuthDeg": 86.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          164.4119,
+          5.8688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1134a",
+        "sol": 1134,
+        "earthDate": "2022-02-04",
+        "magnitude": 2.9,
+        "eventType": "BB",
+        "quality": "B",
+        "distanceDeg": 33.2,
+        "backAzimuthDeg": 94.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          168.7464,
+          1.582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1160a",
+        "sol": 1160,
+        "earthDate": "2022-03-03",
+        "magnitude": 2.5,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 16.5,
+        "backAzimuthDeg": 100.0,
+        "epicenterRegion": "Elysium Planitia",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.8714,
+          1.4956
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1179a",
+        "sol": 1179,
+        "earthDate": "2022-03-22",
+        "magnitude": 3.3,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 36.0,
+        "backAzimuthDeg": 88.0,
+        "epicenterRegion": "Cerberus Fossae East",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          171.7455,
+          4.8161
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1201a",
+        "sol": 1201,
+        "earthDate": "2022-04-13",
+        "magnitude": 2.2,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 12.8,
+        "backAzimuthDeg": 80.0,
+        "epicenterRegion": "InSight Regional Basin",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          148.3111,
+          6.5979
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1222a",
+        "sol": 1222,
+        "earthDate": "2022-05-04",
+        "magnitude": 4.7,
+        "eventType": "BB",
+        "quality": "A",
+        "distanceDeg": 37.0,
+        "backAzimuthDeg": 101.0,
+        "epicenterRegion": "Cerberus Fossae East",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          171.8906,
+          -2.9684
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1246a",
+        "sol": 1246,
+        "earthDate": "2022-05-29",
+        "magnitude": 2.6,
+        "eventType": "LF",
+        "quality": "C",
+        "distanceDeg": 29.0,
+        "backAzimuthDeg": 93.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          164.6097,
+          2.4852
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1271a",
+        "sol": 1271,
+        "earthDate": "2022-06-24",
+        "magnitude": 2.8,
+        "eventType": "BB",
+        "quality": "B",
+        "distanceDeg": 34.5,
+        "backAzimuthDeg": 87.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          170.2453,
+          5.4079
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1290a",
+        "sol": 1290,
+        "earthDate": "2022-07-14",
+        "magnitude": 3.1,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 38.0,
+        "backAzimuthDeg": 95.0,
+        "epicenterRegion": "Cerberus Fossae Far East",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          173.4548,
+          0.4793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1314a",
+        "sol": 1314,
+        "earthDate": "2022-08-08",
+        "magnitude": 2.4,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 14.0,
+        "backAzimuthDeg": 112.0,
+        "epicenterRegion": "Elysium Planitia",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          148.5868,
+          -0.8124
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1345a",
+        "sol": 1345,
+        "earthDate": "2022-09-09",
+        "magnitude": 2.9,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 30.2,
+        "backAzimuthDeg": 89.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          165.9166,
+          4.393
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1378a",
+        "sol": 1378,
+        "earthDate": "2022-10-13",
+        "magnitude": 3.2,
+        "eventType": "BB",
+        "quality": "B",
+        "distanceDeg": 35.0,
+        "backAzimuthDeg": 90.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          170.7066,
+          3.6868
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1402a",
+        "sol": 1402,
+        "earthDate": "2022-11-07",
+        "magnitude": 2.0,
+        "eventType": "HF",
+        "quality": "C",
+        "distanceDeg": 15.8,
+        "backAzimuthDeg": 78.0,
+        "epicenterRegion": "Orcus Patera Margin",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2091,
+          7.5834
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1426a",
+        "sol": 1426,
+        "earthDate": "2022-12-02",
+        "magnitude": 2.7,
+        "eventType": "LF",
+        "quality": "C",
+        "distanceDeg": 31.5,
+        "backAzimuthDeg": 84.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          167.1912,
+          6.9717
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "eventId": "S1448a",
+        "sol": 1448,
+        "earthDate": "2022-12-25",
+        "magnitude": 2.5,
+        "eventType": "LF",
+        "quality": "B",
+        "distanceDeg": 33.0,
+        "backAzimuthDeg": 92.0,
+        "epicenterRegion": "Cerberus Fossae",
+        "pdsCitation": "NASA/PDS InSight SEIS MQS Data Release 14"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          168.6417,
+          2.6874
+        ]
+      }
+    }
+  ]
+}
