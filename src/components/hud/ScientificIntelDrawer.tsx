@@ -6,8 +6,6 @@ import {
   getAllGeologicalEpochs,
   getTerrainPhysicsDossier,
   getRouteTraversalScienceDossier,
-  DatasetScientificDossier,
-  GeologicalEpochDossier,
 } from '../../services/data/scientificIntelligenceService.ts';
 import { Badge } from '../ui/Badge.tsx';
 import {
@@ -20,12 +18,9 @@ import {
   X,
   Copy,
   Check,
-  ExternalLink,
   ShieldCheck,
   AlertTriangle,
   Info,
-  Calendar,
-  Sparkles,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
