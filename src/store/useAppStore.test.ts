@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useAppStore } from './useAppStore.ts';
+import { DATASET_REGISTRY } from '../services/data/datasetRegistry.ts';
 
 describe('useAppStore', () => {
   beforeEach(() => {
@@ -82,6 +83,14 @@ describe('useAppStore', () => {
     // Selecting olympus mons updates regional center to its coordinates
     expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(18.65, 2);
     expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(-133.8, 1);
+  });
+
+  it('initializes layers from DATASET_REGISTRY including all terrain intelligence layers', () => {
+    const layers = useAppStore.getState().layers;
+    expect(layers.length).toBe(DATASET_REGISTRY.length);
+    expect(layers.some((l) => l.id === 'mars-mcolordem-shaded-relief')).toBe(true);
+    expect(layers.some((l) => l.id === 'mars-mola-elevation-tint')).toBe(true);
+    expect(layers.some((l) => l.id === 'mars-regional-slope')).toBe(true);
   });
 });
 

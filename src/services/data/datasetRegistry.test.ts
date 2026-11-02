@@ -76,4 +76,26 @@ describe('Dataset Registry & Scientific Provenance', () => {
     expect(footprints?.minScale).toBe(10000000);
     expect(footprints?.maxScale).toBe(1000);
   });
+
+  it('registers Phase 06 terrain intelligence layers (shaded relief, elevation tint, regional slope)', () => {
+    // Assert mars-mcolordem-shaded-relief is registered with category topography, classification DERIVED, and format TILE_SERVER
+    const shadedRelief = getDatasetById('mars-mcolordem-shaded-relief');
+    expect(shadedRelief, 'mars-mcolordem-shaded-relief must be registered').toBeDefined();
+    expect(shadedRelief?.category).toBe('topography');
+    expect(shadedRelief?.classification).toBe('DERIVED');
+    expect(shadedRelief?.format).toBe('TILE_SERVER');
+
+    // Assert mars-mola-elevation-tint is registered with category topography, classification DERIVED
+    const elevationTint = getDatasetById('mars-mola-elevation-tint');
+    expect(elevationTint, 'mars-mola-elevation-tint must be registered').toBeDefined();
+    expect(elevationTint?.category).toBe('topography');
+    expect(elevationTint?.classification).toBe('DERIVED');
+
+    // Assert mars-regional-slope is registered with category topography, classification DERIVED, and description explicitly noting regional scale derivation
+    const regionalSlope = getDatasetById('mars-regional-slope');
+    expect(regionalSlope, 'mars-regional-slope must be registered').toBeDefined();
+    expect(regionalSlope?.category).toBe('topography');
+    expect(regionalSlope?.classification).toBe('DERIVED');
+    expect(regionalSlope?.description).toMatch(/regional.*derived/i);
+  });
 });

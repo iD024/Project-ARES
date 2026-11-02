@@ -8,6 +8,10 @@ import {
 import { MARS_LANDING_SITES } from '../../config/mars.ts';
 import { MARS_REGIONS, getRegionById } from '../../config/marsRegions.ts';
 import { MapControls } from './MapControls.tsx';
+import {
+  queryPointElevation,
+  inspectMartianTerrain,
+} from '../../services/data/terrainElevationService.ts';
 import { Radio, AlertCircle, Map as MapIcon } from 'lucide-react';
 
 export const MarsMapView: React.FC = () => {
@@ -22,8 +26,11 @@ export const MarsMapView: React.FC = () => {
   const {
     regionalCenter,
     selectedRegionId,
+    setSelectedLandingSiteId,
+    setSelectedRegionId,
     setTelemetry,
     setViewMode,
+    setActiveTerrainInspection,
   } = useAppStore();
 
   // Reset Extent back to selected region or default regional extent
@@ -265,9 +272,9 @@ export const MarsMapView: React.FC = () => {
           }
         );
 
-        // Live pointer coordinate telemetry tracking
-        view.on('pointer-move', (event: any) => {
-          const mapPoint = view.toMap({ x: event.x, y: event.y });
+        // Live pointer coordinate and elevation telemetry tracking
+        view.on('pointer-move', async (event: any) => {
+          const mapPoint = event.mapPoint || (view.toMap ? view.toMap({ x: event.x, y: event.y }) : null);
           if (
             mapPoint &&
             typeof mapPoint.latitude === 'number' &&
@@ -276,13 +283,60 @@ export const MarsMapView: React.FC = () => {
             const scaleFormatted = view.scale
               ? `1:${Math.round(view.scale).toLocaleString()}`
               : '1:500,000';
+            try {
+              const elevation = await queryPointElevation(mapPoint.longitude, mapPoint.latitude);
+              setTelemetry({
+                latitude: parseFloat(mapPoint.latitude.toFixed(4)),
+                longitude: parseFloat(mapPoint.longitude.toFixed(4)),
+                elevation,
+                scale: scaleFormatted,
+                crs: 'GCS_Mars_2000 (WKID 104905)',
+              });
+            } catch {
+              setTelemetry({
+                latitude: parseFloat(mapPoint.latitude.toFixed(4)),
+                longitude: parseFloat(mapPoint.longitude.toFixed(4)),
+                scale: scaleFormatted,
+                crs: 'GCS_Mars_2000 (WKID 104905)',
+              });
+            }
+          }
+        });
 
-            setTelemetry({
-              latitude: parseFloat(mapPoint.latitude.toFixed(4)),
-              longitude: parseFloat(mapPoint.longitude.toFixed(4)),
-              scale: scaleFormatted,
-              crs: 'GCS_Mars_2000 (WKID 104905)',
-            });
+        // Single click on Mars surface to inspect terrain or select feature
+        view.on('click', async (event: any) => {
+          try {
+            if (typeof view.hitTest === 'function') {
+              const hitResult = await view.hitTest(event);
+              const siteHit: any = hitResult?.results?.find(
+                (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-landing-sites-2d'
+              );
+              if (siteHit && siteHit.graphic?.attributes?.siteId) {
+                setSelectedLandingSiteId(siteHit.graphic.attributes.siteId);
+              }
+              const regionHit: any = hitResult?.results?.find(
+                (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-regions-2d'
+              );
+              if (regionHit && regionHit.graphic?.attributes?.regionId) {
+                setSelectedRegionId(regionHit.graphic.attributes.regionId);
+              }
+            }
+          } catch {
+            // ignore hit-test errors
+          }
+
+          const mapPoint = event.mapPoint || (view.toMap ? view.toMap({ x: event.x, y: event.y }) : null);
+          if (
+            mapPoint &&
+            typeof mapPoint.latitude === 'number' &&
+            typeof mapPoint.longitude === 'number'
+          ) {
+            try {
+              const data = await inspectMartianTerrain(mapPoint.longitude, mapPoint.latitude);
+              setActiveTerrainInspection(data);
+            } catch (err) {
+              console.warn('Terrain inspection failed:', err);
+            }
           }
         });
       } catch (err: any) {
@@ -308,7 +362,7 @@ export const MarsMapView: React.FC = () => {
         viewInstance.destroy();
       }
     };
-  }, [setTelemetry]);
+  }, [setTelemetry, setSelectedLandingSiteId, setSelectedRegionId, setViewMode, setActiveTerrainInspection]);
 
   return (
     <div

@@ -9,6 +9,10 @@ import {
 } from '../../config/marsLayers.ts';
 import { MARS_LANDING_SITES } from '../../config/mars.ts';
 import { GlobeControls } from './GlobeControls.tsx';
+import {
+  queryPointElevation,
+  inspectMartianTerrain,
+} from '../../services/data/terrainElevationService.ts';
 import { Radio, AlertCircle, Map } from 'lucide-react';
 
 export const MarsGlobeView: React.FC = () => {
@@ -26,6 +30,7 @@ export const MarsGlobeView: React.FC = () => {
     setRegionalCenter,
     setViewMode,
     setTelemetry,
+    setActiveTerrainInspection,
   } = useAppStore();
 
   // Camera action handlers
@@ -336,8 +341,8 @@ export const MarsGlobeView: React.FC = () => {
         });
 
         // Live pointer coordinate telemetry tracking
-        view.on('pointer-move', (event: any) => {
-          const mapPoint = view.toMap({ x: event.x, y: event.y });
+        view.on('pointer-move', async (event: any) => {
+          const mapPoint = event.mapPoint || (view.toMap ? view.toMap({ x: event.x, y: event.y }) : null);
           if (
             mapPoint &&
             typeof mapPoint.latitude === 'number' &&
@@ -346,26 +351,60 @@ export const MarsGlobeView: React.FC = () => {
             const altitude = view.camera?.position?.z
               ? Math.round(view.camera.position.z / 1000)
               : 450;
-            setTelemetry({
-              latitude: Number(mapPoint.latitude.toFixed(2)),
-              longitude: Number(mapPoint.longitude.toFixed(2)),
-              altitudeKm: altitude,
-            });
+            try {
+              const elevation = await queryPointElevation(
+                mapPoint.longitude,
+                mapPoint.latitude,
+                marsElevationLayer
+              );
+              setTelemetry({
+                latitude: Number(mapPoint.latitude.toFixed(2)),
+                longitude: Number(mapPoint.longitude.toFixed(2)),
+                altitudeKm: altitude,
+                elevation,
+              });
+            } catch {
+              setTelemetry({
+                latitude: Number(mapPoint.latitude.toFixed(2)),
+                longitude: Number(mapPoint.longitude.toFixed(2)),
+                altitudeKm: altitude,
+              });
+            }
           }
         });
 
-        // Click on 3D pin to select site
+        // Click on 3D pin to select site or inspect Mars surface
         view.on('click', async (event: any) => {
           try {
-            const hitResult = await view.hitTest(event);
-            const siteHit: any = hitResult.results?.find(
-              (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-landing-sites'
-            );
-            if (siteHit && siteHit.graphic?.attributes?.siteId) {
-              setSelectedLandingSiteId(siteHit.graphic.attributes.siteId);
+            if (typeof view.hitTest === 'function') {
+              const hitResult = await view.hitTest(event);
+              const siteHit: any = hitResult?.results?.find(
+                (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-landing-sites'
+              );
+              if (siteHit && siteHit.graphic?.attributes?.siteId) {
+                setSelectedLandingSiteId(siteHit.graphic.attributes.siteId);
+              }
             }
           } catch {
             // ignore hit-test errors
+          }
+
+          const mapPoint = event.mapPoint || (view.toMap ? view.toMap({ x: event.x, y: event.y }) : null);
+          if (
+            mapPoint &&
+            typeof mapPoint.latitude === 'number' &&
+            typeof mapPoint.longitude === 'number'
+          ) {
+            try {
+              const data = await inspectMartianTerrain(
+                mapPoint.longitude,
+                mapPoint.latitude,
+                marsElevationLayer
+              );
+              setActiveTerrainInspection(data);
+            } catch (err) {
+              console.warn('Terrain inspection failed:', err);
+            }
           }
         });
       } catch (err: any) {
@@ -402,7 +441,7 @@ export const MarsGlobeView: React.FC = () => {
         }
       }
     };
-  }, [setTelemetry]);
+  }, [setTelemetry, setSelectedLandingSiteId, setRegionalCenter, setViewMode, setActiveTerrainInspection]);
 
   return (
     <div className="relative w-full h-full min-h-screen bg-ares-space overflow-hidden select-none">

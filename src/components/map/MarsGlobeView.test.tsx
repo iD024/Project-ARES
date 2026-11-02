@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import { MarsGlobeView } from './MarsGlobeView.tsx';
 import { GlobeControls } from './GlobeControls.tsx';
 import { useAppStore } from '../../store/useAppStore.ts';
+import * as terrainElevationService from '../../services/data/terrainElevationService.ts';
 
 const mockUseMarsLayerSync = vi.fn();
 vi.mock('../../hooks/useMarsLayerSync.ts', () => ({
@@ -12,13 +13,18 @@ vi.mock('../../hooks/useMarsLayerSync.ts', () => ({
 }));
 
 const mockReactiveWatchCallbacks: Array<{ getter: () => any; callback: (val: any) => void }> = [];
+const mockSceneViewHandlers: Record<string, (event: any) => any> = {};
 
 const mockSceneView = {
   when: vi.fn().mockResolvedValue(true),
-  on: vi.fn(),
+  on: vi.fn((event: string, handler: (event: any) => any) => {
+    mockSceneViewHandlers[event] = handler;
+    return { remove: vi.fn() };
+  }),
   goTo: vi.fn(),
   destroy: vi.fn(),
   toMap: vi.fn(),
+  hitTest: vi.fn().mockResolvedValue({ results: [] }),
   scale: 15000000,
   camera: {
     position: { x: 0, y: 0, z: 15000000 },
@@ -76,6 +82,9 @@ describe('MarsGlobeView & GlobeControls', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockReactiveWatchCallbacks.length = 0;
+    for (const key of Object.keys(mockSceneViewHandlers)) {
+      delete mockSceneViewHandlers[key];
+    }
     delete (window as any).WebGLRenderingContext;
   });
 
@@ -163,6 +172,74 @@ describe('MarsGlobeView & GlobeControls', () => {
       });
 
       expect(useAppStore.getState().telemetry.scale).toBe('1:7,500,000');
+    });
+
+    it('updates telemetry.elevation on pointer-move using queryPointElevation', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({
+        telemetry: {
+          ...useAppStore.getState().telemetry,
+          elevation: 0,
+        },
+      });
+
+      mockSceneView.toMap.mockReturnValue({
+        longitude: 226.2,
+        latitude: 18.65,
+      });
+
+      const queryElevationSpy = vi.spyOn(terrainElevationService, 'queryPointElevation');
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      const pointerMoveHandler = mockSceneViewHandlers['pointer-move'];
+      expect(pointerMoveHandler).toBeDefined();
+
+      await act(async () => {
+        await pointerMoveHandler({ x: 100, y: 200 });
+      });
+
+      await waitFor(() => {
+        expect(queryElevationSpy).toHaveBeenCalledWith(226.2, 18.65, expect.anything());
+        expect(useAppStore.getState().telemetry.elevation).toBe(21229);
+      });
+    });
+
+    it('triggers inspectMartianTerrain and sets activeTerrainInspection on surface click', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({ activeTerrainInspection: null });
+
+      mockSceneView.toMap.mockReturnValue({
+        longitude: 77.45,
+        latitude: 18.38,
+      });
+
+      const inspectSpy = vi.spyOn(terrainElevationService, 'inspectMartianTerrain');
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      const clickHandler = mockSceneViewHandlers['click'];
+      expect(clickHandler).toBeDefined();
+
+      await act(async () => {
+        await clickHandler({ x: 300, y: 400 });
+      });
+
+      await waitFor(() => {
+        expect(inspectSpy).toHaveBeenCalledWith(77.45, 18.38, expect.anything());
+        const inspection = useAppStore.getState().activeTerrainInspection;
+        expect(inspection).not.toBeNull();
+        expect(inspection?.elevationMeters).toBe(-2560);
+        expect(inspection?.quadrangleName).toBe('MC-11 Syrtis Major');
+      });
     });
   });
 });

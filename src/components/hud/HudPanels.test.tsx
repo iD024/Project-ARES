@@ -29,6 +29,16 @@ describe('HUD Panels', () => {
       fireEvent.click(toolsBtn);
       expect(useAppStore.getState().activeDrawer).toBe('tools');
     });
+
+    it('toggles terrain legend panel visibility', () => {
+      useAppStore.setState({ isLegendOpen: false });
+      render(<TopCommandBar />);
+      const legendBtn = screen.getByRole('button', { name: /Legend/i });
+      fireEvent.click(legendBtn);
+      expect(useAppStore.getState().isLegendOpen).toBe(true);
+      fireEvent.click(legendBtn);
+      expect(useAppStore.getState().isLegendOpen).toBe(false);
+    });
   });
 
   describe('TelemetryStrip', () => {

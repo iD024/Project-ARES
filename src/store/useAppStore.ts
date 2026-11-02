@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ViewMode, DrawerId, ModalId, LayerItem, TelemetryData } from '../types/hud.ts';
+import { ViewMode, DrawerId, ModalId, LayerItem, TelemetryData, TerrainInspectionData } from '../types/hud.ts';
 import { DATASET_REGISTRY } from '../services/data/datasetRegistry.ts';
 import { MARS_REGIONS } from '../config/marsRegions.ts';
 
@@ -19,6 +19,8 @@ export interface AppState {
   selectedLandingSiteId: string | null;
   selectedRegionId: string | null;
   regionalCenter: RegionalCoordinates;
+  isLegendOpen: boolean;
+  activeTerrainInspection: TerrainInspectionData | null;
 
   // Actions
   setViewMode: (mode: ViewMode) => void;
@@ -31,6 +33,8 @@ export interface AppState {
   setSelectedLandingSiteId: (siteId: string | null) => void;
   setSelectedRegionId: (regionId: string | null) => void;
   setRegionalCenter: (center: Partial<RegionalCoordinates>) => void;
+  setIsLegendOpen: (open: boolean) => void;
+  setActiveTerrainInspection: (data: TerrainInspectionData | null) => void;
 }
 
 const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
@@ -57,6 +61,8 @@ export const useAppStore = create<AppState>((set) => ({
   activeModal: null,
   selectedLandingSiteId: 'perseverance',
   selectedRegionId: 'jezero-crater',
+  isLegendOpen: false,
+  activeTerrainInspection: null,
   regionalCenter: {
     latitude: 18.38,
     longitude: 77.45,
@@ -125,4 +131,8 @@ export const useAppStore = create<AppState>((set) => ({
     set((state) => ({
       regionalCenter: { ...state.regionalCenter, ...center },
     })),
+
+  setIsLegendOpen: (open) => set({ isLegendOpen: open }),
+
+  setActiveTerrainInspection: (data) => set({ activeTerrainInspection: data }),
 }));

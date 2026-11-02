@@ -10,7 +10,7 @@ This roadmap mirrors [`PROMPTS.MD`](file:///home/laksh/Hackathons/Space-App/PROM
 | **Phase 03** | **Mars Data Infrastructure** | **Completed & Verified** | Python/ETL pipeline, structured dataset registry, HiRISE footprints & IAU nomenclature GeoJSON, layer factory, health monitor. |
 | **Phase 04** | **2D Regional Exploration** | **Completed & Verified** | 2D MapView on `GCS_Mars_2000`, continuous ViewportCoordinator, verified regional bookmarks, HUD navigation, 1-click return to 3D. |
 | **Phase 05** | **Multi-Resolution Imagery & Layers** | **Completed & Verified** | Progressive layer streaming (NASA Trek WMTS, USGS WMS), opacity controls, resolution & coverage indicators, attribution metadata. |
-| **Phase 06** | **Terrain Intelligence and Analysis** | *Pending* | 3D elevation visualization, hillshade, slope calculation, geological map overlays, HiRISE DTM targeted visualization. |
+| **Phase 06** | **Terrain Intelligence and Analysis** | **Completed & Verified** | Topographic elevation visualization, MColorDEM shaded relief, Horn's slope derivation, USGS 30-quad locator, TerrainLegendPanel, TerrainInspectorCard. |
 | **Phase 07** | **Location Intelligence & Measurement**| *Pending* | Click-to-inspect (lat, lon, elevation, geology), geodesic distance measurement, surface area, interactive elevation transect profiles. |
 | **Phase 08** | **Mission and Rover Intelligence** | *Pending* | Perseverance (Jezero) and Curiosity (Gale) traverse paths, sol milestones, historical landing markers, PDS provenance links. |
 | **Phase 09** | **Terrain-Aware Route Planning** | *Pending* | Terrain-cost grid, A* / Dijkstra pathfinding, slope/roughness penalties, candidate route comparisons, elevation profiles. |

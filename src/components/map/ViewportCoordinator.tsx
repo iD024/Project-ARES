@@ -4,6 +4,8 @@ import { MarsGlobeView } from './MarsGlobeView.tsx';
 import { MarsMapView } from './MarsMapView.tsx';
 import { MapAttributionOverlay } from '../hud/MapAttributionOverlay.tsx';
 import { ExtentCoverageBanner } from '../hud/ExtentCoverageBanner.tsx';
+import { TerrainLegendPanel } from '../hud/TerrainLegendPanel.tsx';
+import { TerrainInspectorCard } from '../hud/TerrainInspectorCard.tsx';
 import { clsx } from 'clsx';
 
 export const ViewportCoordinator: React.FC = () => {
@@ -45,6 +47,12 @@ export const ViewportCoordinator: React.FC = () => {
 
       {/* 4. Floating Extent & Scale Coverage Banner */}
       <ExtentCoverageBanner />
+
+      {/* 5. Floating HUD Terrain Legend Panel */}
+      <TerrainLegendPanel />
+
+      {/* 6. Contextual Terrain Inspection Card */}
+      <TerrainInspectorCard />
     </div>
   );
 };

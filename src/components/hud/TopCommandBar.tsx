@@ -10,12 +10,21 @@ import {
   Globe,
   Map,
   Compass,
+  Mountain,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const TopCommandBar: React.FC = () => {
-  const { viewMode, setViewMode, activeDrawer, setActiveDrawer, activeModal, setActiveModal } =
-    useAppStore();
+  const {
+    viewMode,
+    setViewMode,
+    activeDrawer,
+    setActiveDrawer,
+    activeModal,
+    setActiveModal,
+    isLegendOpen,
+    setIsLegendOpen,
+  } = useAppStore();
 
   const modes: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
     { id: 'GLOBAL_3D', label: 'GLOBAL 3D', icon: <Globe className="w-3.5 h-3.5" /> },
@@ -109,6 +118,20 @@ export const TopCommandBar: React.FC = () => {
         >
           <MapPin className="w-3.5 h-3.5 text-ares-rust" />
           <span>Sites</span>
+        </button>
+
+        <button
+          onClick={() => setIsLegendOpen(!isLegendOpen)}
+          aria-label="Legend"
+          className={clsx(
+            'flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer border text-xs font-medium',
+            isLegendOpen
+              ? 'bg-emerald-950/60 text-emerald-400 border-emerald-700/80 shadow-sm'
+              : 'text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-700/70 border-slate-700/60'
+          )}
+        >
+          <Mountain className="w-3.5 h-3.5 text-emerald-400" />
+          <span>Legend</span>
         </button>
 
         <div className="h-5 w-[1px] bg-slate-700/60 mx-0.5" />

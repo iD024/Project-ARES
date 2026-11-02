@@ -69,4 +69,12 @@ describe('ViewportCoordinator component', () => {
 
     expect(screen.getByTestId('map-attribution-overlay')).toBeInTheDocument();
   });
+
+  it('mounts floating TerrainLegendPanel when isLegendOpen is true', () => {
+    useAppStore.setState({ isLegendOpen: true });
+
+    render(<ViewportCoordinator />);
+
+    expect(screen.getByTestId('terrain-legend-panel')).toBeInTheDocument();
+  });
 });

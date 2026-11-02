@@ -45,3 +45,15 @@ export interface TelemetryData {
   crs: string;
 }
 
+export interface TerrainInspectionData {
+  longitude: number;
+  latitude: number;
+  elevationMeters: number;
+  regionalSlopeDegrees?: number;
+  slopeCategory?: string;
+  quadrangleName?: string;
+  quadrangleCode?: string;
+  geologicalPeriod?: 'Amazonian' | 'Hesperian' | 'Noachian' | 'Undivided' | string;
+  classification?: DataClassification | 'INTERPRETED' | string;
+}
+
