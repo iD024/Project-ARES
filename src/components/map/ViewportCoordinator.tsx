@@ -6,13 +6,17 @@ import { MapAttributionOverlay } from '../hud/MapAttributionOverlay.tsx';
 import { ExtentCoverageBanner } from '../hud/ExtentCoverageBanner.tsx';
 import { TerrainLegendPanel } from '../hud/TerrainLegendPanel.tsx';
 import { TerrainInspectorCard } from '../hud/TerrainInspectorCard.tsx';
+import { MeasurementToolbar } from '../hud/MeasurementToolbar.tsx';
+import { ElevationProfileTray } from '../hud/ElevationProfileTray.tsx';
+import { LocalPovControls } from '../hud/LocalPovControls.tsx';
+import { RoverMilestoneSlider } from '../hud/RoverMilestoneSlider.tsx';
 import { clsx } from 'clsx';
 
 export const ViewportCoordinator: React.FC = () => {
   const { viewMode } = useAppStore();
 
-  const isGlobeVisible = viewMode === 'GLOBAL_3D';
-  const isMapVisible = viewMode === 'REGIONAL_2D' || viewMode === 'LOCAL_ANALYSIS';
+  const isGlobeVisible = viewMode === 'GLOBAL_3D' || viewMode === 'LOCAL_ANALYSIS';
+  const isMapVisible = viewMode === 'REGIONAL_2D';
 
   return (
     <div className="relative w-full h-full min-h-screen overflow-hidden bg-ares-space">
@@ -53,6 +57,18 @@ export const ViewportCoordinator: React.FC = () => {
 
       {/* 6. Contextual Terrain Inspection Card */}
       <TerrainInspectorCard />
+
+      {/* 7. Phase 07 Measurement Toolbar */}
+      <MeasurementToolbar />
+
+      {/* 8. Phase 07 Elevation Profile Transect Tray */}
+      <ElevationProfileTray />
+
+      {/* 9. Phase 7.5 Local 3D POV Flight Deck */}
+      <LocalPovControls />
+
+      {/* 10. Phase 08 Rover Sol Milestone Timeline */}
+      <RoverMilestoneSlider />
     </div>
   );
 };

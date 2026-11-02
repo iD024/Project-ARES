@@ -1,0 +1,694 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_CURIOSITY_Traverse_PDS",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "curiosity-traverse-path",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "ROVER_TRAVERSE_PATH",
+        "totalDistanceKm": 35.6,
+        "totalSols": 4200,
+        "startSite": "Bradbury Landing",
+        "latestSite": "Upper Gediz Canyon",
+        "datum": "Mars 2000 Sphere / Spheroid (WKID 104971)",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            137.4417,
+            -4.5895
+          ],
+          [
+            137.445,
+            -4.588
+          ],
+          [
+            137.452,
+            -4.584
+          ],
+          [
+            137.451,
+            -4.5835
+          ],
+          [
+            137.432,
+            -4.605
+          ],
+          [
+            137.418,
+            -4.622
+          ],
+          [
+            137.399,
+            -4.638
+          ],
+          [
+            137.382,
+            -4.654
+          ],
+          [
+            137.375,
+            -4.665
+          ],
+          [
+            137.362,
+            -4.678
+          ],
+          [
+            137.351,
+            -4.692
+          ],
+          [
+            137.342,
+            -4.706
+          ],
+          [
+            137.335,
+            -4.718
+          ],
+          [
+            137.329,
+            -4.729
+          ],
+          [
+            137.321,
+            -4.741
+          ],
+          [
+            137.312,
+            -4.755
+          ],
+          [
+            137.304,
+            -4.768
+          ],
+          [
+            137.296,
+            -4.78
+          ],
+          [
+            137.288,
+            -4.792
+          ],
+          [
+            137.281,
+            -4.802
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-0",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 0,
+        "earthDate": "2012-08-06",
+        "elevationMeters": -4501,
+        "distanceKm": 0.0,
+        "siteName": "Bradbury Landing",
+        "formation": "Crater Floor Alluvial Plains",
+        "instrumentTargets": [
+          "Mastcam First Light",
+          "REMS Atmospheric Baseline",
+          "ChemCam Calibration"
+        ],
+        "discoverySummary": "Precision sky crane landing inside Gale Crater on the northern floor.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Primary Mission Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.4417,
+          -4.5895
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-50",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 50,
+        "earthDate": "2012-09-26",
+        "elevationMeters": -4505,
+        "distanceKm": 0.45,
+        "siteName": "Rocknest Sand Patch",
+        "formation": "Eolian Sand Drift",
+        "instrumentTargets": [
+          "CHIMRA Scoop",
+          "CheMin X-ray Diffraction",
+          "SAM Combustion"
+        ],
+        "discoverySummary": "First scoop of Martian soil delivered to CheMin and SAM instruments; discovered amorphous minerals.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS CheMin Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.445,
+          -4.588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-125",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 125,
+        "earthDate": "2012-12-12",
+        "elevationMeters": -4520,
+        "distanceKm": 0.95,
+        "siteName": "Yellowknife Bay",
+        "formation": "Sheepbed Mudstone",
+        "instrumentTargets": [
+          "First Drill Operation",
+          "SAM Gas Chromatograph"
+        ],
+        "discoverySummary": "Definitive evidence of an ancient habitable freshwater lakebed with neutral pH, carbon, sulfur, and nitrogen.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS SAM Instrument Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.452,
+          -4.584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-270",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 270,
+        "earthDate": "2013-05-19",
+        "elevationMeters": -4522,
+        "distanceKm": 1.2,
+        "siteName": "Cumberland Drill Target",
+        "formation": "Sheepbed Member",
+        "instrumentTargets": [
+          "CheMin Mineralogy",
+          "SAM Noble Gases"
+        ],
+        "discoverySummary": "Confirmed clay minerals (smectite) formed in standing water; radiometric age dating of Gale surface.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.451,
+          -4.5835
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-400",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 400,
+        "earthDate": "2013-09-22",
+        "elevationMeters": -4510,
+        "distanceKm": 3.4,
+        "siteName": "Darwin Waypoint",
+        "formation": "Conglomerate Cross-Beds",
+        "instrumentTargets": [
+          "MAHLI Hand Lens",
+          "APXS Elemental Assay"
+        ],
+        "discoverySummary": "Pebble conglomerates confirming ancient vigorous stream flow from Gale Crater rim.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Traverse Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.432,
+          -4.605
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-530",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 530,
+        "earthDate": "2014-02-03",
+        "elevationMeters": -4495,
+        "distanceKm": 5.8,
+        "siteName": "Dingo Gap Dune Crossing",
+        "formation": "Active Sand Ripples",
+        "instrumentTargets": [
+          "Hazcam Wheel Slip",
+          "AutoNav Sand Traversal"
+        ],
+        "discoverySummary": "Successfully negotiated 1-meter active sand dune barrier into Moonlight Valley.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Mobility Data",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.418,
+          -4.622
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-670",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 670,
+        "earthDate": "2014-06-27",
+        "elevationMeters": -4480,
+        "distanceKm": 8.1,
+        "siteName": "The Kimberley",
+        "formation": "Windjana Sandstone",
+        "instrumentTargets": [
+          "Drill Coring",
+          "CheMin High K-Feldspar"
+        ],
+        "discoverySummary": "High potassium-feldspar sandstone pointing to diverse crustal magma sources.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.399,
+          -4.638
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-753",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 753,
+        "earthDate": "2014-09-19",
+        "elevationMeters": -4465,
+        "distanceKm": 10.2,
+        "siteName": "Pahrump Hills",
+        "formation": "Murray Formation Base (Mount Sharp)",
+        "instrumentTargets": [
+          "Confidence Hills Drill",
+          "CheMin Hematite Scan"
+        ],
+        "discoverySummary": "Official arrival at the basal layers of Mount Sharp (Aeolis Mons); 5-kilometer mountain ascent begins.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Mount Sharp Baseline",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.382,
+          -4.654
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-950",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 950,
+        "earthDate": "2015-04-10",
+        "elevationMeters": -4440,
+        "distanceKm": 12.1,
+        "siteName": "Garden City Mineral Veins",
+        "formation": "Cross-Cutting Fracture Network",
+        "instrumentTargets": [
+          "ChemCam Laser Shots",
+          "MAHLI Micro-Textures"
+        ],
+        "discoverySummary": "Dense network of calcium sulfate mineral veins showing multiple episodes of groundwater flow.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS ChemCam Spectral Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.375,
+          -4.665
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-1220",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1220,
+        "earthDate": "2016-01-19",
+        "elevationMeters": -4415,
+        "distanceKm": 14.5,
+        "siteName": "Namib Sand Dune",
+        "formation": "Bagnold Dune Field",
+        "instrumentTargets": [
+          "Wind Particle Motion",
+          "DAN Subsurface Neutrons"
+        ],
+        "discoverySummary": "First in-situ exploration of active extraterrestrial dark basaltic sand dunes.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS DAN Instrument Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.362,
+          -4.678
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-1500",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1500,
+        "earthDate": "2016-10-24",
+        "elevationMeters": -4380,
+        "distanceKm": 16.9,
+        "siteName": "Murray Buttes",
+        "formation": "Ancient Eolian Sandstone Towers",
+        "instrumentTargets": [
+          "Mastcam Mosaic",
+          "ChemCam Bedding Survey"
+        ],
+        "discoverySummary": "Dramatic preserved sandstone mesas formed from ancient fossilized sand dunes.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.351,
+          -4.692
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-1800",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1800,
+        "earthDate": "2017-08-30",
+        "elevationMeters": -4330,
+        "distanceKm": 19.4,
+        "siteName": "Vera Rubin Ridge North Scarp",
+        "formation": "Hematite-Bearing Ridge Member",
+        "instrumentTargets": [
+          "Mastcam Hematite Filters",
+          "ChemCam Iron Survey"
+        ],
+        "discoverySummary": "Reached prominent ridge visible from orbit, identifying strong crystalline hematite signatures.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.342,
+          -4.706
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-2050",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 2050,
+        "earthDate": "2018-05-15",
+        "elevationMeters": -4285,
+        "distanceKm": 21.8,
+        "siteName": "Rock Hall Drill Target",
+        "formation": "Gray Hematite Bedrock",
+        "instrumentTargets": [
+          "Feed-Extended Drill",
+          "CheMin Mineral Diffraction"
+        ],
+        "discoverySummary": "Sampled hardest rock encountered on Mars, demonstrating persistent acidic groundwater evolution.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS CheMin Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.335,
+          -4.718
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-2350",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 2350,
+        "earthDate": "2019-03-24",
+        "elevationMeters": -4250,
+        "distanceKm": 23.9,
+        "siteName": "Glen Torridon Clay Trough",
+        "formation": "Jura Clay Member",
+        "instrumentTargets": [
+          "Kilmarie Drill Core",
+          "SAM Pyro-GCMS"
+        ],
+        "discoverySummary": "Highest concentration of clay minerals detected on Mars, indicating calm lacustrine conditions.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS SAM Instrument Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.329,
+          -4.729
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-2700",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 2700,
+        "earthDate": "2020-03-12",
+        "elevationMeters": -4210,
+        "distanceKm": 26.2,
+        "siteName": "Greenheugh Pediment",
+        "formation": "Stimson Sandstone Capping",
+        "instrumentTargets": [
+          "Steep Slope AutoNav (32\u00b0 pitch)",
+          "APXS Chemistry"
+        ],
+        "discoverySummary": "Climbed record 32-degree slope onto the capping pediment sandstone.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Mobility Data",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.321,
+          -4.741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-3100",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 3100,
+        "earthDate": "2021-04-26",
+        "elevationMeters": -4165,
+        "distanceKm": 28.5,
+        "siteName": "Mont Mercou Cliff",
+        "formation": "6-Meter Sedimentary Escarpment",
+        "instrumentTargets": [
+          "Nontron Drill Sample",
+          "Mastcam Gigapanorama"
+        ],
+        "discoverySummary": "Full sedimentary cross-section documenting the climatic drying of ancient Mars.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.312,
+          -4.755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-3450",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 3450,
+        "earthDate": "2022-04-20",
+        "elevationMeters": -4110,
+        "distanceKm": 30.8,
+        "siteName": "Sulfate-Bearing Transition",
+        "formation": "Mirador Canyon Sulfate Beds",
+        "instrumentTargets": [
+          "Canaima Drill Core",
+          "ChemCam Salt Laser Sounding"
+        ],
+        "discoverySummary": "Entered salty sulfate-bearing region marking the shift to an arid, salty planetary climate.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.304,
+          -4.768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-3750",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 3750,
+        "earthDate": "2023-02-22",
+        "elevationMeters": -4050,
+        "distanceKm": 32.4,
+        "siteName": "Marker Band Valley",
+        "formation": "Thin Hard Carbonate/Sulfate Band",
+        "instrumentTargets": [
+          "Tap-Abrasion Test",
+          "CheMin XRD"
+        ],
+        "discoverySummary": "Discovered widespread water-ripple textures preserved in rock, evidence of waves in ancient shallow lake.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.296,
+          -4.78
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-4000",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 4000,
+        "earthDate": "2023-11-06",
+        "elevationMeters": -3980,
+        "distanceKm": 34.1,
+        "siteName": "Gediz Vallis Debris Ridge",
+        "formation": "Catastrophic Debris Flow",
+        "instrumentTargets": [
+          "Boulder Field Assay",
+          "Mastcam Channel Profile"
+        ],
+        "discoverySummary": "Investigated huge boulder deposits left by torrential late-stage wet debris flows rushing down Mount Sharp.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.288,
+          -4.792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curiosity-sol-4200",
+      "properties": {
+        "roverId": "curiosity",
+        "roverName": "Curiosity Rover (MSL)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 4200,
+        "earthDate": "2024-06-01",
+        "elevationMeters": -3920,
+        "distanceKm": 35.6,
+        "siteName": "Upper Gediz Canyon",
+        "formation": "Upper Channel Scarp",
+        "instrumentTargets": [
+          "Elemental Sulfur Crystals",
+          "APXS Pure Sulfur Assay"
+        ],
+        "discoverySummary": "Discovered elemental pure yellow sulfur crystals inside crushed boulders on Mount Sharp.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS MSL Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          137.281,
+          -4.802
+        ]
+      }
+    }
+  ]
+}

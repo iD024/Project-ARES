@@ -49,4 +49,41 @@ describe('ToolsDrawer component', () => {
     expect(useAppStore.getState().selectedRegionId).toBe('olympus-mons');
     expect(useAppStore.getState().viewMode).toBe('REGIONAL_2D');
   });
+
+  it('provides 3D POV View action on landing site to dive directly into LOCAL_ANALYSIS', () => {
+    useAppStore.setState({
+      selectedLandingSiteId: 'perseverance',
+      viewMode: 'GLOBAL_3D',
+    });
+
+    render(<ToolsDrawer isOpen={true} onClose={vi.fn()} />);
+
+    const povBtn = screen.getByRole('button', { name: /3D POV View for Perseverance/i });
+    expect(povBtn).toBeInTheDocument();
+
+    fireEvent.click(povBtn);
+    expect(useAppStore.getState().viewMode).toBe('LOCAL_ANALYSIS');
+  });
+
+  it('renders Landmarks tab and allows diving into 3D POV for Olympus Mons', () => {
+    useAppStore.setState({
+      viewMode: 'GLOBAL_3D',
+      selectedLandmarkId: null,
+    });
+
+    render(<ToolsDrawer isOpen={true} onClose={vi.fn()} />);
+
+    const wondersTab = screen.getByRole('tab', { name: /Landmarks/i });
+    expect(wondersTab).toBeInTheDocument();
+    fireEvent.click(wondersTab);
+
+    expect(screen.getByText('Olympus Mons')).toBeInTheDocument();
+
+    const povBtn = screen.getByRole('button', { name: /3D POV View for Olympus Mons/i });
+    expect(povBtn).toBeInTheDocument();
+
+    fireEvent.click(povBtn);
+    expect(useAppStore.getState().viewMode).toBe('LOCAL_ANALYSIS');
+    expect(useAppStore.getState().selectedLandmarkId).toBe('olympus-mons');
+  });
 });

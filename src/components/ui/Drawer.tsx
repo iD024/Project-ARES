@@ -22,7 +22,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   side = 'left',
   children,
   className,
-  width = 'w-84 sm:w-96',
+  width = 'w-96 sm:w-[440px]',
 }) => {
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -40,8 +40,8 @@ export const Drawer: React.FC<DrawerProps> = ({
     <aside
       className={twMerge(
         clsx(
-          'absolute top-16 bottom-14 z-30 flex flex-col',
-          'backdrop-blur-xl bg-slate-900/90 border border-slate-700/60 shadow-2xl rounded-2xl overflow-hidden',
+          'absolute top-20 bottom-16 z-30 flex flex-col',
+          'backdrop-blur-2xl bg-black/90 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.9)] rounded-3xl overflow-hidden',
           side === 'left' ? 'left-4' : 'right-4',
           width,
           className
@@ -49,17 +49,17 @@ export const Drawer: React.FC<DrawerProps> = ({
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800/80 bg-slate-950/40">
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-white/[0.02]">
         <div>
-          <h2 className="text-sm font-semibold text-slate-100 font-mono tracking-wide">{title}</h2>
+          <h2 className="text-base font-bold text-white font-mono tracking-wide">{title}</h2>
           {subtitle && (
-            <p className="text-[10px] text-slate-400 font-sans tracking-tight">{subtitle}</p>
+            <p className="text-xs text-slate-300 font-sans tracking-tight mt-0.5">{subtitle}</p>
           )}
         </div>
         <button
           onClick={onClose}
           aria-label="Close drawer"
-          className="p-1 rounded-md text-slate-400 hover:text-slate-100 hover:bg-slate-800/70 transition-colors"
+          className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>

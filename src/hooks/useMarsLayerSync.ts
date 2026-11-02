@@ -19,25 +19,84 @@ export interface UseMarsLayerSyncResult {
 export function addLayerToMap(map: any, instance: any) {
   if (!map || !instance) return;
 
+  // Route ElevationLayer to 3D ground mesh if supported
+  if (
+    (instance.declaredClass === 'esri.layers.ElevationLayer' || instance.type === 'elevation') &&
+    map.ground &&
+    map.ground.layers
+  ) {
+    if (typeof map.ground.layers.add === 'function') {
+      map.ground.layers.add(instance);
+    } else if (Array.isArray(map.ground.layers) && !map.ground.layers.includes(instance)) {
+      map.ground.layers.push(instance);
+    }
+    return;
+  }
+
+  // For operational raster layers, insert before vector graphics layers (pins, landing sites)
+  const layersList: any[] = Array.isArray(map.layers)
+    ? map.layers
+    : map.layers && typeof map.layers.toArray === 'function'
+      ? map.layers.toArray()
+      : map.layers && Array.isArray(map.layers.items)
+        ? map.layers.items
+        : [];
+
+  const firstGraphicsIndex = layersList.findIndex(
+    (l: any) =>
+      l?.type === 'graphics' ||
+      l?.id?.includes('landing-sites') ||
+      l?.id?.includes('regions')
+  );
+
+  const insertIndex = firstGraphicsIndex >= 0 ? firstGraphicsIndex : undefined;
+
   if (typeof map.add === 'function') {
-    map.add(instance);
+    if (insertIndex !== undefined) {
+      map.add(instance, insertIndex);
+    } else {
+      map.add(instance);
+    }
   } else if (map.layers && typeof map.layers.add === 'function') {
-    map.layers.add(instance);
+    if (insertIndex !== undefined && typeof map.layers.addIndex === 'function') {
+      map.layers.addIndex(instance, insertIndex);
+    } else {
+      map.layers.add(instance);
+    }
   } else if (Array.isArray(map.layers)) {
     if (!map.layers.includes(instance)) {
-      map.layers.push(instance);
+      if (insertIndex !== undefined) {
+        map.layers.splice(insertIndex, 0, instance);
+      } else {
+        map.layers.push(instance);
+      }
     }
   }
 
   // Ensure instance is registered in map.layers array for mocks/environments
   // where map.add is stubbed and does not automatically append to map.layers
   if (Array.isArray(map.layers) && !map.layers.includes(instance)) {
-    map.layers.push(instance);
+    if (insertIndex !== undefined) {
+      map.layers.splice(insertIndex, 0, instance);
+    } else {
+      map.layers.push(instance);
+    }
   }
 }
 
 export function removeLayerFromMap(map: any, instance: any) {
   if (!map || !instance) return;
+
+  if (map.ground && map.ground.layers) {
+    if (typeof map.ground.layers.remove === 'function') {
+      map.ground.layers.remove(instance);
+    } else if (Array.isArray(map.ground.layers)) {
+      const gIdx = map.ground.layers.indexOf(instance);
+      if (gIdx !== -1) {
+        map.ground.layers.splice(gIdx, 1);
+      }
+    }
+  }
 
   if (typeof map.remove === 'function') {
     map.remove(instance);
@@ -98,7 +157,24 @@ export function useMarsLayerSync(
       let passError: string | null = null;
 
       for (const layer of layers) {
-        const cachedInstance = layerCacheRef.current.get(layer.id);
+        let cachedInstance = layerCacheRef.current.get(layer.id);
+
+        if (!cachedInstance && view.map) {
+          // Adopt pre-existing layer on map or ground to prevent duplication
+          const findInList = (list: any): any => {
+            if (!list) return null;
+            if (Array.isArray(list)) return list.find((l: any) => l?.id === layer.id);
+            if (typeof list.find === 'function') return list.find((l: any) => l?.id === layer.id);
+            if (Array.isArray(list.items)) return list.items.find((l: any) => l?.id === layer.id);
+            return null;
+          };
+
+          const existingMapLayer = findInList(view.map.layers) || findInList(view.map.ground?.layers);
+          if (existingMapLayer) {
+            cachedInstance = existingMapLayer;
+            layerCacheRef.current.set(layer.id, cachedInstance);
+          }
+        }
 
         if (cachedInstance) {
           // Atomic property mutation without recreating layer or context thrashing

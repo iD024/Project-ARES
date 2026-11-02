@@ -5,10 +5,18 @@ import { TopCommandBar } from './components/hud/TopCommandBar.tsx';
 import { TelemetryStrip } from './components/hud/TelemetryStrip.tsx';
 import { LayersDrawer } from './components/hud/LayersDrawer.tsx';
 import { ToolsDrawer } from './components/hud/ToolsDrawer.tsx';
+import { MissionControlDrawer } from './components/hud/MissionControlDrawer.tsx';
 import { ProvenanceModal } from './components/hud/ProvenanceModal.tsx';
 
 export const App: React.FC = () => {
-  const { activeDrawer, setActiveDrawer, activeModal, setActiveModal } = useAppStore();
+  const {
+    activeDrawer,
+    setActiveDrawer,
+    activeModal,
+    setActiveModal,
+    isMissionControlOpen,
+    setIsMissionControlOpen,
+  } = useAppStore();
 
   return (
     <div className="relative w-full h-full min-h-screen overflow-hidden bg-ares-space text-slate-100 flex flex-col font-sans select-none">
@@ -26,7 +34,13 @@ export const App: React.FC = () => {
         onClose={() => setActiveDrawer(null)}
       />
 
-      {/* 4. Right Dockable Drawer: Exploration Tools & Landing Sites */}
+      {/* 4. Left Dockable Drawer: Mission Control & Rover Traverses */}
+      <MissionControlDrawer
+        isOpen={isMissionControlOpen}
+        onClose={() => setIsMissionControlOpen(false)}
+      />
+
+      {/* 5. Right Dockable Drawer: Exploration Tools & Landing Sites */}
       <ToolsDrawer
         isOpen={activeDrawer === 'tools' || activeDrawer === 'sites'}
         onClose={() => setActiveDrawer(null)}

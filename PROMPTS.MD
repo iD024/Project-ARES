@@ -276,9 +276,32 @@ Do not display fabricated elevation or geological information when data is unava
 
 ---
 
+# PHASE 07.5 — LOCAL ANALYSIS 3D POV AND LAYER DIAGNOSTICS
+
+**Objective:** Transform local exploration into a Google Earth-style 3D Point-Of-View (POV) ground-level inspection experience and diagnose/restore planetary scientific data layers.
+
+### Prompt
+
+Implement the 3D ground-level Point-Of-View (POV) exploration mode and restore scientific layers in ARES.
+
+Requirements:
+
+1. Support low-altitude ($1,000\text{ m} - 5,000\text{ m}$) 3D terrain exploration in `@arcgis/core` SceneView.
+2. Allow camera pitch up to $85^\circ$ for dramatic ground-level horizon views looking at Martian landmarks and mountains.
+3. Eliminate artificial orbital altitude floors and disable auto-transition to 2D when in 3D POV mode.
+4. Implement automatic ground-level camera fly-to animations targeting geological wonders and landing sites with terrain elevation awareness.
+5. Create a floating `LocalPovControls` HUD panel with 360° orbit mode, pitch presets, compass reset, and landmark jumper.
+6. Provide one-click "3D POV VIEW" action triggers on landing sites and geological landmarks in `ToolsDrawer.tsx`.
+7. Configure explicit styled ArcGIS renderers for vector GeoJSON layers (IAU nomenclature and HiRISE footprints).
+8. Ensure derived layers (MColorDEM shaded relief, HRSC-MOLA blended DEM) composite cleanly with opacity controls.
+9. Verify all unit and integration tests pass with 100% green status and clean production build.
+
+---
+
 # PHASE 08 — MISSION AND ROVER INTELLIGENCE
 
 **Objective:** Integrate historical mission information into the exploration experience.
+**Status:** Completed & Verified (2026-11-02). Verified Perseverance & Curiosity Mars 2000 GeoJSON traverse routes, Sol milestone scrubber slider, 1-click ground POV fly-tos, MissionControlDrawer, and 3D/2D traverse GraphicsLayers.
 
 ### Prompt
 

@@ -24,6 +24,9 @@ export interface LayerItem {
   visible: boolean;
   opacity: number; // 0.0 to 1.0
   sourceUrl: string;
+  whatItIs?: string;
+  howItLooks?: string;
+  colorSwatch?: string;
   healthStatus?: 'ONLINE' | 'DEGRADED' | 'OFFLINE' | 'UNKNOWN';
   minScale?: number;
   maxScale?: number;

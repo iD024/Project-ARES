@@ -2,6 +2,13 @@ import { create } from 'zustand';
 import { ViewMode, DrawerId, ModalId, LayerItem, TelemetryData, TerrainInspectionData } from '../types/hud.ts';
 import { DATASET_REGISTRY } from '../services/data/datasetRegistry.ts';
 import { MARS_REGIONS } from '../config/marsRegions.ts';
+import {
+  GeodesicCoordinate,
+  ElevationTransectResult,
+} from '../services/data/measurementService.ts';
+import { RoverMissionId } from '../services/data/roverMissionService.ts';
+
+export type MeasurementToolType = 'distance' | 'area' | 'profile' | null;
 
 export interface RegionalCoordinates {
   longitude: number;
@@ -17,10 +24,17 @@ export interface AppState {
   telemetry: TelemetryData;
   layers: LayerItem[];
   selectedLandingSiteId: string | null;
+  selectedLandmarkId: string | null;
   selectedRegionId: string | null;
   regionalCenter: RegionalCoordinates;
   isLegendOpen: boolean;
   activeTerrainInspection: TerrainInspectionData | null;
+
+  // Phase 07 Measurement State
+  activeMeasurementTool: MeasurementToolType;
+  measurementPoints: GeodesicCoordinate[];
+  elevationTransect: ElevationTransectResult | null;
+  isMeasurementActive: boolean;
 
   // Actions
   setViewMode: (mode: ViewMode) => void;
@@ -31,10 +45,30 @@ export interface AppState {
   setLayerOpacity: (layerId: string, opacity: number) => void;
   setLayerHealth: (layerId: string, health: 'ONLINE' | 'DEGRADED' | 'OFFLINE') => void;
   setSelectedLandingSiteId: (siteId: string | null) => void;
+  setSelectedLandmarkId: (landmarkId: string | null) => void;
   setSelectedRegionId: (regionId: string | null) => void;
   setRegionalCenter: (center: Partial<RegionalCoordinates>) => void;
   setIsLegendOpen: (open: boolean) => void;
   setActiveTerrainInspection: (data: TerrainInspectionData | null) => void;
+
+  // Phase 07 Measurement Actions
+  setActiveMeasurementTool: (tool: MeasurementToolType) => void;
+  addMeasurementPoint: (point: GeodesicCoordinate) => void;
+  setMeasurementPoints: (points: GeodesicCoordinate[]) => void;
+  clearMeasurement: () => void;
+  setElevationTransect: (transect: ElevationTransectResult | null) => void;
+
+  // Phase 08 Mission & Rover Intelligence State
+  selectedRoverId: RoverMissionId | null;
+  activeSol: number | null;
+  isRoverTraverseVisible: boolean;
+  isMissionControlOpen: boolean;
+
+  // Phase 08 Actions
+  setSelectedRoverId: (roverId: RoverMissionId | null) => void;
+  setActiveSol: (sol: number | null) => void;
+  setRoverTraverseVisible: (visible: boolean) => void;
+  setIsMissionControlOpen: (open: boolean) => void;
 }
 
 const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
@@ -46,9 +80,15 @@ const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
   provider: dataset.provider,
   resolution: dataset.resolution,
   coverage: dataset.coverage,
-  visible: dataset.id === 'mars-viking-mdim21' || dataset.id === 'mars-nomenclature',
-  opacity: dataset.defaultOpacity ?? 1.0,
+  visible:
+    dataset.id === 'mars-viking-mdim21' ||
+    dataset.id === 'mars-nomenclature' ||
+    dataset.id === 'mars-mcolordem-shaded-relief',
+  opacity: dataset.id === 'mars-mcolordem-shaded-relief' ? 0.8 : (dataset.defaultOpacity ?? 1.0),
   sourceUrl: dataset.endpointUrl,
+  whatItIs: dataset.whatItIs,
+  howItLooks: dataset.howItLooks,
+  colorSwatch: dataset.colorSwatch,
   healthStatus: 'ONLINE',
   minScale: dataset.minScale,
   maxScale: dataset.maxScale,
@@ -60,9 +100,29 @@ export const useAppStore = create<AppState>((set) => ({
   activeDrawer: null,
   activeModal: null,
   selectedLandingSiteId: 'perseverance',
+  selectedLandmarkId: 'olympus-mons',
   selectedRegionId: 'jezero-crater',
-  isLegendOpen: false,
-  activeTerrainInspection: null,
+  isLegendOpen: true,
+  activeTerrainInspection: {
+    longitude: 77.45,
+    latitude: 18.38,
+    elevationMeters: -2560,
+    regionalSlopeDegrees: 1.8,
+    slopeCategory: 'GENTLE',
+    quadrangleName: 'MC-11 Syrtis Major',
+    geologicalPeriod: 'Noachian',
+    classification: 'DERIVED',
+  },
+  // Phase 07 Measurement
+  activeMeasurementTool: null,
+  measurementPoints: [],
+  elevationTransect: null,
+  isMeasurementActive: false,
+  // Phase 08 Mission & Rover Intelligence
+  selectedRoverId: 'perseverance',
+  activeSol: 1150,
+  isRoverTraverseVisible: true,
+  isMissionControlOpen: false,
   regionalCenter: {
     latitude: 18.38,
     longitude: 77.45,
@@ -110,6 +170,8 @@ export const useAppStore = create<AppState>((set) => ({
 
   setSelectedLandingSiteId: (siteId) => set({ selectedLandingSiteId: siteId }),
 
+  setSelectedLandmarkId: (landmarkId) => set({ selectedLandmarkId: landmarkId }),
+
   setSelectedRegionId: (regionId) =>
     set(() => {
       if (!regionId) return { selectedRegionId: null };
@@ -135,4 +197,40 @@ export const useAppStore = create<AppState>((set) => ({
   setIsLegendOpen: (open) => set({ isLegendOpen: open }),
 
   setActiveTerrainInspection: (data) => set({ activeTerrainInspection: data }),
+
+  setActiveMeasurementTool: (tool) =>
+    set((state) => ({
+      activeMeasurementTool: tool,
+      isMeasurementActive: tool !== null,
+      // If switching or closing tool, reset points if closing
+      measurementPoints: tool === null ? [] : state.measurementPoints,
+      elevationTransect: tool === null ? null : state.elevationTransect,
+    })),
+
+  addMeasurementPoint: (point) =>
+    set((state) => ({
+      measurementPoints: [...state.measurementPoints, point],
+    })),
+
+  setMeasurementPoints: (points) =>
+    set({
+      measurementPoints: points,
+    }),
+
+  clearMeasurement: () =>
+    set({
+      measurementPoints: [],
+      elevationTransect: null,
+    }),
+
+  setElevationTransect: (transect) =>
+    set({
+      elevationTransect: transect,
+    }),
+
+  // Phase 08 Actions
+  setSelectedRoverId: (roverId) => set({ selectedRoverId: roverId }),
+  setActiveSol: (sol) => set({ activeSol: sol }),
+  setRoverTraverseVisible: (visible) => set({ isRoverTraverseVisible: visible }),
+  setIsMissionControlOpen: (open) => set({ isMissionControlOpen: open }),
 }));

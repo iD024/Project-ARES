@@ -92,5 +92,53 @@ describe('useAppStore', () => {
     expect(layers.some((l) => l.id === 'mars-mola-elevation-tint')).toBe(true);
     expect(layers.some((l) => l.id === 'mars-regional-slope')).toBe(true);
   });
+
+  it('manages Phase 07 measurement tools and point records', () => {
+    expect(useAppStore.getState().activeMeasurementTool).toBeNull();
+    expect(useAppStore.getState().measurementPoints).toEqual([]);
+
+    // Activate distance tool
+    useAppStore.getState().setActiveMeasurementTool('distance');
+    expect(useAppStore.getState().activeMeasurementTool).toBe('distance');
+    expect(useAppStore.getState().isMeasurementActive).toBe(true);
+
+    // Add points
+    useAppStore.getState().addMeasurementPoint({ lon: 77.45, lat: 18.38 });
+    useAppStore.getState().addMeasurementPoint({ lon: 78.10, lat: 18.90 });
+    expect(useAppStore.getState().measurementPoints.length).toBe(2);
+
+    // Clear points
+    useAppStore.getState().clearMeasurement();
+    expect(useAppStore.getState().measurementPoints).toEqual([]);
+
+    // Deactivate tool
+    useAppStore.getState().setActiveMeasurementTool(null);
+    expect(useAppStore.getState().activeMeasurementTool).toBeNull();
+    expect(useAppStore.getState().isMeasurementActive).toBe(false);
+  });
+
+  it('manages selectedLandmarkId for 3D local POV exploration', () => {
+    useAppStore.getState().setSelectedLandmarkId('olympus-mons');
+    expect(useAppStore.getState().selectedLandmarkId).toBe('olympus-mons');
+
+    useAppStore.getState().setSelectedLandmarkId('valles-marineris');
+    expect(useAppStore.getState().selectedLandmarkId).toBe('valles-marineris');
+  });
+
+  it('manages Phase 08 rover mission state and active Sol milestones', () => {
+    expect(useAppStore.getState().selectedRoverId).toBeDefined();
+
+    useAppStore.getState().setSelectedRoverId('curiosity');
+    expect(useAppStore.getState().selectedRoverId).toBe('curiosity');
+
+    useAppStore.getState().setActiveSol(125);
+    expect(useAppStore.getState().activeSol).toBe(125);
+
+    useAppStore.getState().setRoverTraverseVisible(false);
+    expect(useAppStore.getState().isRoverTraverseVisible).toBe(false);
+
+    useAppStore.getState().setIsMissionControlOpen(true);
+    expect(useAppStore.getState().isMissionControlOpen).toBe(true);
+  });
 });
 

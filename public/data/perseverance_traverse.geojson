@@ -1,0 +1,759 @@
+{
+  "type": "FeatureCollection",
+  "name": "ARES_PERSEVERANCE_Traverse_PDS",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::104971"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "perseverance-traverse-path",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "ROVER_TRAVERSE_PATH",
+        "totalDistanceKm": 32.1,
+        "totalSols": 1150,
+        "startSite": "Octavia E. Butler Landing",
+        "latestSite": "Dox Castle Fan Apex",
+        "datum": "Mars 2000 Sphere / Spheroid (WKID 104971)",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.4509,
+            18.3797
+          ],
+          [
+            77.4485,
+            18.382
+          ],
+          [
+            77.442,
+            18.3812
+          ],
+          [
+            77.438,
+            18.375
+          ],
+          [
+            77.436,
+            18.369
+          ],
+          [
+            77.432,
+            18.365
+          ],
+          [
+            77.428,
+            18.36
+          ],
+          [
+            77.431,
+            18.355
+          ],
+          [
+            77.425,
+            18.372
+          ],
+          [
+            77.418,
+            18.385
+          ],
+          [
+            77.411,
+            18.391
+          ],
+          [
+            77.406,
+            18.397
+          ],
+          [
+            77.401,
+            18.402
+          ],
+          [
+            77.408,
+            18.408
+          ],
+          [
+            77.395,
+            18.414
+          ],
+          [
+            77.388,
+            18.419
+          ],
+          [
+            77.378,
+            18.428
+          ],
+          [
+            77.368,
+            18.435
+          ],
+          [
+            77.359,
+            18.441
+          ],
+          [
+            77.35,
+            18.448
+          ],
+          [
+            77.342,
+            18.455
+          ],
+          [
+            77.334,
+            18.462
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-0",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 0,
+        "earthDate": "2021-02-18",
+        "elevationMeters": -2560,
+        "distanceKm": 0.0,
+        "siteName": "Octavia E. Butler Landing",
+        "formation": "Crater Floor Fractured Rough",
+        "instrumentTargets": [
+          "MEDA Startup",
+          "Mastcam-Z First Panorama",
+          "SuperCam Calibration"
+        ],
+        "discoverySummary": "Successful touchdown inside Jezero Crater with sky crane descent stage.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Mission Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.4509,
+          18.3797
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-58",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 58,
+        "earthDate": "2021-04-18",
+        "elevationMeters": -2565,
+        "distanceKm": 0.15,
+        "siteName": "First Autonomous Drive",
+        "formation": "Crater Floor",
+        "instrumentTargets": [
+          "AutoNav Test",
+          "Hazcam Imaging"
+        ],
+        "discoverySummary": "First autonomous navigation drive demonstrating visual odometry on Mars.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Navigational Data",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.4485,
+          18.382
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-114",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 114,
+        "earthDate": "2021-06-14",
+        "elevationMeters": -2568,
+        "distanceKm": 0.45,
+        "siteName": "Wright Brothers Field",
+        "formation": "Crater Floor Flat Plains",
+        "instrumentTargets": [
+          "Ingenuity Support",
+          "Mastcam-Z Video"
+        ],
+        "discoverySummary": "Staging area for Ingenuity helicopter historic first powered atmospheric flight.",
+        "pdsCitation": "NASA/JPL-Caltech Mars 2020 Ingenuity Airfield Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.442,
+          18.3812
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-173",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 173,
+        "earthDate": "2021-08-14",
+        "elevationMeters": -2572,
+        "distanceKm": 1.1,
+        "siteName": "S\u00e9\u00edtah North Ridge",
+        "formation": "S\u00e9\u00edtah Sub-unit",
+        "instrumentTargets": [
+          "PIXL Elemental",
+          "SHERLOC UV Raman"
+        ],
+        "discoverySummary": "Initial survey of olivine-rich igneous rock units in the S\u00e9\u00edtah formation.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.438,
+          18.375
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-200",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 200,
+        "earthDate": "2021-09-11",
+        "elevationMeters": -2575,
+        "distanceKm": 1.85,
+        "siteName": "Roubion Abrasion Target",
+        "formation": "S\u00e9\u00edtah Layered Basalt",
+        "instrumentTargets": [
+          "WATSON Microscope",
+          "PIXL Scan"
+        ],
+        "discoverySummary": "First rock abrasion patch revealing pristine volcanic crystalline texture.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.436,
+          18.369
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-235",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 235,
+        "earthDate": "2021-10-17",
+        "elevationMeters": -2578,
+        "distanceKm": 2.6,
+        "siteName": "Montdenier Core Site",
+        "formation": "S\u00e9\u00edtah Olivine Cumulate",
+        "instrumentTargets": [
+          "Drill Coring",
+          "Sample Tube #1"
+        ],
+        "discoverySummary": "Successfully sealed the first Martian core sample inside titanium sample tube.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Sample Return Caching System",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.432,
+          18.365
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-285",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 285,
+        "earthDate": "2021-12-08",
+        "elevationMeters": -2580,
+        "distanceKm": 3.8,
+        "siteName": "South S\u00e9\u00edtah Dunefield",
+        "formation": "Active Sand Ripples",
+        "instrumentTargets": [
+          "RIMFAX Ground Radar",
+          "SuperCam LIBS"
+        ],
+        "discoverySummary": "Subsurface radar imaging confirmed layered sedimentary and volcanic beds beneath ripples.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS RIMFAX Archive",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.428,
+          18.36
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-340",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 340,
+        "earthDate": "2022-02-02",
+        "elevationMeters": -2576,
+        "distanceKm": 5.1,
+        "siteName": "Issole Sample Target",
+        "formation": "S\u00e9\u00edtah Basalt",
+        "instrumentTargets": [
+          "Drill Core #2",
+          "SHERLOC Fluorescence"
+        ],
+        "discoverySummary": "Second igneous core sample collected before commencing rapid trek toward delta.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Sample Return Caching System",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.431,
+          18.355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-380",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 380,
+        "earthDate": "2022-03-15",
+        "elevationMeters": -2570,
+        "distanceKm": 7.2,
+        "siteName": "Rapid Delta Transit",
+        "formation": "Crater Floor Traversed",
+        "instrumentTargets": [
+          "AutoNav Sprint",
+          "Hazcam Tracking"
+        ],
+        "discoverySummary": "Multi-kilometer autonomous driving sprint across Jezero plains at record pace.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Navigational Traverses",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.425,
+          18.372
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-420",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 420,
+        "earthDate": "2022-04-26",
+        "elevationMeters": -2565,
+        "distanceKm": 9.4,
+        "siteName": "Enchanted Lake Base Scarp",
+        "formation": "Delta Front Escarpment",
+        "instrumentTargets": [
+          "Mastcam-Z Multispectral",
+          "SuperCam Remote Micro-Imager"
+        ],
+        "discoverySummary": "Arrival at the base of the Jezero ancient river delta; observed clear fluvial cross-bedding.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.418,
+          18.385
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-465",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 465,
+        "earthDate": "2022-06-11",
+        "elevationMeters": -2550,
+        "distanceKm": 10.8,
+        "siteName": "Hawksbill Gap",
+        "formation": "Shenandoah Delta Unit",
+        "instrumentTargets": [
+          "PIXL Micro-mapping",
+          "Abrasion Bit"
+        ],
+        "discoverySummary": "Detailed elemental mapping of delta mudstones deposited in ancient Jezero lake waters.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.411,
+          18.391
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-510",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 510,
+        "earthDate": "2022-07-28",
+        "elevationMeters": -2535,
+        "distanceKm": 12.3,
+        "siteName": "Amalik Outcrop",
+        "formation": "Fine-Grained Sandstone",
+        "instrumentTargets": [
+          "SHERLOC Spectroscopy",
+          "WATSON"
+        ],
+        "discoverySummary": "Identified sulfate and carbonate mineral salts with high biosignature preservation potential.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.406,
+          18.397
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-570",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 570,
+        "earthDate": "2022-09-28",
+        "elevationMeters": -2520,
+        "distanceKm": 13.9,
+        "siteName": "Wildcat Ridge",
+        "formation": "Siltstone / Deltaic Mudstone",
+        "instrumentTargets": [
+          "Drill Core #3 & #4",
+          "SHERLOC UV Raman"
+        ],
+        "discoverySummary": "Detected aromatic organic molecules correlated with sulfate minerals in lakebed mudstone.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.401,
+          18.402
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-630",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 630,
+        "earthDate": "2022-11-29",
+        "elevationMeters": -2530,
+        "distanceKm": 15.4,
+        "siteName": "Three Forks Sample Depot",
+        "formation": "Delta Margin Flat",
+        "instrumentTargets": [
+          "Sample Drop Robotic Arm",
+          "WATSON Verification"
+        ],
+        "discoverySummary": "Deposited 10 sealed backup sample tubes on the Martian surface for future Mars Sample Return.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Sample Return Caching System",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.408,
+          18.408
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-720",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 720,
+        "earthDate": "2023-03-02",
+        "elevationMeters": -2495,
+        "distanceKm": 17.1,
+        "siteName": "Tenby Channel Outcrop",
+        "formation": "Delta Top Fluvial Sandstone",
+        "instrumentTargets": [
+          "SuperCam LIBS",
+          "Mastcam-Z Stereo"
+        ],
+        "discoverySummary": "Ascended to the delta top surface, characterizing fast-flowing ancient river currents.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.395,
+          18.414
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-780",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 780,
+        "earthDate": "2023-05-04",
+        "elevationMeters": -2470,
+        "distanceKm": 19.2,
+        "siteName": "Castell Henllys",
+        "formation": "Curvilinear Delta Bedset",
+        "instrumentTargets": [
+          "PIXL Lithochemistry",
+          "Drill Core #5"
+        ],
+        "discoverySummary": "Extracted delta-top sandstone core sample recording high-energy meandering river regime.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.388,
+          18.419
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-840",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 840,
+        "earthDate": "2023-07-06",
+        "elevationMeters": -2440,
+        "distanceKm": 21.5,
+        "siteName": "Belva Crater Rim",
+        "formation": "Impact Breccia Over Fluvial Beds",
+        "instrumentTargets": [
+          "RIMFAX Subsurface Deep Sounding",
+          "Mastcam-Z 360 Gigapixel"
+        ],
+        "discoverySummary": "Spectacular panoramic view of Belva Crater exposing boulder-rich catastrophic flood layers.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.378,
+          18.428
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-900",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 900,
+        "earthDate": "2023-09-08",
+        "elevationMeters": -2410,
+        "distanceKm": 23.8,
+        "siteName": "Otis Peak",
+        "formation": "Conglomerate Boulder Beds",
+        "instrumentTargets": [
+          "Abrasion Target",
+          "PIXL Trace Minerals"
+        ],
+        "discoverySummary": "Discovered rounded volcanic cobbles carried from tens of kilometers outside Jezero Crater.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.368,
+          18.435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-960",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 960,
+        "earthDate": "2023-11-10",
+        "elevationMeters": -2380,
+        "distanceKm": 26.1,
+        "siteName": "Jurabi Point",
+        "formation": "Margin Carbonate Unit",
+        "instrumentTargets": [
+          "SHERLOC Raman Mapping",
+          "Drill Core #6"
+        ],
+        "discoverySummary": "Sampled carbonate-silica lake margin deposits, crucial for fossilized microbial mats.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.359,
+          18.441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-1010",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1010,
+        "earthDate": "2024-01-02",
+        "elevationMeters": -2350,
+        "distanceKm": 28.3,
+        "siteName": "Neretva Vallis Inflow Breach",
+        "formation": "Canyon Inflow Floor",
+        "instrumentTargets": [
+          "SuperCam Long-Range Telephoto",
+          "MEDA Wind Sensor"
+        ],
+        "discoverySummary": "Traversed through the narrow canyon mouth where water breached Jezero crater rim.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.35,
+          18.448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-1080",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1080,
+        "earthDate": "2024-03-15",
+        "elevationMeters": -2315,
+        "distanceKm": 30.2,
+        "siteName": "Bright Angel Carbonate",
+        "formation": "Altered River Channel Bed",
+        "instrumentTargets": [
+          "Abrasion 'Walhalla Glades'",
+          "PIXL High-Z Mapping"
+        ],
+        "discoverySummary": "Discovered chemical reduction spots with halo structures in channel bedrock.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.342,
+          18.455
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "perseverance-sol-1150",
+      "properties": {
+        "roverId": "perseverance",
+        "roverName": "Perseverance Rover (Mars 2020)",
+        "featureType": "SOL_MILESTONE",
+        "sol": 1150,
+        "earthDate": "2024-05-28",
+        "elevationMeters": -2280,
+        "distanceKm": 32.1,
+        "siteName": "Dox Castle Fan Apex",
+        "formation": "Upper Fan Margin",
+        "instrumentTargets": [
+          "Mastcam-Z Regional Panorama",
+          "RIMFAX Bedrock Survey"
+        ],
+        "discoverySummary": "Reached the highest elevation on the delta apex, surveying the climb up Jezero crater rim.",
+        "pdsCitation": "NASA/JPL-Caltech/PDS Mars 2020 Science Products",
+        "classification": "ARCHIVED OBSERVATION (PDS)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.334,
+          18.462
+        ]
+      }
+    }
+  ]
+}

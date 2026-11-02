@@ -83,7 +83,7 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
           ? config.url
           : `${config.url.replace(/\/+$/, '')}/{level}/{col}/{row}.png`;
 
-        return new WebTileLayer({
+        const options: any = {
           id: config.id,
           urlTemplate,
           title: config.title,
@@ -91,8 +91,13 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
           copyright: config.copyright,
           minScale: config.minScale,
           maxScale: config.maxScale,
-          subDomains: ['a', 'b', 'c', 'd'],
-        });
+        };
+
+        if (urlTemplate.includes('{subDomain}')) {
+          options.subDomains = ['a', 'b', 'c', 'd'];
+        }
+
+        return new WebTileLayer(options);
       } catch {
         const { default: TileLayer } = await import('@arcgis/core/layers/TileLayer');
         return new TileLayer({
@@ -117,7 +122,7 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
     }
     case 'geojson': {
       const { default: GeoJSONLayer } = await import('@arcgis/core/layers/GeoJSONLayer');
-      return new GeoJSONLayer({
+      const geojsonProps: any = {
         id: config.id,
         url: config.url,
         title: config.title,
@@ -125,11 +130,70 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
         copyright: config.copyright,
         minScale: config.minScale,
         maxScale: config.maxScale,
-      });
+      };
+
+      if (dataset.id === 'mars-nomenclature') {
+        geojsonProps.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-marker',
+            style: 'diamond',
+            color: [6, 182, 212, 0.9], // ARES Cyan
+            size: 9,
+            outline: {
+              color: [255, 255, 255, 0.95],
+              width: 1.5,
+            },
+          },
+        };
+        geojsonProps.popupTemplate = {
+          title: '{name}',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                { fieldName: 'type', label: 'Feature Type' },
+                { fieldName: 'diameterKm', label: 'Diameter (km)' },
+                { fieldName: 'origin', label: 'Origin' },
+                { fieldName: 'classification', label: 'Data Classification' },
+              ],
+            },
+          ],
+        };
+      } else if (dataset.id === 'mars-hirise-footprints') {
+        geojsonProps.renderer = {
+          type: 'simple',
+          symbol: {
+            type: 'simple-fill',
+            color: [6, 182, 212, 0.2], // Translucent Cyan
+            outline: {
+              color: [249, 115, 22, 0.95], // ARES Orange
+              width: 2,
+            },
+          },
+        };
+        geojsonProps.popupTemplate = {
+          title: '{name}',
+          content: [
+            {
+              type: 'fields',
+              fieldInfos: [
+                { fieldName: 'targetRegion', label: 'Target Region' },
+                { fieldName: 'instrument', label: 'Instrument' },
+                { fieldName: 'resolution', label: 'Native Resolution' },
+                { fieldName: 'elevRange', label: 'Elevation Range' },
+                { fieldName: 'citation', label: 'Citation' },
+              ],
+            },
+          ],
+        };
+      }
+
+      return new GeoJSONLayer(geojsonProps);
     }
     case 'wms': {
       const { default: WMSLayer } = await import('@arcgis/core/layers/WMSLayer');
-      return new WMSLayer({
+      const wmsProps: any = {
         id: config.id,
         url: config.url,
         title: config.title,
@@ -137,7 +201,11 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
         copyright: config.copyright,
         minScale: config.minScale,
         maxScale: config.maxScale,
-      });
+      };
+      if (dataset.sublayers && dataset.sublayers.length > 0) {
+        wmsProps.sublayers = dataset.sublayers;
+      }
+      return new WMSLayer(wmsProps);
     }
     default:
       throw new Error(`Unsupported layer type for dataset: ${dataset.id}`);

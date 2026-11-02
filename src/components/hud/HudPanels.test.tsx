@@ -39,6 +39,16 @@ describe('HUD Panels', () => {
       fireEvent.click(legendBtn);
       expect(useAppStore.getState().isLegendOpen).toBe(false);
     });
+
+    it('toggles mission control drawer visibility', () => {
+      useAppStore.setState({ isMissionControlOpen: false });
+      render(<TopCommandBar />);
+      const missionsBtn = screen.getByRole('button', { name: /Missions/i });
+      fireEvent.click(missionsBtn);
+      expect(useAppStore.getState().isMissionControlOpen).toBe(true);
+      fireEvent.click(missionsBtn);
+      expect(useAppStore.getState().isMissionControlOpen).toBe(false);
+    });
   });
 
   describe('TelemetryStrip', () => {

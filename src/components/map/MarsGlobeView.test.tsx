@@ -34,11 +34,24 @@ const mockSceneView = {
 };
 
 vi.mock('@arcgis/core/Map', () => ({
-  default: vi.fn().mockImplementation((opts) => ({ ...opts, layers: [] })),
+  default: vi.fn().mockImplementation((opts) => ({
+    ...opts,
+    layers: {
+      find: (predicate: any) => opts.layers?.find(predicate),
+      forEach: (fn: any) => opts.layers?.forEach(fn),
+      map: (fn: any) => opts.layers?.map(fn),
+      items: opts.layers || [],
+    },
+  })),
 }));
 
 vi.mock('@arcgis/core/views/SceneView', () => ({
-  default: vi.fn().mockImplementation(() => mockSceneView),
+  default: vi.fn().mockImplementation((opts) => {
+    if (opts?.map) {
+      mockSceneView.map = opts.map;
+    }
+    return mockSceneView;
+  }),
 }));
 
 vi.mock('@arcgis/core/geometry/SpatialReference', () => ({
@@ -54,7 +67,17 @@ vi.mock('@arcgis/core/layers/ElevationLayer', () => ({
 }));
 
 vi.mock('@arcgis/core/layers/GraphicsLayer', () => ({
-  default: vi.fn().mockImplementation((opts) => ({ ...opts, add: vi.fn() })),
+  default: vi.fn().mockImplementation((opts) => {
+    const graphics: any[] = [];
+    return {
+      ...opts,
+      add: vi.fn((g) => graphics.push(g)),
+      removeAll: vi.fn(() => {
+        graphics.length = 0;
+      }),
+      graphics,
+    };
+  }),
 }));
 
 vi.mock('@arcgis/core/Graphic', () => ({
@@ -62,6 +85,10 @@ vi.mock('@arcgis/core/Graphic', () => ({
 }));
 
 vi.mock('@arcgis/core/geometry/Point', () => ({
+  default: vi.fn().mockImplementation((opts) => opts),
+}));
+
+vi.mock('@arcgis/core/geometry/Polyline', () => ({
   default: vi.fn().mockImplementation((opts) => opts),
 }));
 
@@ -240,6 +267,78 @@ describe('MarsGlobeView & GlobeControls', () => {
         expect(inspection?.elevationMeters).toBe(-2560);
         expect(inspection?.quadrangleName).toBe('MC-11 Syrtis Major');
       });
+    });
+
+    it('triggers ground-level 3D POV fly-to when selectedLandmarkId changes in LOCAL_ANALYSIS mode', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({
+        viewMode: 'LOCAL_ANALYSIS',
+        selectedLandmarkId: null,
+      });
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      mockSceneView.goTo.mockClear();
+
+      await act(async () => {
+        useAppStore.setState({ selectedLandmarkId: 'olympus-mons' });
+      });
+
+      await waitFor(() => {
+        expect(mockSceneView.goTo).toHaveBeenCalled();
+        const callArgs = mockSceneView.goTo.mock.calls[0][0];
+        expect(callArgs.target.x).toBeCloseTo(-133.8, 1);
+        expect(callArgs.target.y).toBeCloseTo(18.65, 1);
+        expect(callArgs.tilt).toBeGreaterThanOrEqual(60);
+      });
+    });
+
+    it('synchronizes rover traverse track and sol milestones onto 3D graphics layer', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      useAppStore.setState({
+        selectedRoverId: 'perseverance',
+        isRoverTraverseVisible: true,
+        activeSol: 420,
+      });
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      const traverseLayer = (mockSceneView.map.layers as any).find(
+        (l: any) => l.id === 'mars-rover-traverse-layer'
+      );
+      expect(traverseLayer).toBeDefined();
+
+      await waitFor(() => {
+        expect(traverseLayer.graphics.length).toBeGreaterThan(0);
+      });
+
+      // Verify click hitTest on a sol milestone updates activeSol
+      const clickHandler = mockSceneViewHandlers['click'];
+      expect(clickHandler).toBeDefined();
+
+      mockSceneView.hitTest.mockResolvedValueOnce({
+        results: [
+          {
+            graphic: {
+              attributes: { sol: 174 },
+            },
+          },
+        ],
+      });
+
+      await act(async () => {
+        await clickHandler({ x: 200, y: 300 });
+      });
+
+      expect(useAppStore.getState().activeSol).toBe(174);
     });
   });
 });

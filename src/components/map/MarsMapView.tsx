@@ -12,6 +12,7 @@ import {
   queryPointElevation,
   inspectMartianTerrain,
 } from '../../services/data/terrainElevationService.ts';
+import { getRoverMilestones } from '../../services/data/roverMissionService.ts';
 import { Radio, AlertCircle, Map as MapIcon } from 'lucide-react';
 
 export const MarsMapView: React.FC = () => {
@@ -30,8 +31,234 @@ export const MarsMapView: React.FC = () => {
     setSelectedRegionId,
     setTelemetry,
     setViewMode,
+    activeTerrainInspection,
     setActiveTerrainInspection,
+    measurementPoints,
+    activeMeasurementTool,
+    selectedRoverId,
+    activeSol,
+    setActiveSol,
+    isRoverTraverseVisible,
   } = useAppStore();
+
+  // Sync measurement graphics onto 2D regional map
+  useEffect(() => {
+    if (!viewRef.current || !viewRef.current.map) return;
+    const measLayer = viewRef.current.map.layers?.find
+      ? viewRef.current.map.layers.find((l: any) => l.id === 'mars-measurement-layer-2d')
+      : null;
+    if (!measLayer) return;
+
+    if (typeof measLayer.removeAll === 'function') {
+      measLayer.removeAll();
+    }
+    if (!activeMeasurementTool || measurementPoints.length === 0) return;
+
+    Promise.all([
+      import('@arcgis/core/Graphic'),
+      import('@arcgis/core/geometry/Point'),
+      import('@arcgis/core/geometry/Polyline'),
+      import('@arcgis/core/geometry/Polygon'),
+      import('@arcgis/core/geometry/SpatialReference'),
+    ]).then(([
+      { default: Graphic },
+      { default: Point },
+      { default: Polyline },
+      { default: Polygon },
+      { default: SpatialReference },
+    ]) => {
+      const marsSR = new SpatialReference({ wkid: MARS_PLANETARY_SR.wkid });
+
+      // Add points
+      measurementPoints.forEach((pt, index) => {
+        const pointGeom = new Point({
+          x: pt.lon,
+          y: pt.lat,
+          spatialReference: marsSR,
+        });
+
+        const markerGraphic = new Graphic({
+          geometry: pointGeom,
+          symbol: {
+            type: 'simple-marker',
+            style: 'circle',
+            color: [6, 182, 212, 0.9],
+            size: index === 0 ? 10 : 8,
+            outline: {
+              color: [255, 255, 255, 1],
+              width: 1.5,
+            },
+          } as any,
+        });
+        measLayer.add(markerGraphic);
+      });
+
+      // Add line if distance or profile
+      if (
+        (activeMeasurementTool === 'distance' || activeMeasurementTool === 'profile') &&
+        measurementPoints.length >= 2
+      ) {
+        const polylineGeom = new Polyline({
+          paths: [measurementPoints.map((p) => [p.lon, p.lat])],
+          spatialReference: marsSR,
+        });
+
+        const lineGraphic = new Graphic({
+          geometry: polylineGeom,
+          symbol: {
+            type: 'simple-line',
+            color: [6, 182, 212, 0.95],
+            width: 2.5,
+          } as any,
+        });
+        measLayer.add(lineGraphic);
+      }
+
+      // Add polygon if area
+      if (activeMeasurementTool === 'area' && measurementPoints.length >= 3) {
+        const ring = measurementPoints.map((p) => [p.lon, p.lat]);
+        ring.push([measurementPoints[0].lon, measurementPoints[0].lat]);
+
+        const polygonGeom = new Polygon({
+          rings: [ring],
+          spatialReference: marsSR,
+        });
+
+        const polygonGraphic = new Graphic({
+          geometry: polygonGeom,
+          symbol: {
+            type: 'simple-fill',
+            color: [16, 185, 129, 0.25],
+            outline: {
+              color: [16, 185, 129, 0.95],
+              width: 2,
+            },
+          } as any,
+        });
+        measLayer.add(polygonGraphic);
+      }
+    }).catch(() => {});
+  }, [measurementPoints, activeMeasurementTool]);
+
+  // Sync activeTerrainInspection reticle pin onto 2D map
+  useEffect(() => {
+    if (!viewRef.current || !viewRef.current.map) return;
+    const inspLayer = viewRef.current.map.layers?.find
+      ? viewRef.current.map.layers.find((l: any) => l.id === 'mars-inspection-layer-2d')
+      : null;
+    if (!inspLayer) return;
+
+    if (typeof inspLayer.removeAll === 'function') {
+      inspLayer.removeAll();
+    }
+
+    if (activeTerrainInspection) {
+      Promise.all([
+        import('@arcgis/core/Graphic'),
+        import('@arcgis/core/geometry/Point'),
+      ]).then(([{ default: Graphic }, { default: Point }]) => {
+        const point = new Point({
+          x: activeTerrainInspection.longitude,
+          y: activeTerrainInspection.latitude,
+          spatialReference: { wkid: MARS_PLANETARY_SR.wkid },
+        });
+
+        const reticleGraphic = new Graphic({
+          geometry: point,
+          symbol: {
+            type: 'simple-marker',
+            style: 'cross',
+            color: [6, 182, 212, 1], // ARES Cyan
+            size: 16,
+            outline: {
+              color: [255, 255, 255, 0.95],
+              width: 2,
+            },
+          } as any,
+        });
+
+        inspLayer.add(reticleGraphic);
+      });
+    }
+  }, [activeTerrainInspection, isMapReady]);
+
+  // Sync Rover Traverse & Sol Milestones onto 2D Regional Map
+  useEffect(() => {
+    if (!viewRef.current || !viewRef.current.map) return;
+    const traverseLayer = viewRef.current.map.layers?.find
+      ? viewRef.current.map.layers.find((l: any) => l.id === 'mars-rover-traverse-layer-2d')
+      : null;
+    if (!traverseLayer) return;
+
+    if (typeof traverseLayer.removeAll === 'function') {
+      traverseLayer.removeAll();
+    }
+
+    if (!isRoverTraverseVisible || !selectedRoverId) return;
+
+    const milestones = getRoverMilestones(selectedRoverId);
+    if (!milestones || milestones.length === 0) return;
+
+    Promise.all([
+      import('@arcgis/core/Graphic'),
+      import('@arcgis/core/geometry/Point'),
+      import('@arcgis/core/geometry/Polyline'),
+      import('@arcgis/core/geometry/SpatialReference'),
+    ]).then(([{ default: Graphic }, { default: Point }, { default: Polyline }, { default: SpatialReference }]) => {
+      const marsSR = new SpatialReference({ wkid: MARS_PLANETARY_SR.wkid });
+      const isPerseverance = selectedRoverId === 'perseverance';
+      const primaryColor = isPerseverance ? [234, 88, 12, 0.95] : [6, 182, 212, 0.95];
+
+      // 1. Draw Polyline traverse track
+      const pathCoords = milestones.map((m) => [m.longitude, m.latitude]);
+      const traversePolyline = new Polyline({
+        paths: [pathCoords],
+        spatialReference: marsSR,
+      });
+
+      const lineGraphic = new Graphic({
+        geometry: traversePolyline,
+        symbol: {
+          type: 'simple-line',
+          color: primaryColor,
+          width: 3.5,
+        } as any,
+      });
+      traverseLayer.add(lineGraphic);
+
+      // 2. Draw milestone Points
+      milestones.forEach((m) => {
+        const isActive = activeSol !== null && m.sol === activeSol;
+        const point = new Point({
+          x: m.longitude,
+          y: m.latitude,
+          spatialReference: marsSR,
+        });
+
+        const markerGraphic = new Graphic({
+          geometry: point,
+          attributes: {
+            sol: m.sol,
+            siteName: m.siteName,
+            distanceKm: m.distanceKm,
+            elevation: m.elevationMeters,
+            formation: m.formation,
+          },
+          symbol: {
+            type: 'simple-marker',
+            style: 'circle',
+            color: isActive ? [249, 115, 22, 1.0] : primaryColor,
+            size: isActive ? 12 : 6,
+            outline: {
+              color: [255, 255, 255, 0.9],
+              width: isActive ? 2.5 : 1,
+            },
+          } as any,
+        });
+        traverseLayer.add(markerGraphic);
+      });
+    }).catch(() => {});
+  }, [selectedRoverId, activeSol, isRoverTraverseVisible, isMapReady]);
 
   // Reset Extent back to selected region or default regional extent
   const handleResetExtent = useCallback(() => {
@@ -134,7 +361,7 @@ export const MarsMapView: React.FC = () => {
 
         // 1. Mars MDIM 2.1 Color Basemap
         const marsSurfaceLayer = new TileLayer({
-          id: 'mars-mdim-basemap-2d',
+          id: 'mars-viking-mdim21',
           url: MARS_SERVICE_ENDPOINTS.imagery,
           title: 'Mars MDIM 2.1 Color Mosaic',
           copyright: 'NASA / USGS Astrogeology / Esri',
@@ -211,9 +438,34 @@ export const MarsMapView: React.FC = () => {
           regionsGraphicsLayer.add(markerGraphic);
         });
 
+        // 4. Terrain Inspection Reticle Graphics Layer
+        const inspectionGraphicsLayer = new GraphicsLayer({
+          id: 'mars-inspection-layer-2d',
+          title: 'Terrain Inspection Reticle',
+        });
+
+        // 5. Phase 07 Measurement Graphics Layer
+        const measurementGraphicsLayer = new GraphicsLayer({
+          id: 'mars-measurement-layer-2d',
+          title: 'Martian Geodesic Measurements',
+        });
+
+        // 6. Phase 08 Rover Traverse & Sol Milestones Graphics Layer
+        const roverTraverseGraphicsLayer = new GraphicsLayer({
+          id: 'mars-rover-traverse-layer-2d',
+          title: 'Rover Traverses & Sol Milestones',
+        });
+
         // Assemble Mars 2D Map
         const map = new EsriMap({
-          layers: [marsSurfaceLayer, regionsGraphicsLayer, landingGraphicsLayer],
+          layers: [
+            marsSurfaceLayer,
+            regionsGraphicsLayer,
+            landingGraphicsLayer,
+            inspectionGraphicsLayer,
+            measurementGraphicsLayer,
+            roverTraverseGraphicsLayer,
+          ],
         });
 
         const activeCenter = regionalCenter ?? {
@@ -309,16 +561,25 @@ export const MarsMapView: React.FC = () => {
             if (typeof view.hitTest === 'function') {
               const hitResult = await view.hitTest(event);
               const siteHit: any = hitResult?.results?.find(
-                (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-landing-sites-2d'
+                (r: any) => 'graphic' in r && ((r as any).graphic?.layer?.id === 'mars-landing-sites-2d' || (r as any).graphic?.attributes?.siteId)
               );
               if (siteHit && siteHit.graphic?.attributes?.siteId) {
                 setSelectedLandingSiteId(siteHit.graphic.attributes.siteId);
+                return;
               }
               const regionHit: any = hitResult?.results?.find(
-                (r: any) => 'graphic' in r && (r as any).graphic?.layer?.id === 'mars-regions-2d'
+                (r: any) => 'graphic' in r && ((r as any).graphic?.layer?.id === 'mars-regions-2d' || (r as any).graphic?.attributes?.regionId)
               );
               if (regionHit && regionHit.graphic?.attributes?.regionId) {
                 setSelectedRegionId(regionHit.graphic.attributes.regionId);
+                return;
+              }
+              const milestoneHit: any = hitResult?.results?.find(
+                (r: any) => 'graphic' in r && (r as any).graphic?.attributes?.sol !== undefined
+              );
+              if (milestoneHit && milestoneHit.graphic?.attributes?.sol !== undefined) {
+                setActiveSol(milestoneHit.graphic.attributes.sol);
+                return;
               }
             }
           } catch {
@@ -331,6 +592,15 @@ export const MarsMapView: React.FC = () => {
             typeof mapPoint.latitude === 'number' &&
             typeof mapPoint.longitude === 'number'
           ) {
+            // When measurement tool is active, record point and avoid triggering terrain inspection
+            if (useAppStore.getState().activeMeasurementTool !== null) {
+              useAppStore.getState().addMeasurementPoint({
+                lon: Number(mapPoint.longitude.toFixed(4)),
+                lat: Number(mapPoint.latitude.toFixed(4)),
+              });
+              return;
+            }
+
             try {
               const data = await inspectMartianTerrain(mapPoint.longitude, mapPoint.latitude);
               setActiveTerrainInspection(data);

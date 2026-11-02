@@ -81,4 +81,28 @@ describe('ArcGIS Layer Factory & Resolver', () => {
     expect(layer.minScale).toBe(jezeroDtm?.minScale);
     expect(layer.maxScale).toBe(jezeroDtm?.maxScale);
   });
+
+  it('creates GeoJSONLayer with custom glowing cyan renderer for IAU Nomenclature', async () => {
+    const nomenclature = getDatasetById('mars-nomenclature');
+    expect(nomenclature).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(nomenclature!);
+    expect(layer).toBeDefined();
+    expect(layer.declaredClass || layer.type).toMatch(/GeoJSONLayer|geojson/i);
+    expect(layer.renderer).toBeDefined();
+    expect(layer.renderer.type).toBe('simple');
+    expect(layer.renderer.symbol).toBeDefined();
+  });
+
+  it('creates GeoJSONLayer with translucent polygon renderer for HiRISE Footprints', async () => {
+    const footprints = getDatasetById('mars-hirise-footprints');
+    expect(footprints).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(footprints!);
+    expect(layer).toBeDefined();
+    expect(layer.declaredClass || layer.type).toMatch(/GeoJSONLayer|geojson/i);
+    expect(layer.renderer).toBeDefined();
+    expect(layer.renderer.type).toBe('simple');
+    expect(layer.renderer.symbol).toBeDefined();
+  });
 });

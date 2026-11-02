@@ -34,7 +34,7 @@ describe('ViewportCoordinator component', () => {
     expect(mapContainer).toHaveClass('opacity-100', 'pointer-events-auto');
   });
 
-  it('renders 2D Map container active when in LOCAL_ANALYSIS mode', () => {
+  it('renders 3D Globe SceneView container active when in LOCAL_ANALYSIS mode (POV mode)', () => {
     useAppStore.setState({ viewMode: 'LOCAL_ANALYSIS' });
 
     render(<ViewportCoordinator />);
@@ -42,8 +42,8 @@ describe('ViewportCoordinator component', () => {
     const globeContainer = screen.getByTestId('viewport-globe-container');
     const mapContainer = screen.getByTestId('viewport-map-container');
 
-    expect(globeContainer).toHaveClass('opacity-0', 'pointer-events-none');
-    expect(mapContainer).toHaveClass('opacity-100', 'pointer-events-auto');
+    expect(globeContainer).toHaveClass('opacity-100', 'pointer-events-auto');
+    expect(mapContainer).toHaveClass('opacity-0', 'pointer-events-none');
   });
 
   it('mounts floating MapAttributionOverlay overlay', () => {
@@ -76,5 +76,44 @@ describe('ViewportCoordinator component', () => {
     render(<ViewportCoordinator />);
 
     expect(screen.getByTestId('terrain-legend-panel')).toBeInTheDocument();
+  });
+
+  it('mounts MeasurementToolbar when measurement tool is active', () => {
+    useAppStore.setState({
+      activeMeasurementTool: 'distance',
+      isMeasurementActive: true,
+    });
+
+    render(<ViewportCoordinator />);
+
+    expect(screen.getByRole('toolbar', { name: /Martian Geodesic Measurement/i })).toBeInTheDocument();
+  });
+
+  it('mounts ElevationProfileTray when elevation transect is populated', () => {
+    useAppStore.setState({
+      elevationTransect: {
+        totalDistanceKm: 120,
+        minElevationMeters: -1500,
+        maxElevationMeters: 2500,
+        elevationChangeMeters: 4000,
+        averageSlopeDegrees: 2.5,
+        points: [
+          { fraction: 0, distanceKm: 0, longitude: 0, latitude: 0, elevationMeters: -1500 },
+          { fraction: 1, distanceKm: 120, longitude: 2, latitude: 2, elevationMeters: 2500 },
+        ],
+      },
+    });
+
+    render(<ViewportCoordinator />);
+
+    expect(screen.getByText('Martian Elevation Cross-Section')).toBeInTheDocument();
+  });
+
+  it('mounts LocalPovControls when in LOCAL_ANALYSIS mode', () => {
+    useAppStore.setState({ viewMode: 'LOCAL_ANALYSIS' });
+
+    render(<ViewportCoordinator />);
+
+    expect(screen.getByRole('region', { name: /Local 3D POV Flight Deck/i })).toBeInTheDocument();
   });
 });

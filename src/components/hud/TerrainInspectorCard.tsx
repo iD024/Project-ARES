@@ -64,25 +64,25 @@ export const TerrainInspectorCard: React.FC = () => {
     <div
       data-testid="terrain-inspector-card"
       className={clsx(
-        'absolute top-20 right-4 z-20 w-84 max-w-[calc(100vw-2rem)] select-none pointer-events-auto',
-        'bg-slate-950/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-3.5 shadow-2xl text-slate-100 font-sans'
+        'absolute top-20 right-4 z-20 w-88 max-w-[calc(100vw-2rem)] select-none pointer-events-auto',
+        'bg-black/90 backdrop-blur-2xl border border-white/10 rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.9)] text-slate-100 font-sans'
       )}
     >
       {/* Header bar */}
-      <div className="flex items-center justify-between pb-2.5 border-b border-slate-800">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-ares-rust/20 border border-ares-rust/40 flex items-center justify-center text-ares-rust">
-            <MapPin className="w-3.5 h-3.5" />
+      <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-ares-rust">
+            <MapPin className="w-4 h-4 text-orange-400" />
           </div>
           <div>
-            <h3 className="text-xs font-bold tracking-wider uppercase font-mono text-slate-200">
+            <h3 className="text-sm font-bold tracking-wider uppercase font-mono text-white">
               Terrain Inspection
             </h3>
-            <p className="text-[10px] text-slate-400 font-mono">Spot Interrogation</p>
+            <p className="text-xs text-white/50 font-mono">Spot Interrogation</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <Badge variant={(classification as any) || 'DERIVED'}>
             {classification}
           </Badge>
@@ -90,7 +90,7 @@ export const TerrainInspectorCard: React.FC = () => {
             type="button"
             aria-label="Close terrain inspection"
             onClick={() => setActiveTerrainInspection(null)}
-            className="p-1 rounded-md text-slate-400 hover:text-rose-400 hover:bg-slate-800/60 transition-colors cursor-pointer"
+            className="p-1 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -98,31 +98,31 @@ export const TerrainInspectorCard: React.FC = () => {
       </div>
 
       {/* Primary Metrics Grid */}
-      <div className="mt-3 grid grid-cols-2 gap-2 text-xs font-mono">
+      <div className="mt-3.5 grid grid-cols-2 gap-2.5 font-mono">
         {/* Coordinates */}
-        <div className="bg-slate-900/80 border border-slate-800/80 rounded-lg p-2 flex flex-col justify-between">
-          <span className="text-[10px] text-slate-400 flex items-center gap-1">
-            <Compass className="w-3 h-3 text-ares-cyan" />
+        <div className="bg-white/5 border border-white/10 rounded-xl p-2.5 flex flex-col justify-between">
+          <span className="text-xs text-white/60 flex items-center gap-1.5 font-medium">
+            <Compass className="w-3.5 h-3.5 text-ares-cyan" />
             COORDINATES
           </span>
           <span
             data-testid="terrain-inspector-coords"
-            className="text-xs font-semibold text-ares-cyan mt-1 truncate"
+            className="text-sm font-bold text-ares-cyan mt-1.5 truncate"
           >
             {formattedCoords}
           </span>
         </div>
 
         {/* Elevation */}
-        <div className="bg-slate-900/80 border border-slate-800/80 rounded-lg p-2 flex flex-col justify-between">
-          <span className="text-[10px] text-slate-400 flex items-center gap-1">
-            <Mountain className="w-3 h-3 text-emerald-400" />
+        <div className="bg-white/5 border border-white/10 rounded-xl p-2.5 flex flex-col justify-between">
+          <span className="text-xs text-white/60 flex items-center gap-1.5 font-medium">
+            <Mountain className="w-3.5 h-3.5 text-emerald-400" />
             ELEVATION
           </span>
           <span
             data-testid="terrain-inspector-elevation"
             className={clsx(
-              'text-xs font-bold mt-1',
+              'text-sm font-extrabold mt-1.5',
               elevationMeters < 0 ? 'text-amber-400' : 'text-emerald-400'
             )}
           >
@@ -132,25 +132,25 @@ export const TerrainInspectorCard: React.FC = () => {
       </div>
 
       {/* Secondary Regional & Geological Attributes */}
-      <div className="mt-2 space-y-1.5 text-xs font-mono">
+      <div className="mt-2.5 space-y-2 font-mono">
         {/* Quadrangle */}
-        <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800/60">
-          <span className="text-[10px] text-slate-400 flex items-center gap-1.5">
-            <Layers className="w-3 h-3 text-slate-400" />
+        <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5">
+          <span className="text-xs text-white/60 flex items-center gap-2">
+            <Layers className="w-3.5 h-3.5 text-white/50" />
             QUADRANGLE
           </span>
-          <span className="text-[11px] font-semibold text-slate-200">
+          <span className="text-xs font-bold text-white">
             {quadrangleDisplay}
           </span>
         </div>
 
         {/* Regional Slope */}
         {slopeLabel && (
-          <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800/60">
-            <span className="text-[10px] text-slate-400">REGIONAL SLOPE</span>
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5">
+            <span className="text-xs text-white/60">REGIONAL SLOPE</span>
             <span
               className={clsx(
-                'text-[11px] font-semibold',
+                'text-xs font-bold',
                 resolvedCategory === 'STEEP' || resolvedCategory === 'PRECIPITOUS'
                   ? 'text-rose-400'
                   : resolvedCategory === 'MODERATE'
@@ -165,9 +165,9 @@ export const TerrainInspectorCard: React.FC = () => {
 
         {/* Geological Period */}
         {geologicalPeriod && (
-          <div className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-slate-900/50 border border-slate-800/60">
-            <span className="text-[10px] text-slate-400">EPOCH</span>
-            <span className="text-[11px] font-semibold text-amber-300">
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5">
+            <span className="text-xs text-white/60">EPOCH</span>
+            <span className="text-xs font-bold text-amber-300">
               {geologicalPeriod}
             </span>
           </div>
@@ -175,8 +175,8 @@ export const TerrainInspectorCard: React.FC = () => {
       </div>
 
       {/* Mandatory Scientific Disclaimer */}
-      <div className="mt-2.5 flex items-start gap-1.5 p-2 rounded-lg bg-amber-950/20 border border-amber-900/40 text-[10px] text-amber-300/90 leading-tight">
-        <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+      <div className="mt-3 flex items-start gap-2 p-3 rounded-xl bg-amber-950/30 border border-amber-800/40 text-xs text-amber-200/90 leading-relaxed font-sans">
+        <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
         <p>{REGIONAL_SLOPE_DISCLAIMER}</p>
       </div>
     </div>
