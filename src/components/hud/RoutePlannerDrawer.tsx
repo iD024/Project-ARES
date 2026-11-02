@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   X,
   Sparkles,
+  BookOpen,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
@@ -34,6 +35,7 @@ export const RoutePlannerDrawer: React.FC = () => {
     isPickingRoutePoint,
     setIsPickingRoutePoint,
     clearRoutePlanning,
+    openIntelForRouteEvaluation,
   } = useAppStore();
 
   const [isCalculating, setIsCalculating] = useState(false);
@@ -105,6 +107,23 @@ export const RoutePlannerDrawer: React.FC = () => {
 
       {/* Main Scrollable Body */}
       <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6 text-sm">
+        {/* Phase 10 Traversal Science Quick Explainer */}
+        <div className="flex items-center justify-between p-3 rounded-xl bg-purple-950/20 border border-purple-500/30">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-purple-400" />
+            <span className="text-xs font-mono font-bold text-purple-200">A* TRAVERSABILITY PHYSICS</span>
+          </div>
+          <button
+            type="button"
+            aria-label="Why this route?"
+            onClick={() => openIntelForRouteEvaluation()}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/30 px-3 py-1.5 rounded-lg border border-purple-400/40 transition-all cursor-pointer"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-purple-300" />
+            <span>Why this route?</span>
+          </button>
+        </div>
+
         {/* Preset Mission Scenarios */}
         <div className="space-y-2">
           <label

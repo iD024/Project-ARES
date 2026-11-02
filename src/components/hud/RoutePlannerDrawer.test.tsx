@@ -156,5 +156,16 @@ describe('RoutePlannerDrawer Component (Phase 09)', () => {
     fireEvent.click(pickOriginBtn);
     expect(useAppStore.getState().isPickingRoutePoint).toBeNull();
   });
+
+  it('opens scientific intelligence drawer on route evaluation click', () => {
+    useAppStore.setState({ activeDrawer: 'routes' });
+    render(<RoutePlannerDrawer />);
+
+    const whyBtn = screen.getByRole('button', { name: /Why this route\?/i });
+    fireEvent.click(whyBtn);
+
+    expect(useAppStore.getState().activeDrawer).toBe('intel');
+    expect(useAppStore.getState().activeIntelTab).toBe('routes');
+  });
 });
 

@@ -49,6 +49,16 @@ describe('HUD Panels', () => {
       fireEvent.click(missionsBtn);
       expect(useAppStore.getState().isMissionControlOpen).toBe(false);
     });
+
+    it('toggles scientific intelligence drawer visibility', () => {
+      useAppStore.setState({ activeDrawer: null });
+      render(<TopCommandBar />);
+      const intelBtn = screen.getByRole('button', { name: /Intel/i });
+      fireEvent.click(intelBtn);
+      expect(useAppStore.getState().activeDrawer).toBe('intel');
+      fireEvent.click(intelBtn);
+      expect(useAppStore.getState().activeDrawer).toBeNull();
+    });
   });
 
   describe('TelemetryStrip', () => {

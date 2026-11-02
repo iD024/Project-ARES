@@ -12,6 +12,7 @@ import {
   Mountain,
   Radio,
   Navigation,
+  Atom,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
@@ -158,6 +159,22 @@ export const TopCommandBar: React.FC = () => {
         >
           <Navigation className="w-4 h-4 text-emerald-400" />
           <span className="hidden sm:inline">Routes</span>
+        </button>
+
+        {/* Phase 10 Scientific Intelligence Drawer Toggle */}
+        <button
+          onClick={() => setActiveDrawer(activeDrawer === 'intel' ? null : 'intel')}
+          aria-label="Intel"
+          title="Scientific Intelligence & Provenance"
+          className={clsx(
+            'flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all cursor-pointer border font-semibold',
+            activeDrawer === 'intel'
+              ? 'bg-purple-500/20 text-purple-300 border-purple-400/40 shadow-md shadow-purple-950/50'
+              : 'text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border-white/5'
+          )}
+        >
+          <Atom className="w-4 h-4 text-purple-400" />
+          <span className="hidden sm:inline">Intel</span>
         </button>
 
         {/* Hypsometry & Slope Legend Toggle */}

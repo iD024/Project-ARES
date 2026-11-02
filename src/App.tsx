@@ -7,6 +7,7 @@ import { LayersDrawer } from './components/hud/LayersDrawer.tsx';
 import { ToolsDrawer } from './components/hud/ToolsDrawer.tsx';
 import { MissionControlDrawer } from './components/hud/MissionControlDrawer.tsx';
 import { RoutePlannerDrawer } from './components/hud/RoutePlannerDrawer.tsx';
+import { ScientificIntelDrawer } from './components/hud/ScientificIntelDrawer.tsx';
 import { ProvenanceModal } from './components/hud/ProvenanceModal.tsx';
 
 export const App: React.FC = () => {
@@ -50,7 +51,10 @@ export const App: React.FC = () => {
       {/* 6. Right Dockable Drawer: Surface Route Planner */}
       <RoutePlannerDrawer />
 
-      {/* 7. Center Modal: Scientific Provenance & Metadata Catalog */}
+      {/* 7. Right Dockable Drawer: Scientific Intelligence & Provenance */}
+      <ScientificIntelDrawer />
+
+      {/* 8. Center Modal: Scientific Provenance & Metadata Catalog */}
       <ProvenanceModal
         isOpen={activeModal === 'provenance'}
         onClose={() => setActiveModal(null)}

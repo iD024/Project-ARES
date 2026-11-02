@@ -4,7 +4,7 @@ import { Drawer } from '../ui/Drawer.tsx';
 import { Badge } from '../ui/Badge.tsx';
 import { Slider } from '../ui/Slider.tsx';
 import { Tabs } from '../ui/Tabs.tsx';
-import { Eye, EyeOff, Layers, ExternalLink, Activity } from 'lucide-react';
+import { Eye, EyeOff, Layers, ExternalLink, Activity, Info } from 'lucide-react';
 import { LayerCategory } from '../../types/hud.ts';
 import {
   evaluateLayerStatus,
@@ -26,6 +26,7 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
     setActiveModal,
     telemetry,
     regionalCenter,
+    openIntelForDataset,
   } = useAppStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -165,6 +166,16 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    title={`View Scientific Dossier for ${layer.name}`}
+                    aria-label={`View Scientific Dossier for ${layer.name}`}
+                    onClick={() => openIntelForDataset(layer.id)}
+                    className="p-2 rounded-xl border text-xs font-mono font-medium transition-all cursor-pointer bg-purple-500/10 text-purple-300 border-purple-500/30 hover:bg-purple-500/20 hover:text-white"
+                  >
+                    <Info className="w-4 h-4" />
+                  </button>
+
                   <button
                     type="button"
                     title={`Solo ${layer.name}`}

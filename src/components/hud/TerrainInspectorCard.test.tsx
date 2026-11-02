@@ -115,4 +115,16 @@ describe('TerrainInspectorCard Component', () => {
 
     expect(useAppStore.getState().activeTerrainInspection).toBeNull();
   });
+
+  it('opens scientific intelligence drawer with geology focus when SCIENTIFIC DOSSIER is clicked', () => {
+    useAppStore.setState({ activeTerrainInspection: mockInspectionData, activeDrawer: null });
+    render(<TerrainInspectorCard />);
+
+    const dossierBtn = screen.getByRole('button', { name: /Scientific Dossier/i });
+    fireEvent.click(dossierBtn);
+
+    expect(useAppStore.getState().activeDrawer).toBe('intel');
+    expect(useAppStore.getState().activeIntelTab).toBe('geology');
+    expect(useAppStore.getState().intelFocusedGeologyPeriod).toBe('Noachian');
+  });
 });

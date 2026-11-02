@@ -134,6 +134,20 @@ describe('LayersDrawer, ToolsDrawer & ProvenanceModal', () => {
 
       expect(screen.getByText('85%')).toBeInTheDocument();
     });
+
+    it('opens scientific intelligence drawer when View Scientific Dossier info button is clicked', () => {
+      useAppStore.setState({ activeDrawer: 'layers' });
+      render(<LayersDrawer isOpen={true} onClose={() => {}} />);
+
+      const infoBtn = screen.getByRole('button', {
+        name: /View Scientific Dossier for Viking MDIM 2\.1 Color Mosaic/i,
+      });
+      fireEvent.click(infoBtn);
+
+      expect(useAppStore.getState().activeDrawer).toBe('intel');
+      expect(useAppStore.getState().activeIntelTab).toBe('layers');
+      expect(useAppStore.getState().intelFocusedDatasetId).toBe('mars-viking-mdim21');
+    });
   });
 
   describe('ToolsDrawer', () => {

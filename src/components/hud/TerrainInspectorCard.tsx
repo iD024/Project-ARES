@@ -2,12 +2,13 @@ import React from 'react';
 import { useAppStore } from '../../store/useAppStore.ts';
 import { Badge } from '../ui/Badge.tsx';
 import { REGIONAL_SLOPE_DISCLAIMER, classifyRegionalSlope } from '../../services/data/marsGeodesyService.ts';
-import { MapPin, Mountain, AlertTriangle, X, Compass, Layers } from 'lucide-react';
+import { MapPin, Mountain, AlertTriangle, X, Compass, Layers, BookOpen } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const TerrainInspectorCard: React.FC = () => {
   const activeTerrainInspection = useAppStore((state) => state.activeTerrainInspection);
   const setActiveTerrainInspection = useAppStore((state) => state.setActiveTerrainInspection);
+  const openIntelForGeology = useAppStore((state) => state.openIntelForGeology);
 
   if (!activeTerrainInspection) {
     return null;
@@ -173,6 +174,17 @@ export const TerrainInspectorCard: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Phase 10 Contextual Scientific Dossier Action */}
+      <button
+        type="button"
+        aria-label="Scientific Dossier"
+        onClick={() => openIntelForGeology(geologicalPeriod || 'Noachian', quadrangleCode || undefined)}
+        className="mt-3 w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/40 text-purple-200 text-xs font-mono font-bold transition-all cursor-pointer shadow-md"
+      >
+        <BookOpen className="w-3.5 h-3.5 text-purple-300" />
+        <span>SCIENTIFIC DOSSIER</span>
+      </button>
 
       {/* Mandatory Scientific Disclaimer */}
       <div className="mt-3 flex items-start gap-2 p-3 rounded-xl bg-amber-950/30 border border-amber-800/40 text-xs text-amber-200/90 leading-relaxed font-sans">

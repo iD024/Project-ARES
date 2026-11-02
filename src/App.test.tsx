@@ -51,6 +51,16 @@ describe('ARES Application Shell & 3D Mars Globe (Phase 02)', () => {
     expect(screen.getByText(/ARES Planetary Scientific Data Catalog/i)).toBeInTheDocument();
   });
 
+  it('opens Scientific Intelligence drawer when Intel trigger is clicked', () => {
+    render(<App />);
+
+    const intelBtn = screen.getByRole('button', { name: /Intel/i });
+    fireEvent.click(intelBtn);
+
+    expect(screen.getByTestId('scientific-intel-drawer')).toBeInTheDocument();
+    expect(screen.getByText(/SCIENTIFIC INTELLIGENCE/i)).toBeInTheDocument();
+  });
+
   it('updates exploration mode when mode switcher is clicked', () => {
     render(<App />);
 
