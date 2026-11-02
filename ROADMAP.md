@@ -15,8 +15,8 @@ This roadmap mirrors [`PROMPTS.MD`](file:///home/laksh/Hackathons/Space-App/PROM
 | **Phase 07.5** | **Local Analysis 3D POV & Layer Diagnostics** | **Completed & Verified** | Google Earth-style 3D ground-level POV mode (1,000m–5,000m eye-altitude, up to 85° tilt), 360° orbit, LocalPovControls flight deck, styled GeoJSON nomenclature & HiRISE footprints, 1-click 3D POV on landmarks & landing sites. |
 | **Phase 08** | **Mission and Rover Intelligence** | **Completed & Verified** | Perseverance (Jezero) and Curiosity (Gale) traverse paths, sol milestones, historical landing markers, PDS provenance links, Sol scrubber slider, 1-click ground POV fly-tos, MissionControlDrawer. |
 | **Phase 09** | **Terrain-Aware Route Planning** | *Ready for Planning* | Terrain-cost grid, A* / Dijkstra pathfinding, slope/roughness penalties, candidate route comparisons, elevation profiles. |
-| **Phase 10** | **Scientific Intelligence Interface** | *Pending* | Contextual explanations of active layers, geological unit descriptions, route evaluation criteria, scientific provenance drawer. |
-| **Phase 11** | **Integration, Optimization & Release** | *Pending* | End-to-end multi-view validation, performance tuning, network-failure stress tests, accessibility check, release packaging. |
+| **Phase 10** | **Scientific Intelligence Interface** | **Completed & Verified** | Full scientific dossiers for all 14 datasets, chronostratigraphy, altimetry physics, A* traversal science, ScientificIntelDrawer, contextual deep-links. |
+| **Phase 11** | **Integration, Optimization & Release** | *Ready for Planning* | End-to-end multi-view validation, performance tuning, network-failure stress tests, accessibility check, release packaging. |
 
 ---
 

@@ -1,6 +1,6 @@
 # ARES — Engineering Progress & Verification Log
 
-## Overall Status: Phase 09 (COMPLETED & VERIFIED)
+## Overall Status: Phase 10 (COMPLETED & VERIFIED)
 
 ---
 
@@ -20,8 +20,45 @@
 | **Phase 08** | Mission & Rover Intelligence | 2026-11-02 | 2026-11-02 | **PASSED** (238 Vitest tests + 24 Python pipeline tests pass, Perseverance & Curiosity GeoJSON traverses in Mars 2000 WKID 104971, Sol milestone timeline scrubber, 1-click ground POV fly-tos, MissionControlDrawer, 3D/2D traverse GraphicsLayers, clean build). |
 | **Phase 08.5** | Planetary Data Expansion (Rovers, Marsquakes, Resources & Base Sites) | 2026-11-02 | 2026-11-02 | **PASSED** (259 Vitest tests + 38 Python pipeline tests = 297 tests pass, complete 5-rover mobile fleet + InSight, MQS seismic catalog, CRISM minerals, SWIM subsurface ice sheets, settlement zones catalog, ArcGIS renderers, multi-rover viewport integration, clean build). |
 | **Phase 09** | Terrain-Aware Route Planning | 2026-11-02 | 2026-11-02 | **PASSED** (274 Vitest tests + 38 Python pipeline tests = 312 tests pass, discrete geodetic lattice A* pathfinding on Mars 2000 datum, 3 candidate routes: Safest, Balanced, Direct, RoutePlannerDrawer, TopCommandBar Routes trigger, dual-viewport graphics layers, clean build in 24.96s). |
-| **Phase 10** | Scientific Intelligence Interface | — | — | Ready for Planning. |
-| **Phase 11** | Integration, Optimization & Release | — | — | Pending Phase 10 sign-off. |
+| **Phase 10** | Scientific Intelligence Interface | 2026-11-02 | 2026-11-02 | **PASSED** (296 Vitest tests + 38 Python pipeline tests = 334 tests pass, full scientific dossiers for all 14 datasets, chronostratigraphy, altimetry physics, A* traversal science, ScientificIntelDrawer, contextual deep-links, clean build in 24.98s). |
+| **Phase 11** | Integration, Optimization & Release | — | — | Ready for Final Integration & Release. |
+
+---
+
+## Phase 10 Checklist
+- [x] **Scientific Intelligence Core Domain Engine (`scientificIntelligenceService.ts`)**:
+  - Implemented complete provenance and sensor dossiers for all 14 datasets in `DATASET_REGISTRY` (Viking, MColorDEM, MOLA, HRSC-MOLA, CTX, Geologic Quads, IAU Nomenclature, Regional Slope, HiRISE footprints, HiRISE Jezero DTM, InSight MQS, CRISM minerals, SWIM ice sheets, Settlement sites).
+  - Explicitly classified each dataset into **OBSERVED**, **DERIVED**, **MODELED**, or **SIMULATED** with PDS citations, operating wavelengths, spatial resolutions, and coverage limits.
+  - Formulated chronostratigraphic dossiers for all 3 Martian epochs: Noachian (4.1–3.7 Ga, phyllosilicates), Hesperian (3.7–3.0 Ga, sulfates, volcanism), Amazonian (3.0 Ga–present, ferric oxides, ice).
+  - Defined laser altimetry and Horn's slope derivation physics with the mandatory regional DEM caveat.
+  - Documented mathematical A* route cost equation ($C = d \cdot [1 + w_{\text{slope}} \cdot (\theta/\theta_{\text{max}})^2]$) and 3 vehicle mobility profiles.
+  - Verified with 9 unit tests in `scientificIntelligenceService.test.ts`.
+- [x] **Application Store & Types Integration (`useAppStore.ts` & `src/types/hud.ts`)**:
+  - Added `'intel'` to `DrawerId` union.
+  - Defined `ScientificIntelTab`: `'layers' | 'geology' | 'terrain' | 'routes'`.
+  - Added store slices: `activeIntelTab`, `intelFocusedDatasetId`, `intelFocusedGeologyPeriod`, `intelFocusedQuadCode`.
+  - Added atomic actions: `setActiveIntelTab`, `openIntelForDataset`, `openIntelForGeology`, `openIntelForRouteEvaluation`.
+  - Verified with 11 unit tests in `useAppStore.test.ts`.
+- [x] **Black-Glass Scientific Intelligence Drawer (`ScientificIntelDrawer.tsx`)**:
+  - Built aerospace black-glass drawer (`bg-black/90 backdrop-blur-2xl border-white/10 text-white`) with search filter.
+  - 4 specialized interactive tabs:
+    1. 📡 **Layers & Provenance**: Live dataset list, sensor breakdown, and 1-click PDS citation clipboard copying with feedback.
+    2. 🌋 **Geology & Epochs**: Chronostratigraphic epoch cards, age ranges, diagnostic minerals, and USGS quadrangle locator.
+    3. 📐 **Terrain & DEM Physics**: MOLA 1064nm altimetry, Horn's algorithm, slope gradient matrix with mobility risk, and regional scale warnings.
+    4. 🧭 **Route Traversal Science**: A* edge cost equation, vehicle constraints, and candidate comparison rationales.
+  - Verified with 7 unit tests in `ScientificIntelDrawer.test.tsx`.
+- [x] **Top Command Bar & In-Situ Contextual Deep-Links**:
+  - Added `[Intel]` trigger button with violet Atom icon to `TopCommandBar.tsx`.
+  - Added `[SCIENTIFIC DOSSIER]` button to `TerrainInspectorCard.tsx` that deep-links into the `geology` tab with the active coordinate's epoch and quadrangle.
+  - Added `[Why this route?]` button to `RoutePlannerDrawer.tsx` that deep-links into the `routes` tab with A* cost physics.
+  - Added `[View Scientific Dossier]` info button to each layer item in `LayersDrawer.tsx` opening the `layers` tab with that dataset highlighted.
+  - Mounted `ScientificIntelDrawer` inside `App.tsx`.
+  - Verified with 38 unit/integration tests across `HudPanels.test.tsx`, `TerrainInspectorCard.test.tsx`, `RoutePlannerDrawer.test.tsx`, `LayersAndProvenance.test.tsx`, and `App.test.tsx`.
+- [x] **Automated Verification Gate**:
+  - Vitest Unit/Integration Tests: **296 passed (100%)** across 38 test files.
+  - Python Data Pipeline Tests: **38 passed (100%)**.
+  - Total Passing Tests: **334 passed**.
+  - Production Build: Clean Vite bundle output in 24.98s with zero TypeScript compilation errors.
 
 ---
 
