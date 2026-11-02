@@ -60,10 +60,15 @@ export const ScientificIntelDrawer: React.FC = () => {
   });
 
   const handleCopyCitation = (id: string, citation: string) => {
-    navigator.clipboard.writeText(citation).then(() => {
-      setCopiedCitationId(id);
-      setTimeout(() => setCopiedCitationId(null), 2000);
-    });
+    navigator.clipboard
+      .writeText(citation)
+      .then(() => {
+        setCopiedCitationId(id);
+        setTimeout(() => setCopiedCitationId(null), 2000);
+      })
+      .catch(() => {
+        // Fallback silently if clipboard permissions are restricted in iframe
+      });
   };
 
   const tabs: Array<{ id: ScientificIntelTab; label: string; icon: React.ReactNode }> = [
