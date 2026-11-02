@@ -213,5 +213,35 @@ describe('useAppStore', () => {
     expect(useAppStore.getState().candidateRoutes).toEqual([]);
     expect(useAppStore.getState().isPickingRoutePoint).toBeNull();
   });
+
+  it('manages Phase 10 scientific intelligence drawer tabs and contextual deep-link actions', () => {
+    // Initial activeIntelTab should default to 'layers'
+    expect(useAppStore.getState().activeIntelTab).toBe('layers');
+    expect(useAppStore.getState().intelFocusedDatasetId).toBeNull();
+    expect(useAppStore.getState().intelFocusedGeologyPeriod).toBeNull();
+    expect(useAppStore.getState().intelFocusedQuadCode).toBeNull();
+
+    // Tab switching
+    useAppStore.getState().setActiveIntelTab('geology');
+    expect(useAppStore.getState().activeIntelTab).toBe('geology');
+
+    // Deep-link to dataset: opens intel drawer, sets tab to 'layers', focuses dataset
+    useAppStore.getState().openIntelForDataset('mars-mcolordem-shaded-relief');
+    expect(useAppStore.getState().activeDrawer).toBe('intel');
+    expect(useAppStore.getState().activeIntelTab).toBe('layers');
+    expect(useAppStore.getState().intelFocusedDatasetId).toBe('mars-mcolordem-shaded-relief');
+
+    // Deep-link to geology: opens intel drawer, sets tab to 'geology', focuses period & quad
+    useAppStore.getState().openIntelForGeology('Noachian', 'MC-11');
+    expect(useAppStore.getState().activeDrawer).toBe('intel');
+    expect(useAppStore.getState().activeIntelTab).toBe('geology');
+    expect(useAppStore.getState().intelFocusedGeologyPeriod).toBe('Noachian');
+    expect(useAppStore.getState().intelFocusedQuadCode).toBe('MC-11');
+
+    // Deep-link to route evaluation: opens intel drawer, sets tab to 'routes'
+    useAppStore.getState().openIntelForRouteEvaluation();
+    expect(useAppStore.getState().activeDrawer).toBe('intel');
+    expect(useAppStore.getState().activeIntelTab).toBe('routes');
+  });
 });
 

@@ -4,7 +4,9 @@
 
 export type ViewMode = 'GLOBAL_3D' | 'REGIONAL_2D' | 'LOCAL_ANALYSIS';
 
-export type DrawerId = 'layers' | 'tools' | 'sites' | 'routes' | null;
+export type DrawerId = 'layers' | 'tools' | 'sites' | 'routes' | 'intel' | null;
+
+export type ScientificIntelTab = 'layers' | 'geology' | 'terrain' | 'routes';
 
 export type ModalId = 'provenance' | 'mission' | null;
 

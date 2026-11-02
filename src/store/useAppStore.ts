@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ViewMode, DrawerId, ModalId, LayerItem, TelemetryData, TerrainInspectionData } from '../types/hud.ts';
+import { ViewMode, DrawerId, ModalId, LayerItem, TelemetryData, TerrainInspectionData, ScientificIntelTab } from '../types/hud.ts';
 import { DATASET_REGISTRY } from '../services/data/datasetRegistry.ts';
 import { MARS_REGIONS } from '../config/marsRegions.ts';
 import {
@@ -92,6 +92,18 @@ export interface AppState {
   setIsRoutePlannerOpen: (open: boolean) => void;
   setIsPickingRoutePoint: (point: 'origin' | 'destination' | null) => void;
   clearRoutePlanning: () => void;
+
+  // Phase 10 Scientific Intelligence State
+  activeIntelTab: ScientificIntelTab;
+  intelFocusedDatasetId: string | null;
+  intelFocusedGeologyPeriod: string | null;
+  intelFocusedQuadCode: string | null;
+
+  // Phase 10 Scientific Intelligence Actions
+  setActiveIntelTab: (tab: ScientificIntelTab) => void;
+  openIntelForDataset: (datasetId: string) => void;
+  openIntelForGeology: (period: string, quadCode?: string) => void;
+  openIntelForRouteEvaluation: () => void;
 }
 
 const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
@@ -155,6 +167,12 @@ export const useAppStore = create<AppState>((set) => ({
   selectedRouteIndex: 0,
   isRoutePlannerOpen: false,
   isPickingRoutePoint: null,
+
+  // Phase 10 Scientific Intelligence State
+  activeIntelTab: 'layers',
+  intelFocusedDatasetId: null,
+  intelFocusedGeologyPeriod: null,
+  intelFocusedQuadCode: null,
   regionalCenter: {
     latitude: 18.38,
     longitude: 77.45,
@@ -293,5 +311,26 @@ export const useAppStore = create<AppState>((set) => ({
       candidateRoutes: [],
       selectedRouteIndex: 0,
       isPickingRoutePoint: null,
+    }),
+
+  // Phase 10 Scientific Intelligence Actions
+  setActiveIntelTab: (tab) => set({ activeIntelTab: tab }),
+  openIntelForDataset: (datasetId) =>
+    set({
+      activeDrawer: 'intel',
+      activeIntelTab: 'layers',
+      intelFocusedDatasetId: datasetId,
+    }),
+  openIntelForGeology: (period, quadCode) =>
+    set({
+      activeDrawer: 'intel',
+      activeIntelTab: 'geology',
+      intelFocusedGeologyPeriod: period,
+      intelFocusedQuadCode: quadCode ?? null,
+    }),
+  openIntelForRouteEvaluation: () =>
+    set({
+      activeDrawer: 'intel',
+      activeIntelTab: 'routes',
     }),
 }));
