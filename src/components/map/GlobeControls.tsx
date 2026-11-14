@@ -17,7 +17,7 @@ export const GlobeControls: React.FC<GlobeControlsProps> = ({
   onZoomOut,
 }) => {
   return (
-    <div className="absolute bottom-20 right-4 z-20 flex flex-col gap-1.5 p-1.5 rounded-2xl backdrop-blur-2xl bg-black/80 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.12)] select-none">
+    <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-2xl backdrop-blur-2xl bg-black/85 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.12)] select-none">
       {/* Zoom In */}
       {onZoomIn && (
         <button

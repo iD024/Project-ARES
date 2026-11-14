@@ -20,6 +20,7 @@ import {
   getRoverColorRgba,
 } from '../../services/data/roverMissionService.ts';
 import { Radio, AlertCircle, Map } from 'lucide-react';
+import { clsx } from 'clsx';
 
 export const MarsGlobeView: React.FC = () => {
   const mapDivRef = useRef<HTMLDivElement>(null);
@@ -1061,7 +1062,12 @@ export const MarsGlobeView: React.FC = () => {
           />
 
           {/* Engine Status Notification */}
-          <div className="absolute top-20 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-xl backdrop-blur-xl bg-black/80 border border-white/10 shadow-xl font-mono text-[11px] text-slate-300">
+          <div
+            className={clsx(
+              "absolute top-20 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-xl backdrop-blur-xl bg-black/85 border border-white/10 shadow-xl font-mono text-[11px] text-slate-300 transition-opacity duration-300",
+              isGlobeReady && !initNotice ? "opacity-0 pointer-events-none md:opacity-60 md:hover:opacity-100" : "opacity-100"
+            )}
+          >
             <Radio className="w-3.5 h-3.5 text-ares-rust animate-pulse" />
             <span>3D MARS GLOBE:</span>
             <span className={`font-bold ${isGlobeReady ? 'text-emerald-400' : 'text-cyan-400'}`}>

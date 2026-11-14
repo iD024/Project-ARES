@@ -13,10 +13,10 @@ export const TelemetryStrip: React.FC = () => {
   const coordStr = formatMarsCoordinates(telemetry.latitude, telemetry.longitude);
 
   return (
-    <footer className="absolute bottom-4 left-4 right-4 z-20 pointer-events-none flex justify-center">
-      <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-2 rounded-2xl backdrop-blur-2xl bg-black/80 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.12)] pointer-events-auto font-mono text-xs text-white/90">
+    <footer className="absolute bottom-3 sm:bottom-4 left-3 right-3 sm:left-4 sm:right-4 z-20 pointer-events-none flex justify-center">
+      <div className="flex items-center justify-between gap-2.5 sm:gap-6 px-3.5 sm:px-6 py-1.5 sm:py-2 rounded-2xl backdrop-blur-2xl bg-black/85 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.12)] pointer-events-auto font-mono text-xs text-white/90 max-w-full overflow-x-auto no-scrollbar">
         {/* Left Segment: Primary Position & Elevation Telemetry */}
-        <div className="flex items-center gap-3 sm:gap-5 flex-wrap">
+        <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
           {/* Live Telemetry Status Pill */}
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
@@ -31,19 +31,19 @@ export const TelemetryStrip: React.FC = () => {
           <div className="h-3.5 w-px bg-white/15 hidden sm:block" />
 
           {/* Coordinates Pod */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Compass className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span className="text-white/50 text-[11px]">POS:</span>
-            <strong className="text-white font-bold tracking-wide tabular-nums">{coordStr}</strong>
+            <span className="text-white/50 text-[11px] hidden xs:inline">POS:</span>
+            <strong className="text-white font-bold tracking-wide tabular-nums text-[11px] sm:text-xs">{coordStr}</strong>
           </div>
 
-          <div className="h-3.5 w-px bg-white/15 hidden md:block" />
+          <div className="h-3.5 w-px bg-white/15" />
 
           {/* Elevation Pod */}
-          <div className="flex items-center gap-2">
-            <span className="text-white/50 text-[11px]">ELEV:</span>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="text-white/50 text-[11px] hidden xs:inline">ELEV:</span>
             <strong
-              className={`font-bold tabular-nums ${
+              className={`font-bold tabular-nums text-[11px] sm:text-xs ${
                 telemetry.elevation < 0 ? 'text-amber-400' : 'text-emerald-400'
               }`}
             >
@@ -67,8 +67,8 @@ export const TelemetryStrip: React.FC = () => {
         </div>
 
         {/* Right Segment: CRS & Exploration Mode Badges */}
-        <div className="flex items-center gap-3 sm:gap-4 text-xs">
-          <div className="flex items-center gap-2 text-white/60">
+        <div className="flex items-center gap-2 sm:gap-4 text-xs shrink-0">
+          <div className="flex items-center gap-1.5 text-white/60">
             <Globe className="w-3.5 h-3.5 text-white/40 shrink-0" />
             <span className="text-white/70 font-semibold hidden sm:inline text-[11px]">
               GCS_Mars_2000 (WKID 104905)
