@@ -6,11 +6,11 @@ import { clsx } from 'clsx';
 type LegendTab = 'all' | 'elevation' | 'slope' | 'geology';
 
 export const TerrainLegendPanel: React.FC = () => {
-  const { isLegendOpen, setIsLegendOpen } = useAppStore();
+  const { isLegendOpen, setIsLegendOpen, isHudVisible } = useAppStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState<LegendTab>('all');
 
-  if (!isLegendOpen) {
+  if (!isHudVisible || !isLegendOpen) {
     return null;
   }
 
@@ -25,7 +25,7 @@ export const TerrainLegendPanel: React.FC = () => {
     <div
       data-testid="terrain-legend-panel"
       className={clsx(
-        'absolute bottom-20 left-4 z-20 w-88 max-w-[calc(100vw-2rem)] select-none pointer-events-auto',
+        'absolute bottom-28 left-4 z-20 w-88 max-w-[calc(100vw-2rem)] select-none pointer-events-auto',
         'backdrop-blur-2xl bg-[#080A0F]/92 border border-white/10 rounded-2xl p-4',
         'shadow-[0_20px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)] text-white font-sans'
       )}

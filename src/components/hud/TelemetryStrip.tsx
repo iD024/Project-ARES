@@ -4,7 +4,11 @@ import { formatMarsCoordinates } from '../../config/mars.ts';
 import { Activity, Compass, Globe, Sun } from 'lucide-react';
 
 export const TelemetryStrip: React.FC = () => {
-  const { telemetry, viewMode } = useAppStore();
+  const { telemetry, viewMode, isHudVisible } = useAppStore();
+
+  if (!isHudVisible) {
+    return null;
+  }
 
   const coordStr = formatMarsCoordinates(telemetry.latitude, telemetry.longitude);
 

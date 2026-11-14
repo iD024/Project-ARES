@@ -18,6 +18,7 @@ export const App: React.FC = () => {
     setActiveModal,
     isMissionControlOpen,
     setIsMissionControlOpen,
+    isHudVisible,
   } = useAppStore();
 
   return (
@@ -32,19 +33,19 @@ export const App: React.FC = () => {
 
       {/* 3. Left Dockable Drawer: Planetary Layers Manager */}
       <LayersDrawer
-        isOpen={activeDrawer === 'layers'}
+        isOpen={isHudVisible && activeDrawer === 'layers'}
         onClose={() => setActiveDrawer(null)}
       />
 
       {/* 4. Left Dockable Drawer: Mission Control & Rover Traverses */}
       <MissionControlDrawer
-        isOpen={isMissionControlOpen}
+        isOpen={isHudVisible && isMissionControlOpen}
         onClose={() => setIsMissionControlOpen(false)}
       />
 
       {/* 5. Right Dockable Drawer: Exploration Tools & Landing Sites */}
       <ToolsDrawer
-        isOpen={activeDrawer === 'tools' || activeDrawer === 'sites'}
+        isOpen={isHudVisible && (activeDrawer === 'tools' || activeDrawer === 'sites')}
         onClose={() => setActiveDrawer(null)}
       />
 
@@ -56,12 +57,12 @@ export const App: React.FC = () => {
 
       {/* 8. Center Modal: Scientific Provenance & Metadata Catalog */}
       <ProvenanceModal
-        isOpen={activeModal === 'provenance'}
+        isOpen={isHudVisible && activeModal === 'provenance'}
         onClose={() => setActiveModal(null)}
       />
 
       {/* 6. Bottom Floating Telemetry & System Status Strip */}
-      <TelemetryStrip />
+      {isHudVisible && <TelemetryStrip />}
     </div>
   );
 };

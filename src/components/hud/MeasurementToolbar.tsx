@@ -23,9 +23,12 @@ export const MeasurementToolbar: React.FC = () => {
     measurementPoints,
     clearMeasurement,
     setElevationTransect,
+    isHudVisible,
   } = useAppStore();
 
   const [isLoadingProfile, setIsLoadingProfile] = useState(false);
+
+  if (!isHudVisible) return null;
 
   // Auto-calculate elevation transect when in profile mode with 2 points
   useEffect(() => {

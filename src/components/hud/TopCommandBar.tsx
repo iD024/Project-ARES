@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppStore } from '../../store/useAppStore.ts';
 import { ViewMode } from '../../types/hud.ts';
 import {
@@ -13,6 +13,8 @@ import {
   Radio,
   Navigation,
   Atom,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
@@ -32,7 +34,27 @@ export const TopCommandBar: React.FC = () => {
     setActiveMeasurementTool,
     isMissionControlOpen,
     setIsMissionControlOpen,
+    isHudVisible,
+    toggleHudVisibility,
   } = useAppStore();
+
+  // Keyboard shortcut listener: 'h' or 'H' toggles HUD visibility
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target as HTMLElement)?.isContentEditable
+      ) {
+        return;
+      }
+      if (e.key === 'h' || e.key === 'H') {
+        toggleHudVisibility();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleHudVisibility]);
 
   const modes: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
     { id: 'GLOBAL_3D', label: 'GLOBAL 3D', icon: <Globe className="w-3.5 h-3.5" /> },
@@ -55,6 +77,24 @@ export const TopCommandBar: React.FC = () => {
     }
     setViewMode(mode);
   };
+
+  if (!isHudVisible) {
+    return (
+      <aside className="absolute top-4 right-4 z-40 pointer-events-auto">
+        <button
+          type="button"
+          onClick={toggleHudVisibility}
+          aria-label="Toggle HUD"
+          title="Restore HUD overlays (Press H)"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-2xl backdrop-blur-2xl bg-black/85 hover:bg-black text-white border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.15)] font-mono text-xs transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+        >
+          <Eye className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          <span className="font-semibold tracking-wide">Restore HUD</span>
+          <span className="text-[10px] px-1 py-0.2 rounded bg-white/10 text-white/60">H</span>
+        </button>
+      </aside>
+    );
+  }
 
   return (
     <header className="absolute top-4 left-4 right-4 z-20 pointer-events-none flex items-center justify-between gap-3 font-sans">
@@ -81,7 +121,25 @@ export const TopCommandBar: React.FC = () => {
       <div className="pointer-events-auto hidden md:flex items-center p-1 rounded-2xl backdrop-blur-2xl bg-black/80 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.12)] font-mono">
         {modes.map((m) => {
           const isActive = viewMode === m.id;
-          return (
+          if (!isHudVisible) {
+    return (
+      <aside className="absolute top-4 right-4 z-40 pointer-events-auto">
+        <button
+          type="button"
+          onClick={toggleHudVisibility}
+          aria-label="Toggle HUD"
+          title="Restore HUD overlays (Press H)"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-2xl backdrop-blur-2xl bg-black/85 hover:bg-black text-white border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.15)] font-mono text-xs transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+        >
+          <Eye className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          <span className="font-semibold tracking-wide">Restore HUD</span>
+          <span className="text-[10px] px-1 py-0.2 rounded bg-white/10 text-white/60">H</span>
+        </button>
+      </aside>
+    );
+  }
+
+  return (
             <button
               key={m.id}
               role="button"
@@ -230,6 +288,21 @@ export const TopCommandBar: React.FC = () => {
         >
           <FileText className="w-3.5 h-3.5 text-purple-400" />
           <span className="hidden 2xl:inline text-xs">Data</span>
+        </button>
+
+        {/* Subtle Hairline Divider */}
+        <div className="h-4 w-px bg-white/15 mx-0.5" />
+
+        {/* Zen View / HUD Toggle Trigger */}
+        <button
+          type="button"
+          onClick={toggleHudVisibility}
+          aria-label="Toggle HUD"
+          title="Clean Zen View (Press H to hide/restore HUD)"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl transition-all duration-150 cursor-pointer border border-transparent hover:border-white/10 text-white/60 hover:text-white bg-transparent hover:bg-white/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+        >
+          <EyeOff className="w-3.5 h-3.5 text-cyan-400/80 hover:text-cyan-300" />
+          <span className="hidden 2xl:inline text-xs">HUD</span>
         </button>
       </div>
     </header>

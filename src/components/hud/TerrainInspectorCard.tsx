@@ -9,8 +9,9 @@ export const TerrainInspectorCard: React.FC = () => {
   const activeTerrainInspection = useAppStore((state) => state.activeTerrainInspection);
   const setActiveTerrainInspection = useAppStore((state) => state.setActiveTerrainInspection);
   const openIntelForGeology = useAppStore((state) => state.openIntelForGeology);
+  const isHudVisible = useAppStore((state) => state.isHudVisible);
 
-  if (!activeTerrainInspection) {
+  if (!isHudVisible || !activeTerrainInspection) {
     return null;
   }
 

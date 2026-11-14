@@ -9,7 +9,7 @@ import {
 import { clsx } from 'clsx';
 
 export const ElevationProfileTray: React.FC = () => {
-  const { elevationTransect, setElevationTransect } = useAppStore();
+  const { elevationTransect, setElevationTransect, isHudVisible } = useAppStore();
   const [isMinimized, setIsMinimized] = useState(false);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
@@ -68,7 +68,7 @@ export const ElevationProfileTray: React.FC = () => {
     return null;
   }, [yMin, yMax, totalYRange, svgHeight]);
 
-  if (!elevationTransect || elevationTransect.points.length === 0) {
+  if (!isHudVisible || !elevationTransect || elevationTransect.points.length === 0) {
     return null;
   }
 
@@ -89,7 +89,7 @@ export const ElevationProfileTray: React.FC = () => {
   return (
     <div
       className={clsx(
-        'absolute bottom-14 left-4 right-4 z-20 pointer-events-auto select-none transition-all',
+        'absolute bottom-16 left-4 right-4 z-20 pointer-events-auto select-none transition-all',
         'rounded-2xl backdrop-blur-2xl bg-[#080A0F]/92 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)] text-white font-sans'
       )}
     >

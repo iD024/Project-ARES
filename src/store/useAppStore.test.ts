@@ -268,5 +268,15 @@ describe('useAppStore', () => {
     expect(useAppStore.getState().activeDrawer).toBe('intel');
     expect(useAppStore.getState().activeIntelTab).toBe('routes');
   });
+
+  it('manages HUD visibility for uncluttered Zen mode', () => {
+    expect(useAppStore.getState().isHudVisible).toBe(true);
+
+    useAppStore.getState().toggleHudVisibility();
+    expect(useAppStore.getState().isHudVisible).toBe(false);
+
+    useAppStore.getState().setIsHudVisible(true);
+    expect(useAppStore.getState().isHudVisible).toBe(true);
+  });
 });
 

@@ -18,6 +18,7 @@ export const MapAttributionOverlay: React.FC<MapAttributionOverlayProps> = ({
 }) => {
   const storeLayers = useAppStore((state) => state.layers);
   const setActiveModal = useAppStore((state) => state.setActiveModal);
+  const isHudVisible = useAppStore((state) => state.isHudVisible);
 
   const layers = propLayers ?? storeLayers;
 
@@ -27,7 +28,7 @@ export const MapAttributionOverlay: React.FC<MapAttributionOverlayProps> = ({
     [...layers].reverse().find((l) => l.visible) ||
     null;
 
-  if (!activeLayer) {
+  if (!isHudVisible || !activeLayer) {
     return null;
   }
 

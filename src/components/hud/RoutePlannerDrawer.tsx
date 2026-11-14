@@ -36,12 +36,13 @@ export const RoutePlannerDrawer: React.FC = () => {
     setIsPickingRoutePoint,
     clearRoutePlanning,
     openIntelForRouteEvaluation,
+    isHudVisible,
   } = useAppStore();
 
   const [isCalculating, setIsCalculating] = useState(false);
   const [calculationError, setCalculationError] = useState<string | null>(null);
 
-  if (activeDrawer !== 'routes') return null;
+  if (!isHudVisible || activeDrawer !== 'routes') return null;
 
   const handleCalculateRoutes = async () => {
     if (!routeOrigin || !routeDestination) {

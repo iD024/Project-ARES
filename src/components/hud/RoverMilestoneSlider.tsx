@@ -29,9 +29,10 @@ export const RoverMilestoneSlider: React.FC = () => {
     setTelemetry,
     setRegionalCenter,
     setActiveTerrainInspection,
+    isHudVisible,
   } = useAppStore();
 
-  if (!selectedRoverId || !isRoverTraverseVisible) {
+  if (!isHudVisible || !selectedRoverId || !isRoverTraverseVisible) {
     return null;
   }
 

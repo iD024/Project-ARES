@@ -17,6 +17,7 @@ import {
   getRoverColorRgba,
 } from '../../services/data/roverMissionService.ts';
 import { Radio, AlertCircle, Map as MapIcon } from 'lucide-react';
+import { clsx } from 'clsx';
 
 export const MarsMapView: React.FC = () => {
   const mapDivRef = useRef<HTMLDivElement>(null);
@@ -48,6 +49,7 @@ export const MarsMapView: React.FC = () => {
     selectedRouteIndex,
     routeOrigin,
     routeDestination,
+    isHudVisible,
   } = useAppStore();
 
   // Sync measurement graphics onto 2D regional map
@@ -815,26 +817,33 @@ export const MarsMapView: React.FC = () => {
   return (
     <div
       data-testid="mars-map-view"
-      className="relative w-full h-full min-h-screen bg-ares-space overflow-hidden select-none"
+      className="relative w-full h-full min-h-[100dvh] bg-ares-space overflow-hidden select-none"
     >
       {/* 2D ArcGIS MapView Mount Node */}
       <div
         ref={mapDivRef}
-        className="w-full h-full min-h-screen outline-none"
+        className="w-full h-full min-h-[100dvh] outline-none focus-visible:ring-1 focus-visible:ring-cyan-500/50"
         tabIndex={0}
       />
 
       {/* 2D Map Navigation Controls */}
-      <MapControls
-        onResetExtent={handleResetExtent}
-        onRotateNorth={handleRotateNorth}
-        onZoomIn={handleZoomIn}
-        onZoomOut={handleZoomOut}
-        onReturnToGlobe={handleReturnToGlobe}
-      />
+      {isHudVisible && (
+        <MapControls
+          onResetExtent={handleResetExtent}
+          onRotateNorth={handleRotateNorth}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          onReturnToGlobe={handleReturnToGlobe}
+        />
+      )}
 
       {/* Top Center: Regional View Indicator Badge */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+      <div
+        className={clsx(
+          'absolute top-20 left-1/2 -translate-x-1/2 z-15 pointer-events-none transition-all duration-200',
+          !isHudVisible || activeMeasurementTool ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+        )}
+      >
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-slate-900/85 border border-ares-cyan/40 text-[11px] font-mono text-cyan-300 shadow-xl">
           <MapIcon className="w-3.5 h-3.5 text-ares-cyan" />
           <span className="font-semibold tracking-wider uppercase">2D Regional Cartography</span>

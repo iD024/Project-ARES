@@ -33,6 +33,7 @@ export interface AppState {
   regionalCenter: RegionalCoordinates;
   isLegendOpen: boolean;
   activeTerrainInspection: TerrainInspectionData | null;
+  isHudVisible: boolean;
 
   // Phase 07 Measurement State
   activeMeasurementTool: MeasurementToolType;
@@ -54,6 +55,8 @@ export interface AppState {
   setRegionalCenter: (center: Partial<RegionalCoordinates>) => void;
   setIsLegendOpen: (open: boolean) => void;
   setActiveTerrainInspection: (data: TerrainInspectionData | null) => void;
+  setIsHudVisible: (visible: boolean) => void;
+  toggleHudVisibility: () => void;
 
   // Phase 07 Measurement Actions
   setActiveMeasurementTool: (tool: MeasurementToolType) => void;
@@ -138,6 +141,7 @@ export const useAppStore = create<AppState>((set) => ({
   selectedRegionId: null,
   isLegendOpen: false,
   activeTerrainInspection: null,
+  isHudVisible: true,
   // Phase 07 Measurement
   activeMeasurementTool: null,
   measurementPoints: [],
@@ -183,12 +187,23 @@ export const useAppStore = create<AppState>((set) => ({
 
   setActiveDrawer: (drawer) =>
     set((state) => {
+      if (drawer === 'missions') {
+        const nextOpen = !state.isMissionControlOpen;
+        return {
+          activeDrawer: null,
+          isMissionControlOpen: nextOpen,
+          isRoverTraverseVisible: nextOpen ? true : state.isRoverTraverseVisible,
+        };
+      }
       const nextDrawer = state.activeDrawer === drawer ? null : drawer;
       return {
         activeDrawer: nextDrawer,
         isMissionControlOpen: nextDrawer ? false : state.isMissionControlOpen,
       };
     }),
+
+  setIsHudVisible: (visible) => set({ isHudVisible: visible }),
+  toggleHudVisibility: () => set((state) => ({ isHudVisible: !state.isHudVisible })),
 
   setActiveModal: (modal) => set({ activeModal: modal }),
 

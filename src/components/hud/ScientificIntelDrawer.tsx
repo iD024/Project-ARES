@@ -33,13 +33,14 @@ export const ScientificIntelDrawer: React.FC = () => {
     intelFocusedDatasetId,
     intelFocusedGeologyPeriod,
     intelFocusedQuadCode,
+    isHudVisible,
   } = useAppStore();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedCitationId, setCopiedCitationId] = useState<string | null>(null);
   const [selectedEpoch, setSelectedEpoch] = useState<string | null>(intelFocusedGeologyPeriod);
 
-  if (activeDrawer !== 'intel') return null;
+  if (!isHudVisible || activeDrawer !== 'intel') return null;
 
   const datasetDossiers = getAllDatasetDossiers();
   const epochs = getAllGeologicalEpochs();

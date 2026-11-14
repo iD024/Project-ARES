@@ -29,12 +29,13 @@ export const LocalPovControls: React.FC<LocalPovControlsProps> = ({
     selectedLandingSiteId,
     setSelectedLandingSiteId,
     telemetry,
+    isHudVisible,
   } = useAppStore();
 
   const [isOrbiting, setIsOrbiting] = useState(false);
   const [activePitch, setActivePitch] = useState(75);
 
-  if (viewMode !== 'LOCAL_ANALYSIS') {
+  if (!isHudVisible || viewMode !== 'LOCAL_ANALYSIS') {
     return null;
   }
 

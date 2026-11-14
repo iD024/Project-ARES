@@ -51,6 +51,7 @@ export const MarsGlobeView: React.FC = () => {
     selectedRouteIndex,
     routeOrigin,
     routeDestination,
+    isHudVisible,
   } = useAppStore();
 
   const prevViewModeRef = useRef(viewMode);
@@ -1040,7 +1041,7 @@ export const MarsGlobeView: React.FC = () => {
   }, [setTelemetry, setSelectedLandingSiteId, setRegionalCenter, setViewMode, setActiveTerrainInspection]);
 
   return (
-    <div className="relative w-full h-full min-h-screen bg-ares-space overflow-hidden select-none">
+    <div className="relative w-full h-full min-h-[100dvh] bg-ares-space overflow-hidden select-none">
       {/* Primary ArcGIS 3D Canvas Viewport */}
       <div
         ref={mapDivRef}
@@ -1048,66 +1049,70 @@ export const MarsGlobeView: React.FC = () => {
         className="absolute inset-0 w-full h-full"
       />
 
-      {/* Floating Tactical Camera Controls (Zoom, Tilt, North, Reset) */}
-      <GlobeControls
-        onResetView={handleResetView}
-        onRotateNorth={handleRotateNorth}
-        onToggleTilt={handleToggleTilt}
-        onZoomIn={handleZoomIn}
-        onZoomOut={handleZoomOut}
-      />
+      {isHudVisible && (
+        <>
+          {/* Floating Tactical Camera Controls (Zoom, Tilt, North, Reset) */}
+          <GlobeControls
+            onResetView={handleResetView}
+            onRotateNorth={handleRotateNorth}
+            onToggleTilt={handleToggleTilt}
+            onZoomIn={handleZoomIn}
+            onZoomOut={handleZoomOut}
+          />
 
-      {/* Engine Status Notification */}
-      <div className="absolute top-20 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-lg backdrop-blur-xl bg-slate-900/85 border border-slate-700/60 shadow-xl font-mono text-[11px] text-slate-300">
-        <Radio className="w-3.5 h-3.5 text-ares-rust animate-pulse" />
-        <span>3D MARS GLOBE:</span>
-        <span className={`font-bold ${isGlobeReady ? 'text-emerald-400' : 'text-cyan-400'}`}>
-          {isGlobeReady ? 'ELEVATION MESH ACTIVE' : 'INITIALIZING'}
-        </span>
-        {initNotice && (
-          <span className="flex items-center gap-1 text-slate-400 text-[10px] ml-1">
-            <AlertCircle className="w-3 h-3 text-amber-400" />
-            <span>({initNotice})</span>
-          </span>
-        )}
-      </div>
-
-      {/* Target Site Callout Banner with Quick Dive to 2D Regional Map */}
-      {selectedLandingSiteId && (
-        <div className="absolute bottom-20 left-4 z-10 flex items-center gap-3 px-4 py-2.5 rounded-xl backdrop-blur-xl bg-slate-900/90 border border-slate-700/80 shadow-2xl font-mono text-xs text-slate-200">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-slate-400 uppercase tracking-wider">TARGET LANDING SITE</span>
-            <span className="font-bold text-slate-100">
-              {MARS_LANDING_SITES.find((s) => s.id === selectedLandingSiteId)?.name}
+          {/* Engine Status Notification */}
+          <div className="absolute top-20 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-xl backdrop-blur-xl bg-black/80 border border-white/10 shadow-xl font-mono text-[11px] text-slate-300">
+            <Radio className="w-3.5 h-3.5 text-ares-rust animate-pulse" />
+            <span>3D MARS GLOBE:</span>
+            <span className={`font-bold ${isGlobeReady ? 'text-emerald-400' : 'text-cyan-400'}`}>
+              {isGlobeReady ? 'ELEVATION MESH ACTIVE' : 'INITIALIZING'}
             </span>
+            {initNotice && (
+              <span className="flex items-center gap-1 text-slate-400 text-[10px] ml-1">
+                <AlertCircle className="w-3 h-3 text-amber-400" />
+                <span>({initNotice})</span>
+              </span>
+            )}
           </div>
-          <button
-            onClick={() => {
-              const site = MARS_LANDING_SITES.find((s) => s.id === selectedLandingSiteId);
-              if (site) {
-                setRegionalCenter({
-                  latitude: site.latitude,
-                  longitude: site.longitude,
-                  scale: 500000,
-                });
-                setViewMode('REGIONAL_2D');
-              }
-            }}
-            aria-label="Enter 2D Regional Map"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-ares-rust to-orange-600 text-white shadow-md shadow-orange-950/40 hover:from-orange-600 hover:to-orange-500 transition-all cursor-pointer"
-          >
-            <Map className="w-3.5 h-3.5" />
-            <span>EXPLORE 2D &rarr;</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setSelectedLandingSiteId(null)}
-            aria-label="Dismiss target site callout"
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors ml-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
-          >
-            <span className="text-sm font-bold leading-none">&times;</span>
-          </button>
-        </div>
+
+          {/* Target Site Callout Banner with Quick Dive to 2D Regional Map */}
+          {selectedLandingSiteId && (
+            <div className="absolute bottom-24 left-4 z-20 flex items-center gap-3 px-4 py-2.5 rounded-2xl backdrop-blur-2xl bg-black/90 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)] font-mono text-xs text-slate-200">
+              <div className="flex flex-col">
+                <span className="text-[10px] text-white/50 uppercase tracking-wider font-semibold">TARGET LANDING SITE</span>
+                <span className="font-bold text-white text-sm">
+                  {MARS_LANDING_SITES.find((s) => s.id === selectedLandingSiteId)?.name}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  const site = MARS_LANDING_SITES.find((s) => s.id === selectedLandingSiteId);
+                  if (site) {
+                    setRegionalCenter({
+                      latitude: site.latitude,
+                      longitude: site.longitude,
+                      scale: 500000,
+                    });
+                    setViewMode('REGIONAL_2D');
+                  }
+                }}
+                aria-label="Enter 2D Regional Map"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-ares-rust to-orange-600 text-white shadow-md shadow-orange-950/40 hover:from-orange-600 hover:to-orange-500 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+              >
+                <Map className="w-3.5 h-3.5" />
+                <span>EXPLORE 2D &rarr;</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedLandingSiteId(null)}
+                aria-label="Dismiss target site callout"
+                className="p-1 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors ml-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+              >
+                <span className="text-sm font-bold leading-none">&times;</span>
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

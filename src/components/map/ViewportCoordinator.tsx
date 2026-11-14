@@ -13,13 +13,13 @@ import { RoverMilestoneSlider } from '../hud/RoverMilestoneSlider.tsx';
 import { clsx } from 'clsx';
 
 export const ViewportCoordinator: React.FC = () => {
-  const { viewMode } = useAppStore();
+  const { viewMode, isHudVisible } = useAppStore();
 
   const isGlobeVisible = viewMode === 'GLOBAL_3D' || viewMode === 'LOCAL_ANALYSIS';
   const isMapVisible = viewMode === 'REGIONAL_2D';
 
   return (
-    <div className="relative w-full h-full min-h-screen overflow-hidden bg-ares-space">
+    <div className="relative w-full h-full min-h-[100dvh] overflow-hidden bg-ares-space">
       {/* 1. Global 3D Mars SceneView Viewport */}
       <div
         data-testid="viewport-globe-container"
@@ -46,29 +46,34 @@ export const ViewportCoordinator: React.FC = () => {
         <MarsMapView />
       </div>
 
-      {/* 3. Floating Viewport Attribution Overlay */}
-      <MapAttributionOverlay />
+      {/* Floating HUD Chrome Overlays */}
+      {isHudVisible && (
+        <>
+          {/* 3. Floating Viewport Attribution Overlay */}
+          <MapAttributionOverlay />
 
-      {/* 4. Floating Extent & Scale Coverage Banner */}
-      <ExtentCoverageBanner />
+          {/* 4. Floating Extent & Scale Coverage Banner */}
+          <ExtentCoverageBanner />
 
-      {/* 5. Floating HUD Terrain Legend Panel */}
-      <TerrainLegendPanel />
+          {/* 5. Floating HUD Terrain Legend Panel */}
+          <TerrainLegendPanel />
 
-      {/* 6. Contextual Terrain Inspection Card */}
-      <TerrainInspectorCard />
+          {/* 6. Contextual Terrain Inspection Card */}
+          <TerrainInspectorCard />
 
-      {/* 7. Phase 07 Measurement Toolbar */}
-      <MeasurementToolbar />
+          {/* 7. Phase 07 Measurement Toolbar */}
+          <MeasurementToolbar />
 
-      {/* 8. Phase 07 Elevation Profile Transect Tray */}
-      <ElevationProfileTray />
+          {/* 8. Phase 07 Elevation Profile Transect Tray */}
+          <ElevationProfileTray />
 
-      {/* 9. Phase 7.5 Local 3D POV Flight Deck */}
-      <LocalPovControls />
+          {/* 9. Phase 7.5 Local 3D POV Flight Deck */}
+          <LocalPovControls />
 
-      {/* 10. Phase 08 Rover Sol Milestone Timeline */}
-      <RoverMilestoneSlider />
+          {/* 10. Phase 08 Rover Sol Milestone Timeline */}
+          <RoverMilestoneSlider />
+        </>
+      )}
     </div>
   );
 };
