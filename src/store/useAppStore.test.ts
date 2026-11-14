@@ -28,12 +28,37 @@ describe('useAppStore', () => {
     expect(state.activeModal).toBeNull();
   });
 
+  it('initializes in clean Zen map-first state with cards and panels closed by default', () => {
+    const state = useAppStore.getState();
+    expect(state.activeTerrainInspection).toBeNull();
+    expect(state.isLegendOpen).toBe(false);
+    expect(state.isRoverTraverseVisible).toBe(false);
+    expect(state.selectedLandingSiteId).toBeNull();
+    expect(state.selectedRegionId).toBeNull();
+  });
+
   it('toggles active drawer correctly', () => {
     useAppStore.getState().setActiveDrawer('layers');
     expect(useAppStore.getState().activeDrawer).toBe('layers');
 
     // Toggling the same drawer closes it
     useAppStore.getState().setActiveDrawer('layers');
+    expect(useAppStore.getState().activeDrawer).toBeNull();
+  });
+
+  it('enforces drawer mutual exclusion between left-docked LayersDrawer and MissionControlDrawer', () => {
+    // Open mission control first
+    useAppStore.getState().setIsMissionControlOpen(true);
+    expect(useAppStore.getState().isMissionControlOpen).toBe(true);
+
+    // Opening layers drawer must automatically close mission control
+    useAppStore.getState().setActiveDrawer('layers');
+    expect(useAppStore.getState().activeDrawer).toBe('layers');
+    expect(useAppStore.getState().isMissionControlOpen).toBe(false);
+
+    // Opening mission control must close layers drawer so they never overlap
+    useAppStore.getState().setIsMissionControlOpen(true);
+    expect(useAppStore.getState().isMissionControlOpen).toBe(true);
     expect(useAppStore.getState().activeDrawer).toBeNull();
   });
 

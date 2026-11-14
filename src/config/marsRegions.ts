@@ -163,3 +163,39 @@ export function getRegionById(id: string): MarsRegion | undefined {
   return MARS_REGIONS.find((r) => r.id === id);
 }
 
+/**
+ * Find the matching Mars region containing the specified coordinates,
+ * or the closest region within a spatial tolerance.
+ */
+export function findRegionAtCoordinates(
+  longitude: number,
+  latitude: number,
+  toleranceDegrees = 3.5
+): MarsRegion | undefined {
+  // 1. Check exact bounding box extent
+  const inExtent = MARS_REGIONS.find((r) => {
+    const ext = r.extent;
+    return (
+      longitude >= ext.minLongitude &&
+      longitude <= ext.maxLongitude &&
+      latitude >= ext.minLatitude &&
+      latitude <= ext.maxLatitude
+    );
+  });
+  if (inExtent) return inExtent;
+
+  // 2. Check proximity to region center within tolerance
+  let closest: MarsRegion | undefined;
+  let minDistance = toleranceDegrees;
+  for (const r of MARS_REGIONS) {
+    const dLon = Math.abs(r.centerLongitude - longitude);
+    const dLat = Math.abs(r.centerLatitude - latitude);
+    const dist = Math.sqrt(dLon * dLon + dLat * dLat);
+    if (dist < minDistance) {
+      minDistance = dist;
+      closest = r;
+    }
+  }
+  return closest;
+}
+

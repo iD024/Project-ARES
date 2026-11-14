@@ -9,6 +9,7 @@ import {
 } from '../../config/marsLayers.ts';
 import { MARS_LANDING_SITES } from '../../config/mars.ts';
 import { MARS_LANDMARKS } from '../../config/marsLandmarks.ts';
+import { findRegionAtCoordinates } from '../../config/marsRegions.ts';
 import { GlobeControls } from './GlobeControls.tsx';
 import {
   queryPointElevation,
@@ -34,6 +35,7 @@ export const MarsGlobeView: React.FC = () => {
     selectedLandingSiteId,
     selectedLandmarkId,
     setSelectedLandingSiteId,
+    regionalCenter,
     setRegionalCenter,
     setViewMode,
     setTelemetry,
@@ -50,6 +52,8 @@ export const MarsGlobeView: React.FC = () => {
     routeOrigin,
     routeDestination,
   } = useAppStore();
+
+  const prevViewModeRef = useRef(viewMode);
 
   // Sync measurement graphics onto 3D globe
   useEffect(() => {
@@ -405,15 +409,29 @@ export const MarsGlobeView: React.FC = () => {
   const handleZoomIn = useCallback(() => {
     if (!viewRef.current) return;
     const currentCamera = viewRef.current.camera.clone();
-    if (viewMode === 'GLOBAL_3D' && currentCamera.position.z <= 1200000) {
+    if (viewMode === 'GLOBAL_3D' && currentCamera.position.z <= 600000) {
       // Zooming in from low orbit auto-transitions directly into 2D Regional Map only in GLOBAL_3D
-      const target = viewRef.current.center || (viewRef.current.camera as any)?.target;
-      if (target) {
+      const view = viewRef.current;
+      const screenCenter = { x: (view.width || 800) / 2, y: (view.height || 600) / 2 };
+      const groundPoint = view.toMap ? view.toMap(screenCenter) : null;
+      const target = groundPoint || view.center;
+      const lon = typeof target?.longitude === 'number' ? target.longitude : target?.x;
+      const lat = typeof target?.latitude === 'number' ? target.latitude : target?.y;
+      if (
+        typeof lon === 'number' &&
+        typeof lat === 'number' &&
+        !isNaN(lon) &&
+        !isNaN(lat)
+      ) {
+        const roundedLon = Number(lon.toFixed(4));
+        const roundedLat = Number(lat.toFixed(4));
         setRegionalCenter({
-          longitude: target.longitude ?? target.x,
-          latitude: target.latitude ?? target.y,
+          longitude: roundedLon,
+          latitude: roundedLat,
           scale: 500000,
         });
+        const match = findRegionAtCoordinates(roundedLon, roundedLat);
+        useAppStore.setState({ selectedRegionId: match ? match.id : null });
       }
       setViewMode('REGIONAL_2D');
       return;
@@ -497,9 +515,34 @@ export const MarsGlobeView: React.FC = () => {
     );
   }, [selectedLandmarkId, viewMode]);
 
-  // Listen to rover and sol selection changes to execute camera fly-to / Ground POV
+  // Synchronize 3D Globe camera ONLY when returning from 2D regional cartography into 3D
   useEffect(() => {
-    if (!viewRef.current || !selectedRoverId) return;
+    const wasRegional = prevViewModeRef.current === 'REGIONAL_2D';
+    prevViewModeRef.current = viewMode;
+
+    if (!wasRegional || viewMode !== 'GLOBAL_3D' || !viewRef.current || !regionalCenter) {
+      return;
+    }
+
+    const p = viewRef.current.goTo(
+      {
+        position: {
+          x: regionalCenter.longitude,
+          y: regionalCenter.latitude,
+          z: 1800000,
+          spatialReference: { wkid: MARS_PLANETARY_SR.wkid },
+        },
+        heading: 0,
+        tilt: 0,
+      },
+      { duration: 800 }
+    );
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  }, [viewMode, regionalCenter]);
+
+  // Listen to rover and sol selection changes to execute camera fly-to / Ground POV ONLY when traverse is active
+  useEffect(() => {
+    if (!viewRef.current || !selectedRoverId || !isRoverTraverseVisible) return;
 
     const milestones = getRoverMilestones(selectedRoverId);
     if (!milestones || milestones.length === 0) return;
@@ -544,6 +587,7 @@ export const MarsGlobeView: React.FC = () => {
     let isMounted = true;
     let viewInstance: any = null;
     let cameraWatchHandle: any = null;
+    let cameraPositionWatchHandle: any = null;
     let scaleWatchHandle: any = null;
 
     async function initMarsGlobe() {
@@ -747,7 +791,7 @@ export const MarsGlobeView: React.FC = () => {
           }
         }
 
-        // Auto-switch to 2D Regional Map only when in GLOBAL_3D mode and user zooms in below 550 km
+        // Auto-switch to 2D Regional Map only when in GLOBAL_3D mode and user zooms in below 600 km
         cameraWatchHandle = reactiveUtils.watch(
           () => (view.camera?.position?.z as number | undefined),
           (altitude?: number) => {
@@ -755,21 +799,66 @@ export const MarsGlobeView: React.FC = () => {
             if (
               currentMode === 'GLOBAL_3D' &&
               typeof altitude === 'number' &&
-              altitude <= 550000
+              altitude <= 600000
             ) {
-              const centerPoint = view.center || (view.camera as any)?.target;
+              const screenCenter = { x: (view.width || 800) / 2, y: (view.height || 600) / 2 };
+              const groundPoint = view.toMap ? view.toMap(screenCenter) : null;
+              const target = groundPoint || view.center;
+              const lon = typeof target?.longitude === 'number' ? target.longitude : target?.x;
+              const lat = typeof target?.latitude === 'number' ? target.latitude : target?.y;
               if (
-                centerPoint &&
-                typeof centerPoint.latitude === 'number' &&
-                typeof centerPoint.longitude === 'number'
+                typeof lon === 'number' &&
+                typeof lat === 'number' &&
+                !isNaN(lon) &&
+                !isNaN(lat)
               ) {
+                const roundedLon = Number(lon.toFixed(4));
+                const roundedLat = Number(lat.toFixed(4));
                 setRegionalCenter({
-                  longitude: Number(centerPoint.longitude.toFixed(4)),
-                  latitude: Number(centerPoint.latitude.toFixed(4)),
+                  longitude: roundedLon,
+                  latitude: roundedLat,
                   scale: 500000,
                 });
+                const match = findRegionAtCoordinates(roundedLon, roundedLat);
+                useAppStore.setState({ selectedRegionId: match ? match.id : null });
               }
               setViewMode('REGIONAL_2D');
+              // Back off camera altitude to 1,500,000m to prevent instant bounce back when returning to 3D
+              if (view.camera) {
+                const safeCam = view.camera.clone();
+                safeCam.position.z = 1500000;
+                view.goTo(safeCam, { duration: 0 });
+              }
+            }
+          }
+        );
+
+        // Live camera aim point tracking to synchronize regionalCenter, telemetry, and region ID in 3D
+        cameraPositionWatchHandle = reactiveUtils.watch(
+          () => [view.camera?.position?.x, view.camera?.position?.y, view.camera?.position?.z],
+          () => {
+            if (useAppStore.getState().viewMode !== 'GLOBAL_3D') return;
+            const screenCenter = { x: (view.width || 800) / 2, y: (view.height || 600) / 2 };
+            const groundPoint = view.toMap ? view.toMap(screenCenter) : null;
+            const target = groundPoint || view.camera?.position;
+            if (target) {
+              const lon = typeof target.longitude === 'number' ? target.longitude : target.x;
+              const lat = typeof target.latitude === 'number' ? target.latitude : target.y;
+              if (typeof lon === 'number' && !isNaN(lon) && typeof lat === 'number' && !isNaN(lat)) {
+                const roundedLon = Number(lon.toFixed(4));
+                const roundedLat = Number(lat.toFixed(4));
+                setRegionalCenter({
+                  longitude: roundedLon,
+                  latitude: roundedLat,
+                  scale: 500000,
+                });
+                setTelemetry({
+                  longitude: roundedLon,
+                  latitude: roundedLat,
+                });
+                const match = findRegionAtCoordinates(roundedLon, roundedLat);
+                useAppStore.setState({ selectedRegionId: match ? match.id : null });
+              }
             }
           }
         );
@@ -926,6 +1015,13 @@ export const MarsGlobeView: React.FC = () => {
           // ignore cleanup errors
         }
       }
+      if (cameraPositionWatchHandle) {
+        try {
+          cameraPositionWatchHandle.remove();
+        } catch {
+          // ignore cleanup errors
+        }
+      }
       if (scaleWatchHandle) {
         try {
           scaleWatchHandle.remove();
@@ -1002,6 +1098,14 @@ export const MarsGlobeView: React.FC = () => {
           >
             <Map className="w-3.5 h-3.5" />
             <span>EXPLORE 2D &rarr;</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedLandingSiteId(null)}
+            aria-label="Dismiss target site callout"
+            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors ml-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+          >
+            <span className="text-sm font-bold leading-none">&times;</span>
           </button>
         </div>
       )}

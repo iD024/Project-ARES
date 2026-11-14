@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { MARS_REGIONS, getRegionById, MarsRegion } from './marsRegions.ts';
+import { MARS_REGIONS, getRegionById, findRegionAtCoordinates, MarsRegion } from './marsRegions.ts';
 
 describe('marsRegions configuration', () => {
   it('defines the core verified Martian scientific exploration regions', () => {
@@ -44,6 +44,24 @@ describe('marsRegions configuration', () => {
 
     const nonexistent = getRegionById('unknown-region');
     expect(nonexistent).toBeUndefined();
+  });
+
+  it('dynamically resolves matching region at coordinates with findRegionAtCoordinates', () => {
+    // Jezero Crater coordinates
+    const jezero = findRegionAtCoordinates(77.45, 18.38);
+    expect(jezero?.id).toBe('jezero-crater');
+
+    // Olympus Mons coordinates
+    const olympus = findRegionAtCoordinates(-133.8, 18.65);
+    expect(olympus?.id).toBe('olympus-mons');
+
+    // Gale Crater coordinates
+    const gale = findRegionAtCoordinates(137.44, -4.59);
+    expect(gale?.id).toBe('gale-crater');
+
+    // Remote uncatalogued terrain
+    const uncatalogued = findRegionAtCoordinates(10.0, 50.0);
+    expect(uncatalogued).toBeUndefined();
   });
 });
 

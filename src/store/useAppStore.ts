@@ -117,9 +117,8 @@ const INITIAL_LAYERS: LayerItem[] = DATASET_REGISTRY.map((dataset) => ({
   coverage: dataset.coverage,
   visible:
     dataset.id === 'mars-viking-mdim21' ||
-    dataset.id === 'mars-nomenclature' ||
-    dataset.id === 'mars-mcolordem-shaded-relief',
-  opacity: dataset.id === 'mars-mcolordem-shaded-relief' ? 0.8 : (dataset.defaultOpacity ?? 1.0),
+    dataset.id === 'mars-nomenclature',
+  opacity: dataset.defaultOpacity ?? 1.0,
   sourceUrl: dataset.endpointUrl,
   whatItIs: dataset.whatItIs,
   howItLooks: dataset.howItLooks,
@@ -134,20 +133,11 @@ export const useAppStore = create<AppState>((set) => ({
   viewMode: 'GLOBAL_3D',
   activeDrawer: null,
   activeModal: null,
-  selectedLandingSiteId: 'perseverance',
-  selectedLandmarkId: 'olympus-mons',
-  selectedRegionId: 'jezero-crater',
-  isLegendOpen: true,
-  activeTerrainInspection: {
-    longitude: 77.45,
-    latitude: 18.38,
-    elevationMeters: -2560,
-    regionalSlopeDegrees: 1.8,
-    slopeCategory: 'GENTLE',
-    quadrangleName: 'MC-11 Syrtis Major',
-    geologicalPeriod: 'Noachian',
-    classification: 'DERIVED',
-  },
+  selectedLandingSiteId: null,
+  selectedLandmarkId: null,
+  selectedRegionId: null,
+  isLegendOpen: false,
+  activeTerrainInspection: null,
   // Phase 07 Measurement
   activeMeasurementTool: null,
   measurementPoints: [],
@@ -156,7 +146,7 @@ export const useAppStore = create<AppState>((set) => ({
   // Phase 08 Mission & Rover Intelligence
   selectedRoverId: 'perseverance',
   activeSol: 1150,
-  isRoverTraverseVisible: true,
+  isRoverTraverseVisible: false,
   isMissionControlOpen: false,
 
   // Phase 09 Route Planning State
@@ -192,9 +182,13 @@ export const useAppStore = create<AppState>((set) => ({
   setViewMode: (mode) => set({ viewMode: mode }),
 
   setActiveDrawer: (drawer) =>
-    set((state) => ({
-      activeDrawer: state.activeDrawer === drawer ? null : drawer,
-    })),
+    set((state) => {
+      const nextDrawer = state.activeDrawer === drawer ? null : drawer;
+      return {
+        activeDrawer: nextDrawer,
+        isMissionControlOpen: nextDrawer ? false : state.isMissionControlOpen,
+      };
+    }),
 
   setActiveModal: (modal) => set({ activeModal: modal }),
 
@@ -282,7 +276,12 @@ export const useAppStore = create<AppState>((set) => ({
   setSelectedRoverId: (roverId) => set({ selectedRoverId: roverId }),
   setActiveSol: (sol) => set({ activeSol: sol }),
   setRoverTraverseVisible: (visible) => set({ isRoverTraverseVisible: visible }),
-  setIsMissionControlOpen: (open) => set({ isMissionControlOpen: open }),
+  setIsMissionControlOpen: (open) =>
+    set((state) => ({
+      isMissionControlOpen: open,
+      isRoverTraverseVisible: open ? true : state.isRoverTraverseVisible,
+      activeDrawer: open ? null : state.activeDrawer,
+    })),
 
   // Phase 09 Actions
   setRouteOrigin: (coord) => set({ routeOrigin: coord }),

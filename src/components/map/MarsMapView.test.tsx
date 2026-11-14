@@ -167,6 +167,40 @@ describe('MarsMapView component', () => {
     expect(useAppStore.getState().viewMode).toBe('GLOBAL_3D');
   });
 
+  it('does not force camera to Jezero Crater when isRoverTraverseVisible is false', async () => {
+    (window as any).WebGLRenderingContext = vi.fn();
+    mockMapView.goTo.mockClear();
+
+    useAppStore.setState({
+      viewMode: 'REGIONAL_2D',
+      regionalCenter: { longitude: -133.8, latitude: 18.65, scale: 500000 },
+      isRoverTraverseVisible: false,
+      selectedRoverId: 'perseverance',
+      activeSol: 1150,
+    });
+
+    render(<MarsMapView />);
+
+    await waitFor(() => {
+      expect(mockMapView.when).toHaveBeenCalled();
+    });
+
+    // Verify goTo was called with regionalCenter (Olympus Mons: -133.8, 18.65), NOT rover coordinates (77.418, 18.385)
+    expect(mockMapView.goTo).toHaveBeenCalledWith(
+      expect.objectContaining({
+        center: [-133.8, 18.65],
+        scale: 500000,
+      }),
+      expect.anything()
+    );
+    expect(mockMapView.goTo).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        center: [expect.closeTo(77.418, 1), expect.closeTo(18.385, 1)],
+      }),
+      expect.anything()
+    );
+  });
+
   it('mounts useMarsLayerSync hook with MapView reference and readiness state', async () => {
     (window as any).WebGLRenderingContext = vi.fn();
 

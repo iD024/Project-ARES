@@ -31,6 +31,21 @@ describe('ARES Application Shell & 3D Mars Globe (Phase 02)', () => {
     expect(screen.getAllByText(/Viking MDIM 2.1 Color/i).length).toBeGreaterThanOrEqual(1);
   });
 
+  it('switches cleanly from Mission Control to Layers drawer without drawer collisions', () => {
+    render(<App />);
+
+    // 1. Open Mission Control
+    const missionsBtn = screen.getByRole('button', { name: /Missions/i });
+    fireEvent.click(missionsBtn);
+    expect(screen.getByText('MISSION CONTROL')).toBeInTheDocument();
+
+    // 2. Click Layers button -> Mission Control must close and Layers drawer must open cleanly
+    const layersBtn = screen.getByRole('button', { name: /Layers/i });
+    fireEvent.click(layersBtn);
+    expect(screen.getByText('Planetary Layer Catalog')).toBeInTheDocument();
+    expect(screen.queryByText('MISSION CONTROL')).not.toBeInTheDocument();
+  });
+
   it('opens Tools drawer when Sites trigger is clicked', () => {
     render(<App />);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore.ts';
 import {
   evaluateLayerStatus,
@@ -7,7 +7,7 @@ import {
 } from '../../services/data/layerResolutionService.ts';
 import { getDatasetById } from '../../services/data/datasetRegistry.ts';
 import { LayerItem } from '../../types/hud.ts';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, X } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export interface ExtentCoverageBannerProps {
@@ -97,7 +97,9 @@ export const ExtentCoverageBanner: React.FC<ExtentCoverageBannerProps> = ({
     }
   }
 
-  if (notices.length === 0) {
+  const [dismissedMessage, setDismissedMessage] = useState<string | null>(null);
+
+  if (notices.length === 0 || dismissedMessage === notices[0].message) {
     return null;
   }
 
@@ -108,7 +110,7 @@ export const ExtentCoverageBanner: React.FC<ExtentCoverageBannerProps> = ({
       aria-live="polite"
       className={clsx(
         'absolute top-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto select-none',
-        'flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-2xl',
+        'flex items-center gap-2 px-3.5 py-1.5 rounded-xl backdrop-blur-2xl',
         'bg-[#080A0F]/90 border border-amber-500/40 text-amber-300 shadow-[0_12px_32px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.1)]',
         'font-mono text-xs max-w-xl text-center',
         className
@@ -116,6 +118,14 @@ export const ExtentCoverageBanner: React.FC<ExtentCoverageBannerProps> = ({
     >
       <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 animate-pulse" />
       <span className="truncate">{notices[0].message}</span>
+      <button
+        type="button"
+        aria-label="Dismiss banner"
+        onClick={() => setDismissedMessage(notices[0].message)}
+        className="p-1 rounded-lg text-amber-300/60 hover:text-amber-200 hover:bg-amber-500/20 transition-colors ml-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-400"
+      >
+        <X className="w-3.5 h-3.5" />
+      </button>
     </aside>
   );
 };

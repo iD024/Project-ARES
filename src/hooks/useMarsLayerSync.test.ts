@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useMarsLayerSync } from './useMarsLayerSync.ts';
+import { useMarsLayerSync, addLayerToMap } from './useMarsLayerSync.ts';
 import { useAppStore } from '../store/useAppStore.ts';
 import { DATASET_REGISTRY } from '../services/data/datasetRegistry.ts';
 import * as layerService from '../services/data/layerService.ts';
@@ -11,6 +11,8 @@ class MockArcGISLayer {
   url?: string;
   urlTemplate?: string;
   title?: string;
+  type?: string;
+  declaredClass?: string;
   visible: boolean = true;
   opacity: number = 1.0;
   copyright?: string;
@@ -23,6 +25,8 @@ class MockArcGISLayer {
     this.url = options.url;
     this.urlTemplate = options.urlTemplate;
     this.title = options.title;
+    this.type = options.type;
+    this.declaredClass = options.declaredClass;
     this.visible = options.visible ?? true;
     this.opacity = options.opacity ?? 1.0;
     this.copyright = options.copyright;
@@ -44,7 +48,10 @@ vi.mock('@arcgis/core/layers/GeoJSONLayer', () => ({
 }));
 
 vi.mock('@arcgis/core/layers/ElevationLayer', () => ({
-  default: class MockElevationLayer extends MockArcGISLayer {},
+  default: class MockElevationLayer extends MockArcGISLayer {
+    type = 'elevation';
+    declaredClass = 'esri.layers.ElevationLayer';
+  },
 }));
 
 vi.mock('@arcgis/core/layers/WMSLayer', () => ({
@@ -250,6 +257,17 @@ describe('useMarsLayerSync Hook', () => {
     const ctxInstance = view.map.layers.find((l) => l.id === 'mars-ctx-mosaic');
     expect(ctxInstance.visible).toBe(true);
     expect(result.current.syncedLayerCount).toBe(3);
+  });
+
+  it('routes ElevationLayer to ground.layers when available and skips adding to map.layers when ground is absent', async () => {
+    // Direct addLayerToMap check when ground is absent (e.g. 2D MapView)
+    const mockMapNoGround = { layers: [], add: vi.fn() };
+    const mockElevation = new MockArcGISLayer({ id: 'mola', type: 'elevation' });
+    mockElevation.type = 'elevation';
+    mockElevation.declaredClass = 'esri.layers.ElevationLayer';
+
+    addLayerToMap(mockMapNoGround, mockElevation);
+    expect(mockMapNoGround.add).not.toHaveBeenCalled();
   });
 
   it('safely cleans up and removes managed layers on unmount without touching pre-existing map layers', async () => {

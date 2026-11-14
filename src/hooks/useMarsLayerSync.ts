@@ -20,16 +20,15 @@ export function addLayerToMap(map: any, instance: any) {
   if (!map || !instance) return;
 
   // Route ElevationLayer to 3D ground mesh if supported
-  if (
-    (instance.declaredClass === 'esri.layers.ElevationLayer' || instance.type === 'elevation') &&
-    map.ground &&
-    map.ground.layers
-  ) {
-    if (typeof map.ground.layers.add === 'function') {
-      map.ground.layers.add(instance);
-    } else if (Array.isArray(map.ground.layers) && !map.ground.layers.includes(instance)) {
-      map.ground.layers.push(instance);
+  if (instance.declaredClass === 'esri.layers.ElevationLayer' || instance.type === 'elevation') {
+    if (map.ground && map.ground.layers) {
+      if (typeof map.ground.layers.add === 'function') {
+        map.ground.layers.add(instance);
+      } else if (Array.isArray(map.ground.layers) && !map.ground.layers.includes(instance)) {
+        map.ground.layers.push(instance);
+      }
     }
+    // ElevationLayer is strictly for 3D terrain ground surfaces and must not be added to operational map.layers
     return;
   }
 

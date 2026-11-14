@@ -17,13 +17,14 @@ describe('Phase 05 & 06 Layer Sync and Elevation Verification Reproducer', () =>
     expect(config.url).toContain('.jpg');
   });
 
-  it('resolves mars-ctx-mosaic to webtile WMTS format', () => {
+  it('resolves mars-ctx-mosaic to TileLayer format with authoritative Esri/USGS service', () => {
     const ctx = getDatasetById('mars-ctx-mosaic');
     expect(ctx).toBeDefined();
-    expect(ctx?.format).toBe('WMTS');
+    expect(ctx?.format).toBe('TILE_SERVER');
 
     const config = resolveLayerConfig(ctx!);
-    expect(config.layerType).toBe('webtile');
+    expect(config.layerType).toBe('tile');
+    expect(config.url).toBe('https://astro.arcgis.com/arcgis/rest/services/OnMars/CTX/MapServer');
   });
 
   it('resolves mars-regional-slope to webtile format', () => {

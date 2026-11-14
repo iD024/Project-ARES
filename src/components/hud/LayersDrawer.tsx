@@ -65,10 +65,19 @@ export const LayersDrawer: React.FC<LayersDrawerProps> = ({ isOpen, onClose }) =
   };
 
   const handleSolo = (targetLayerId: string) => {
+    const targetLayer = layers.find((l) => l.id === targetLayerId);
     setLayerVisibility(targetLayerId, true);
+
+    const isBaseRaster =
+      targetLayer?.category === 'surface' || targetLayer?.category === 'topography';
+
     layers.forEach((l) => {
-      if (l.id !== targetLayerId && l.category === 'surface') {
-        setLayerVisibility(l.id, false);
+      if (l.id !== targetLayerId) {
+        if (isBaseRaster && (l.category === 'surface' || l.category === 'topography')) {
+          setLayerVisibility(l.id, false);
+        } else if (!isBaseRaster && l.category === targetLayer?.category) {
+          setLayerVisibility(l.id, false);
+        }
       }
     });
   };

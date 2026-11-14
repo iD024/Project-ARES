@@ -26,6 +26,8 @@ const mockSceneView = {
   toMap: vi.fn(),
   hitTest: vi.fn().mockResolvedValue({ results: [] }),
   scale: 15000000,
+  width: 1920,
+  height: 1080,
   camera: {
     position: { x: 0, y: 0, z: 15000000 },
     clone: vi.fn().mockReturnValue({ position: { z: 15000000 }, heading: 0, tilt: 0 }),
@@ -166,6 +168,40 @@ describe('MarsGlobeView & GlobeControls', () => {
       expect(useAppStore.getState().viewMode).toBe('REGIONAL_2D');
       expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(-1.95, 2);
       expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(-5.53, 2);
+    });
+
+    it('auto-transitions to REGIONAL_2D using raycasted ground intersection and updates regionalCenter', async () => {
+      (window as any).WebGLRenderingContext = vi.fn();
+      mockSceneView.toMap.mockReturnValue({
+        longitude: 137.44,
+        latitude: -4.59,
+      });
+      useAppStore.setState({
+        viewMode: 'GLOBAL_3D',
+        regionalCenter: { longitude: 0, latitude: 0, scale: 500000 },
+      });
+
+      render(<MarsGlobeView />);
+
+      await waitFor(() => {
+        expect(mockSceneView.when).toHaveBeenCalled();
+      });
+
+      // Find the camera altitude watch callback
+      const cameraWatch = mockReactiveWatchCallbacks.find((w) => {
+        mockSceneView.camera.position.z = 500000;
+        return w.getter() === 500000;
+      });
+      expect(cameraWatch).toBeDefined();
+
+      // Trigger the watch callback
+      act(() => {
+        cameraWatch!.callback(500000);
+      });
+
+      expect(useAppStore.getState().viewMode).toBe('REGIONAL_2D');
+      expect(useAppStore.getState().regionalCenter.longitude).toBeCloseTo(137.44, 2);
+      expect(useAppStore.getState().regionalCenter.latitude).toBeCloseTo(-4.59, 2);
     });
 
     it('mounts useMarsLayerSync hook with SceneView reference and readiness state', async () => {

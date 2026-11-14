@@ -78,10 +78,45 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
     }
     case 'webtile': {
       try {
-        const { default: WebTileLayer } = await import('@arcgis/core/layers/WebTileLayer');
+        const [
+          { default: WebTileLayer },
+          { default: SpatialReference },
+          { default: TileInfo },
+          { default: Point },
+        ] = await Promise.all([
+          import('@arcgis/core/layers/WebTileLayer'),
+          import('@arcgis/core/geometry/SpatialReference'),
+          import('@arcgis/core/layers/support/TileInfo'),
+          import('@arcgis/core/geometry/Point'),
+        ]);
+
+        const marsSR = new SpatialReference({ wkid: 104971 });
         const urlTemplate = config.url.includes('{')
           ? config.url
           : `${config.url.replace(/\/+$/, '')}/{level}/{col}/{row}.png`;
+
+        // Mars Equirectangular Tile Matrix (NASA Trek WKID 104905 / 104971)
+        const tileInfo = new TileInfo({
+          dpi: 96,
+          size: [256, 256],
+          spatialReference: marsSR,
+          origin: new Point({ x: -180, y: 90, spatialReference: marsSR }),
+          lods: [
+            { level: 0, scale: 279227636.3, resolution: 0.703125 },
+            { level: 1, scale: 139613818.1, resolution: 0.3515625 },
+            { level: 2, scale: 69806909.1, resolution: 0.17578125 },
+            { level: 3, scale: 34903454.5, resolution: 0.087890625 },
+            { level: 4, scale: 17451727.3, resolution: 0.0439453125 },
+            { level: 5, scale: 8725863.6, resolution: 0.02197265625 },
+            { level: 6, scale: 4362931.8, resolution: 0.010986328125 },
+            { level: 7, scale: 2181465.9, resolution: 0.0054931640625 },
+            { level: 8, scale: 1090732.9, resolution: 0.00274658203125 },
+            { level: 9, scale: 545366.5, resolution: 0.001373291015625 },
+            { level: 10, scale: 272683.2, resolution: 0.0006866455078125 },
+            { level: 11, scale: 136341.6, resolution: 0.00034332275390625 },
+            { level: 12, scale: 68170.8, resolution: 0.000171661376953125 },
+          ],
+        });
 
         const options: any = {
           id: config.id,
@@ -91,6 +126,8 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
           copyright: config.copyright,
           minScale: config.minScale,
           maxScale: config.maxScale,
+          spatialReference: marsSR,
+          tileInfo,
         };
 
         if (urlTemplate.includes('{subDomain}')) {
@@ -121,7 +158,14 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
       });
     }
     case 'geojson': {
-      const { default: GeoJSONLayer } = await import('@arcgis/core/layers/GeoJSONLayer');
+      const [
+        { default: GeoJSONLayer },
+        { default: SpatialReference },
+      ] = await Promise.all([
+        import('@arcgis/core/layers/GeoJSONLayer'),
+        import('@arcgis/core/geometry/SpatialReference'),
+      ]);
+
       const geojsonProps: any = {
         id: config.id,
         url: config.url,
@@ -130,6 +174,7 @@ export async function createArcGISLayerInstance(dataset: DatasetEntry): Promise<
         copyright: config.copyright,
         minScale: config.minScale,
         maxScale: config.maxScale,
+        spatialReference: new SpatialReference({ wkid: 104971 }),
       };
 
       if (dataset.id === 'mars-nomenclature') {

@@ -100,6 +100,43 @@ describe('LayersDrawer, ToolsDrawer & ProvenanceModal', () => {
       expect(screen.getByText(/Zoom in below 1:2,500,000/i)).toBeInTheDocument();
     });
 
+    it('isolates target layer when solo button is clicked by deactivating other base raster layers', () => {
+      // Both viking and shaded relief are initially visible
+      useAppStore.setState({
+        layers: DATASET_REGISTRY.map((dataset) => ({
+          id: dataset.id,
+          name: dataset.name,
+          subtitle: dataset.description,
+          category: dataset.category,
+          classification: dataset.classification,
+          provider: dataset.provider,
+          resolution: dataset.resolution,
+          coverage: dataset.coverage,
+          visible: dataset.id === 'mars-viking-mdim21' || dataset.id === 'mars-mcolordem-shaded-relief',
+          opacity: 1.0,
+          sourceUrl: dataset.endpointUrl,
+          healthStatus: 'ONLINE',
+          minScale: dataset.minScale,
+          maxScale: dataset.maxScale,
+          extent: dataset.extent,
+        })),
+      });
+
+      render(<LayersDrawer isOpen={true} onClose={() => {}} />);
+
+      // Click Solo on Viking MDIM 2.1
+      const soloVikingBtn = screen.getByLabelText(/Solo Viking MDIM 2.1 Color Mosaic/i);
+      fireEvent.click(soloVikingBtn);
+
+      const stateAfterVikingSolo = useAppStore.getState().layers;
+      const viking = stateAfterVikingSolo.find((l) => l.id === 'mars-viking-mdim21');
+      const shadedRelief = stateAfterVikingSolo.find((l) => l.id === 'mars-mcolordem-shaded-relief');
+
+      expect(viking?.visible).toBe(true);
+      // Shaded relief MUST be hidden when soloing Viking mosaic!
+      expect(shadedRelief?.visible).toBe(false);
+    });
+
     it('asserts Solo action button toggles only this layer on and disables all other surface layers', () => {
       // Initially, Viking MDIM 2.1 is visible (surface) and CTX Mosaic is hidden (surface)
       const initialViking = useAppStore.getState().layers.find((l) => l.id === 'mars-viking-mdim21');

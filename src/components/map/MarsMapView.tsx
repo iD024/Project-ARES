@@ -6,7 +6,7 @@ import {
   MARS_PLANETARY_SR,
 } from '../../config/marsLayers.ts';
 import { MARS_LANDING_SITES } from '../../config/mars.ts';
-import { MARS_REGIONS, getRegionById } from '../../config/marsRegions.ts';
+import { MARS_REGIONS, getRegionById, findRegionAtCoordinates } from '../../config/marsRegions.ts';
 import { MapControls } from './MapControls.tsx';
 import {
   queryPointElevation,
@@ -32,7 +32,9 @@ export const MarsMapView: React.FC = () => {
     selectedRegionId,
     setSelectedLandingSiteId,
     setSelectedRegionId,
+    telemetry,
     setTelemetry,
+    viewMode,
     setViewMode,
     activeTerrainInspection,
     setActiveTerrainInspection,
@@ -403,26 +405,39 @@ export const MarsMapView: React.FC = () => {
     viewRef.current.goTo({ zoom: viewRef.current.zoom - 1 }, { duration: 400 });
   }, []);
 
-  // Return to 3D Globe
+  // Return to 3D Globe with synchronized coordinates
   const handleReturnToGlobe = useCallback(() => {
+    if (viewRef.current?.center) {
+      const center = viewRef.current.center;
+      if (typeof center.longitude === 'number' && typeof center.latitude === 'number') {
+        useAppStore.getState().setRegionalCenter({
+          longitude: Number(center.longitude.toFixed(4)),
+          latitude: Number(center.latitude.toFixed(4)),
+          scale: 12000000,
+        });
+      }
+    }
     setViewMode('GLOBAL_3D');
   }, [setViewMode]);
 
-  // Sync regionalCenter changes to 2D MapView
+  // Sync regionalCenter and viewMode activation changes to 2D MapView
   useEffect(() => {
     if (!viewRef.current || !regionalCenter) return;
-    viewRef.current.goTo(
-      {
-        center: [regionalCenter.longitude, regionalCenter.latitude],
-        scale: regionalCenter.scale ?? 500000,
-      },
-      { duration: 1200 }
-    );
-  }, [regionalCenter]);
+    if (viewMode === 'REGIONAL_2D') {
+      const p = viewRef.current.goTo(
+        {
+          center: [regionalCenter.longitude, regionalCenter.latitude],
+          scale: regionalCenter.scale ?? 500000,
+        },
+        { duration: 800 }
+      );
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    }
+  }, [regionalCenter, viewMode, isMapReady]);
 
-  // Sync rover and sol selection to 2D MapView extent
+  // Sync rover and sol selection to 2D MapView extent ONLY when rover traverse is actively visible
   useEffect(() => {
-    if (!viewRef.current || !selectedRoverId) return;
+    if (!viewRef.current || !selectedRoverId || !isRoverTraverseVisible) return;
 
     const milestones = getRoverMilestones(selectedRoverId);
     if (!milestones || milestones.length === 0) return;
@@ -434,14 +449,15 @@ export const MarsMapView: React.FC = () => {
 
     if (!targetMilestone) return;
 
-    viewRef.current.goTo(
+    const p = viewRef.current.goTo(
       {
         center: [targetMilestone.longitude, targetMilestone.latitude],
         scale: activeSol !== null ? 25000 : 75000,
       },
       { duration: 1200 }
     );
-  }, [selectedRoverId, activeSol]);
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  }, [selectedRoverId, activeSol, isRoverTraverseVisible, isMapReady]);
 
   // Mount ArcGIS MapView
   useEffect(() => {
@@ -656,6 +672,13 @@ export const MarsMapView: React.FC = () => {
               typeof scale === 'number' &&
               scale >= 12000000
             ) {
+              if (view.center && typeof view.center.longitude === 'number' && typeof view.center.latitude === 'number') {
+                useAppStore.getState().setRegionalCenter({
+                  longitude: Number(view.center.longitude.toFixed(4)),
+                  latitude: Number(view.center.latitude.toFixed(4)),
+                  scale: 12000000,
+                });
+              }
               setViewMode('GLOBAL_3D');
             }
           }
@@ -817,9 +840,22 @@ export const MarsMapView: React.FC = () => {
           <span className="font-semibold tracking-wider uppercase">2D Regional Cartography</span>
           <span className="text-slate-500">|</span>
           <span className="text-slate-300">
-            {selectedRegionId
-              ? getRegionById(selectedRegionId)?.name ?? 'Surface Extent'
-              : 'Surface Extent'}
+            {(() => {
+              if (selectedRegionId) {
+                const r = getRegionById(selectedRegionId);
+                if (r) return r.name;
+              }
+              const lat = regionalCenter?.latitude ?? telemetry?.latitude;
+              const lon = regionalCenter?.longitude ?? telemetry?.longitude;
+              if (typeof lat === 'number' && typeof lon === 'number') {
+                const r = findRegionAtCoordinates(lon, lat);
+                if (r) return r.name;
+                const latStr = `${Math.abs(lat).toFixed(1)}°${lat >= 0 ? 'N' : 'S'}`;
+                const lonStr = `${Math.abs(lon).toFixed(1)}°${lon >= 0 ? 'E' : 'W'}`;
+                return `Surface Extent (${latStr}, ${lonStr})`;
+              }
+              return 'Surface Extent';
+            })()}
           </span>
         </div>
       </div>

@@ -20,6 +20,8 @@ export const TopCommandBar: React.FC = () => {
   const {
     viewMode,
     setViewMode,
+    telemetry,
+    setRegionalCenter,
     activeDrawer,
     setActiveDrawer,
     activeModal,
@@ -39,6 +41,20 @@ export const TopCommandBar: React.FC = () => {
   ];
 
   const isMeasuring = activeMeasurementTool !== null;
+
+  const handleModeChange = (mode: ViewMode) => {
+    if (mode === viewMode) return;
+    if (mode === 'REGIONAL_2D' && viewMode === 'GLOBAL_3D') {
+      if (typeof telemetry?.longitude === 'number' && typeof telemetry?.latitude === 'number') {
+        setRegionalCenter({
+          longitude: telemetry.longitude,
+          latitude: telemetry.latitude,
+          scale: 500000,
+        });
+      }
+    }
+    setViewMode(mode);
+  };
 
   return (
     <header className="absolute top-4 left-4 right-4 z-20 pointer-events-none flex items-center justify-between gap-3 font-sans">
@@ -70,7 +86,7 @@ export const TopCommandBar: React.FC = () => {
               key={m.id}
               role="button"
               aria-label={m.label}
-              onClick={() => setViewMode(m.id)}
+              onClick={() => handleModeChange(m.id)}
               className={clsx(
                 'flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40',
                 isActive

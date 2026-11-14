@@ -42,13 +42,24 @@ describe('ArcGIS Layer Factory & Resolver', () => {
     expect(config.url).toBe(geology?.endpointUrl);
   });
 
-  it('resolves scale constraints (minScale and maxScale) onto ResolvedLayerConfig', () => {
+  it('resolves scale constraints (minScale and maxScale) onto ResolvedLayerConfig for CTX TileLayer', () => {
     const ctx = getDatasetById('mars-ctx-mosaic');
     expect(ctx).toBeDefined();
 
     const config = resolveLayerConfig(ctx!);
+    expect(config.layerType).toBe('tile');
+    expect(config.url).toBe('https://astro.arcgis.com/arcgis/rest/services/OnMars/CTX/MapServer');
     expect(config.minScale).toBe(2500000);
     expect(config.maxScale).toBe(25000);
+  });
+
+  it('assigns GCS_Mars_2000 (WKID 104971) spatial reference to GeoJSONLayer instances', async () => {
+    const nomenclature = getDatasetById('mars-nomenclature');
+    expect(nomenclature).toBeDefined();
+
+    const layer = await createArcGISLayerInstance(nomenclature!);
+    expect(layer.spatialReference).toBeDefined();
+    expect(layer.spatialReference.wkid).toBe(104971);
   });
 
   it('resolves WMTS format dataset into webtile layer configuration with urlTemplate', () => {
