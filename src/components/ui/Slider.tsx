@@ -23,9 +23,9 @@ export const Slider: React.FC<SliderProps> = ({
 
   return (
     <div className={`flex flex-col gap-1.5 font-mono text-xs ${className}`}>
-      <div className="flex items-center justify-between text-slate-300">
-        <span className="text-[11px] text-slate-400 font-medium">{label}</span>
-        <span className="text-[11px] text-ares-cyan font-semibold">{percentage}%</span>
+      <div className="flex items-center justify-between text-white/80">
+        <span className="text-[11px] text-white/50 font-medium tracking-wide uppercase">{label}</span>
+        <span className="text-[11px] text-cyan-400 font-bold tabular-nums">{percentage}%</span>
       </div>
       <input
         type="range"
@@ -39,9 +39,10 @@ export const Slider: React.FC<SliderProps> = ({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-ares-rust focus:outline-none"
+        className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white hover:accent-orange-500 focus:outline-none transition-all"
       />
     </div>
   );
 };
 
+export default Slider;

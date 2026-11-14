@@ -98,10 +98,10 @@ export const RoverMilestoneSlider: React.FC = () => {
     <aside
       role="region"
       aria-label="Rover Sol Milestone Timeline"
-      className="fixed bottom-24 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex flex-col gap-2 p-3.5 rounded-2xl backdrop-blur-2xl bg-black/90 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.85)] font-mono text-xs text-white w-[94vw] max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-300"
+      className="fixed bottom-24 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex flex-col gap-2 p-3.5 rounded-2xl backdrop-blur-2xl bg-[#080A0F]/92 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)] font-mono text-xs text-white w-[94vw] max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-300"
     >
       {/* Header: Rover Badge, Milestone Name & Dismiss */}
-      <div className="flex items-start justify-between gap-3 pb-2 border-b border-white/10">
+      <div className="flex items-start justify-between gap-3 pb-2 border-b border-white/[0.08]">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="w-8 h-8 rounded-xl bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-orange-300 shrink-0">
             <Compass className="w-4 h-4" />
@@ -114,7 +114,7 @@ export const RoverMilestoneSlider: React.FC = () => {
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 border border-white/15 text-white">
                 SOL {currentMilestone.sol}
               </span>
-              <span className="px-1.5 py-0.2 rounded-md text-[9px] font-bold bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">
+              <span className="px-1.5 py-0.2 rounded-md text-[9px] font-bold bg-emerald-950/60 border border-emerald-500/40 text-emerald-300">
                 PDS ARCHIVE
               </span>
             </div>
@@ -128,36 +128,36 @@ export const RoverMilestoneSlider: React.FC = () => {
           type="button"
           aria-label="Close Rover Timeline"
           onClick={() => setRoverTraverseVisible(false)}
-          className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+          className="p-1.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       {/* Discovery Summary */}
-      <p className="text-xs text-slate-300 font-sans leading-relaxed">
+      <p className="text-xs text-white/70 font-sans leading-relaxed">
         {currentMilestone.discoverySummary}
       </p>
 
       {/* Telemetry Metrics Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-1.5 px-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-[11px]">
-        <div className="flex items-center gap-1.5 text-slate-300">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-1.5 px-2.5 rounded-xl bg-white/[0.035] border border-white/[0.08] text-[11px]">
+        <div className="flex items-center gap-1.5 text-white/70">
           <Calendar className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-          <span className="text-slate-400">Date:</span>
-          <span className="font-semibold text-white truncate">{currentMilestone.earthDate}</span>
+          <span className="text-white/50">Date:</span>
+          <span className="font-semibold text-white truncate tabular-nums">{currentMilestone.earthDate}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-slate-300">
+        <div className="flex items-center gap-1.5 text-white/70">
           <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-          <span className="text-slate-400">Odom:</span>
-          <span className="font-semibold text-white">{currentMilestone.distanceKm.toFixed(2)} km</span>
+          <span className="text-white/50">Odom:</span>
+          <span className="font-semibold text-white tabular-nums">{currentMilestone.distanceKm.toFixed(2)} km</span>
         </div>
-        <div className="flex items-center gap-1.5 text-slate-300">
+        <div className="flex items-center gap-1.5 text-white/70">
           <Mountain className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-          <span className="text-slate-400">Elev:</span>
-          <span className="font-semibold text-white">{currentMilestone.elevationMeters} m</span>
+          <span className="text-white/50">Elev:</span>
+          <span className="font-semibold text-white tabular-nums">{currentMilestone.elevationMeters} m</span>
         </div>
-        <div className="flex items-center gap-1.5 text-slate-300">
-          <span className="text-slate-400">Unit:</span>
+        <div className="flex items-center gap-1.5 text-white/70">
+          <span className="text-white/50">Unit:</span>
           <span className="font-semibold text-amber-300 truncate">{currentMilestone.formation}</span>
         </div>
       </div>
@@ -165,11 +165,11 @@ export const RoverMilestoneSlider: React.FC = () => {
       {/* Scientific Instruments Active */}
       {currentMilestone.instrumentTargets && currentMilestone.instrumentTargets.length > 0 && (
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[10px] text-slate-400 uppercase font-semibold">TARGETS:</span>
+          <span className="text-[10px] text-white/50 uppercase font-semibold">TARGETS:</span>
           {currentMilestone.instrumentTargets.map((tgt) => (
             <span
               key={tgt}
-              className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-cyan-950/60 border border-cyan-500/30 text-cyan-200"
+              className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-cyan-950/40 border border-cyan-500/30 text-cyan-200"
             >
               {tgt}
             </span>
@@ -178,21 +178,21 @@ export const RoverMilestoneSlider: React.FC = () => {
       )}
 
       {/* Interactive Sol Scrubber Slider & Steppers */}
-      <div className="flex items-center gap-2 pt-1 border-t border-white/10">
+      <div className="flex items-center gap-2 pt-1 border-t border-white/[0.08]">
         <button
           type="button"
           aria-label="Previous Sol Milestone"
           onClick={handlePrev}
           disabled={currentIndex <= 0}
-          className="p-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none border border-white/10 transition-colors cursor-pointer shrink-0"
+          className="p-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.12] text-white/70 hover:text-white disabled:opacity-30 disabled:pointer-events-none border border-white/10 transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
         <div className="flex-1 flex flex-col gap-1">
-          <div className="flex justify-between text-[10px] text-slate-400">
+          <div className="flex justify-between text-[10px] text-white/50">
             <span>Sol {milestones[0].sol} (Landing)</span>
-            <span className="text-orange-400 font-bold">Sol {currentMilestone.sol}</span>
+            <span className="text-orange-400 font-bold tabular-nums">Sol {currentMilestone.sol}</span>
             <span>Sol {milestones[milestones.length - 1].sol}</span>
           </div>
           <input
@@ -211,7 +211,7 @@ export const RoverMilestoneSlider: React.FC = () => {
           aria-label="Next Sol Milestone"
           onClick={handleNext}
           disabled={currentIndex >= milestones.length - 1}
-          className="p-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none border border-white/10 transition-colors cursor-pointer shrink-0"
+          className="p-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.12] text-white/70 hover:text-white disabled:opacity-30 disabled:pointer-events-none border border-white/10 transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
@@ -221,7 +221,7 @@ export const RoverMilestoneSlider: React.FC = () => {
           type="button"
           aria-label="3D Ground POV at Sol"
           onClick={handlePovAtSol}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-orange-500/30 to-cyan-500/30 hover:from-orange-500/45 hover:to-cyan-500/45 text-white border border-white/20 transition-all cursor-pointer shadow-md shrink-0"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer shadow-md shrink-0 active:scale-95 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
           <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
           <span className="hidden sm:inline">3D POV AT SOL</span>
@@ -233,4 +233,3 @@ export const RoverMilestoneSlider: React.FC = () => {
 };
 
 export default RoverMilestoneSlider;
-

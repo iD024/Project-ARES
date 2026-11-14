@@ -52,29 +52,29 @@ export const MapAttributionOverlay: React.FC<MapAttributionOverlayProps> = ({
         aria-label={`Attribution: ${activeLayer.name}`}
         title="View scientific provenance & data catalog"
         onClick={handleClick}
-        className="group flex flex-wrap items-center gap-2 bg-slate-950/80 backdrop-blur border border-slate-800 rounded-lg px-2.5 py-1.5 shadow-xl text-left hover:border-slate-700 hover:bg-slate-900/90 transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-ares-cyan/50"
+        className="group flex flex-wrap items-center gap-2 bg-[#080A0F]/85 backdrop-blur-xl border border-white/10 rounded-xl px-3 py-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.1)] text-left hover:border-white/20 hover:bg-white/[0.08] transition-all cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
       >
         {/* Layer Classification Badge */}
         <Badge variant={activeLayer.classification}>{activeLayer.classification}</Badge>
 
         {/* Title and Provider */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-1 font-mono text-[11px] leading-tight">
-          <span className="font-bold text-slate-100 group-hover:text-ares-cyan transition-colors">
+          <span className="font-bold text-white group-hover:text-cyan-400 transition-colors">
             {activeLayer.name}
           </span>
-          <span className="text-slate-500 hidden sm:inline">|</span>
-          <span className="text-slate-400 text-[10px]">
+          <span className="text-white/30 hidden sm:inline">|</span>
+          <span className="text-white/60 text-[10px]">
             {activeLayer.provider}
           </span>
         </div>
 
         {/* Resolution Chip */}
-        <span className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-mono">
+        <span className="px-1.5 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] text-white/80 font-mono tabular-nums">
           {activeLayer.resolution}
         </span>
 
         {/* Info Icon */}
-        <Info className="w-3.5 h-3.5 text-slate-400 group-hover:text-ares-cyan transition-colors shrink-0 ml-0.5" />
+        <Info className="w-3.5 h-3.5 text-white/40 group-hover:text-cyan-400 transition-colors shrink-0 ml-0.5" />
       </button>
     </div>
   );

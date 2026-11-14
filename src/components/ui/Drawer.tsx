@@ -41,7 +41,9 @@ export const Drawer: React.FC<DrawerProps> = ({
       className={twMerge(
         clsx(
           'absolute top-20 bottom-16 z-30 flex flex-col',
-          'backdrop-blur-2xl bg-black/90 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.9)] rounded-3xl overflow-hidden',
+          'backdrop-blur-2xl bg-[#07090E]/85 border border-white/10',
+          'shadow-[0_24px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)]',
+          'rounded-3xl overflow-hidden transition-all duration-200 animate-in fade-in-50 zoom-in-95',
           side === 'left' ? 'left-4' : 'right-4',
           width,
           className
@@ -49,17 +51,17 @@ export const Drawer: React.FC<DrawerProps> = ({
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-white/[0.02]">
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.08] bg-white/[0.025]">
         <div>
-          <h2 className="text-base font-bold text-white font-mono tracking-wide">{title}</h2>
+          <h2 className="text-sm font-bold text-white font-mono tracking-wider uppercase">{title}</h2>
           {subtitle && (
-            <p className="text-xs text-slate-300 font-sans tracking-tight mt-0.5">{subtitle}</p>
+            <p className="text-xs text-white/60 font-sans tracking-tight mt-0.5">{subtitle}</p>
           )}
         </div>
         <button
           onClick={onClose}
           aria-label="Close drawer"
-          className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+          className="p-1.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
           <X className="w-4 h-4" />
         </button>
@@ -73,3 +75,4 @@ export const Drawer: React.FC<DrawerProps> = ({
   );
 };
 
+export default Drawer;

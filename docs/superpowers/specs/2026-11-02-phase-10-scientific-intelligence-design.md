@@ -127,3 +127,4 @@ A centralized scientific intelligence engine with deterministic, verified domain
 2. **Production Bundle Integrity**:
    - Execute `npx vitest run` ensuring 100% green tests (baseline 274 + new tests).
    - Execute `npm run build` validating zero TypeScript compilation errors or bundling regressions.
+

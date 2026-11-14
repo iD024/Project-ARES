@@ -90,52 +90,52 @@ export const ElevationProfileTray: React.FC = () => {
     <div
       className={clsx(
         'absolute bottom-14 left-4 right-4 z-20 pointer-events-auto select-none transition-all',
-        'rounded-2xl backdrop-blur-2xl bg-black/95 border border-white/10 shadow-[0_16px_50px_rgba(0,0,0,0.95)] text-slate-100 font-sans'
+        'rounded-2xl backdrop-blur-2xl bg-[#080A0F]/92 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)] text-white font-sans'
       )}
     >
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-white/[0.08]">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400">
             <Activity className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold tracking-wider uppercase font-mono text-white">
+            <h3 className="text-xs font-bold tracking-wider uppercase font-mono text-white">
               Martian Elevation Cross-Section
             </h3>
-            <p className="text-xs text-white/50 font-mono">Topographic Transect • MOLA Interpolation</p>
+            <p className="text-[10px] text-white/50 font-mono">Topographic Transect • MOLA Interpolation</p>
           </div>
         </div>
 
         {/* Metric Badges */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-wrap font-mono text-xs">
-          <div className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5">
-            <span className="text-white/50">DIST:</span>
-            <strong className="text-cyan-300 font-bold">{totalDistanceKm.toFixed(1)} km</strong>
+        <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap font-mono text-xs">
+          <div className="px-2.5 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-1.5">
+            <span className="text-white/50 text-[11px]">DIST:</span>
+            <strong className="text-cyan-400 font-bold tabular-nums">{totalDistanceKm.toFixed(1)} km</strong>
           </div>
 
-          <div className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5">
-            <span className="text-white/50">MIN:</span>
-            <strong className={minElevationMeters < 0 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold'}>
+          <div className="px-2.5 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-1.5">
+            <span className="text-white/50 text-[11px]">MIN:</span>
+            <strong className={`font-bold tabular-nums ${minElevationMeters < 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
               {minElevationMeters > 0 ? `+${minElevationMeters.toLocaleString()}` : `${minElevationMeters.toLocaleString()}`} m
             </strong>
           </div>
 
-          <div className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5">
-            <span className="text-white/50">MAX:</span>
-            <strong className={maxElevationMeters < 0 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold'}>
+          <div className="px-2.5 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-1.5">
+            <span className="text-white/50 text-[11px]">MAX:</span>
+            <strong className={`font-bold tabular-nums ${maxElevationMeters < 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
               {maxElevationMeters > 0 ? `+${maxElevationMeters.toLocaleString()}` : `${maxElevationMeters.toLocaleString()}`} m
             </strong>
           </div>
 
-          <div className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5">
-            <span className="text-white/50">RELIEF:</span>
-            <strong className="text-white font-bold">{elevationChangeMeters.toLocaleString()} m</strong>
+          <div className="px-2.5 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-1.5">
+            <span className="text-white/50 text-[11px]">RELIEF:</span>
+            <strong className="text-white font-bold tabular-nums">{elevationChangeMeters.toLocaleString()} m</strong>
           </div>
 
-          <div className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5">
-            <span className="text-white/50">SLOPE:</span>
-            <strong className="text-orange-400 font-bold">{averageSlopeDegrees.toFixed(1)}°</strong>
+          <div className="px-2.5 py-1 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-1.5">
+            <span className="text-white/50 text-[11px]">SLOPE:</span>
+            <strong className="text-orange-400 font-bold tabular-nums">{averageSlopeDegrees.toFixed(1)}°</strong>
           </div>
         </div>
 
@@ -145,7 +145,7 @@ export const ElevationProfileTray: React.FC = () => {
             type="button"
             aria-label={isMinimized ? 'Expand Profile' : 'Minimize Profile'}
             onClick={() => setIsMinimized(!isMinimized)}
-            className="p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
           >
             {isMinimized ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
@@ -154,7 +154,7 @@ export const ElevationProfileTray: React.FC = () => {
             type="button"
             aria-label="Close Profile"
             onClick={() => setElevationTransect(null)}
-            className="p-1.5 rounded-lg text-white/60 hover:text-rose-400 hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-white/50 hover:text-rose-400 hover:bg-white/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
           >
             <X className="w-4 h-4" />
           </button>
@@ -199,47 +199,38 @@ export const ElevationProfileTray: React.FC = () => {
                   fontFamily="monospace"
                   opacity="0.8"
                 >
-                  0 m (Mars Datum)
+                  DATUM 0 m
                 </text>
               </g>
             )}
 
-            {/* Transect Area Fill */}
+            {/* Area fill */}
             <path d={areaPath} fill="url(#elevationRampGradient)" />
 
             {/* Transect Line */}
             <path
               d={linePath}
               fill="none"
-              stroke="#22d3ee"
-              strokeWidth="2.5"
+              stroke="#06b6d4"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* Start and End Point Markers */}
-            {svgCoords.length > 0 && (
-              <>
-                <circle
-                  cx={svgCoords[0].x}
-                  cy={svgCoords[0].y}
-                  r="4"
-                  fill="#38bdf8"
-                  stroke="#ffffff"
-                  strokeWidth="1.5"
-                />
-                <circle
-                  cx={svgCoords[svgCoords.length - 1].x}
-                  cy={svgCoords[svgCoords.length - 1].y}
-                  r="4"
-                  fill="#f59e0b"
-                  stroke="#ffffff"
-                  strokeWidth="1.5"
-                />
-              </>
-            )}
+            {/* Data points */}
+            {svgCoords.map((coord, idx) => (
+              <circle
+                key={idx}
+                cx={coord.x}
+                cy={coord.y}
+                r={hoverIndex === idx ? 4 : 2}
+                fill={hoverIndex === idx ? '#ffffff' : '#06b6d4'}
+                stroke="#020204"
+                strokeWidth={hoverIndex === idx ? 2 : 1}
+              />
+            ))}
 
-            {/* Interactive Hover Crosshair */}
+            {/* Active Hover Crosshair Line */}
             {activeHoverPoint && (
               <g>
                 <line
@@ -250,48 +241,33 @@ export const ElevationProfileTray: React.FC = () => {
                   stroke="#ffffff"
                   strokeWidth="1"
                   strokeDasharray="2 2"
-                  opacity="0.75"
-                />
-                <circle
-                  cx={activeHoverPoint.x}
-                  cy={activeHoverPoint.y}
-                  r="5"
-                  fill="#ffffff"
-                  stroke="#06b6d4"
-                  strokeWidth="2"
+                  opacity="0.7"
                 />
               </g>
             )}
           </svg>
 
-          {/* Active Hover Floating Readout Card */}
+          {/* Interactive Hover Tooltip */}
           {activeHoverPoint && (
             <div
-              className="absolute pointer-events-none px-3 py-1.5 rounded-xl bg-black/90 border border-white/20 shadow-xl font-mono text-xs z-30"
-              style={{
-                left: `${Math.max(60, Math.min(window.innerWidth - 220, (activeHoverPoint.x / svgWidth) * 100))}%`,
-                top: '12px',
-                transform: 'translateX(-50%)',
-              }}
+              className="absolute pointer-events-none -top-1 px-3 py-1.5 rounded-lg bg-black/90 border border-white/20 text-xs font-mono shadow-xl text-white transform -translate-x-1/2"
+              style={{ left: `${(activeHoverPoint.x / svgWidth) * 100}%` }}
             >
-              <div className="flex items-center gap-3 text-slate-200">
-                <span>Dist: <strong className="text-white">{activeHoverPoint.pt.distanceKm.toFixed(1)} km</strong></span>
-                <span>Elev: <strong className={activeHoverPoint.pt.elevationMeters < 0 ? 'text-amber-400' : 'text-emerald-400'}>
-                  {activeHoverPoint.pt.elevationMeters > 0 ? `+${activeHoverPoint.pt.elevationMeters.toLocaleString()}` : `${activeHoverPoint.pt.elevationMeters.toLocaleString()}`} m
-                </strong></span>
+              <div className="flex items-center gap-2">
+                <span className="text-white/50">KM:</span>
+                <strong className="text-white tabular-nums">{activeHoverPoint.pt.distanceKm.toFixed(1)}</strong>
+                <span className="text-white/30">|</span>
+                <span className="text-white/50">ELEV:</span>
+                <strong
+                  className={`tabular-nums ${
+                    activeHoverPoint.pt.elevationMeters < 0 ? 'text-amber-400' : 'text-emerald-400'
+                  }`}
+                >
+                  {activeHoverPoint.pt.elevationMeters > 0 ? `+${activeHoverPoint.pt.elevationMeters}` : activeHoverPoint.pt.elevationMeters} m
+                </strong>
               </div>
             </div>
           )}
-
-          {/* Bottom Coordinate Range Indicators */}
-          <div className="flex items-center justify-between text-xs font-mono text-white/50 pt-1 px-4">
-            <span>
-              Start: {points[0].longitude.toFixed(2)}°E, {points[0].latitude.toFixed(2)}°N
-            </span>
-            <span>
-              End: {points[points.length - 1].longitude.toFixed(2)}°E, {points[points.length - 1].latitude.toFixed(2)}°N
-            </span>
-          </div>
         </div>
       )}
     </div>

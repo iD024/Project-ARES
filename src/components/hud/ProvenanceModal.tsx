@@ -75,13 +75,13 @@ export const ProvenanceModal: React.FC<ProvenanceModalProps> = ({ isOpen, onClos
       subtitle="Traceable Scientific Datasets, Calibration & Planetary Geodesy"
       maxWidth="max-w-4xl"
     >
-      <div className="flex flex-col gap-4 text-xs font-mono text-slate-300">
+      <div className="flex flex-col gap-4 text-xs font-mono text-white/80">
         {/* Integrity Callout */}
-        <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+        <div className="p-3.5 rounded-xl bg-white/[0.035] border border-white/[0.08] flex items-start gap-3">
           <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
           <div className="font-sans text-xs">
-            <h4 className="font-semibold text-slate-100 font-mono">SCIENTIFIC DATA INTEGRITY POLICY</h4>
-            <p className="text-slate-400 mt-1 leading-relaxed">
+            <h4 className="font-semibold text-white font-mono tracking-wide">SCIENTIFIC DATA INTEGRITY POLICY</h4>
+            <p className="text-white/60 mt-1 leading-relaxed">
               ARES strictly ingests verified, traceable planetary datasets from NASA, USGS, ESA, and the Planetary Data System (PDS).
               All layers are explicitly labeled by classification: <strong>Observed</strong> (raw or calibrated instrument frames),
               <strong> Derived</strong> (elevation models and mosaic hillshades), or <strong>Modeled</strong>.
@@ -91,33 +91,33 @@ export const ProvenanceModal: React.FC<ProvenanceModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Datasets Table */}
-        <div className="rounded-xl border border-slate-800 overflow-hidden">
+        <div className="rounded-xl border border-white/[0.08] overflow-hidden bg-white/[0.02]">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-950/90 text-[11px] text-slate-400 border-b border-slate-800">
-                  <th className="py-2.5 px-3 font-semibold">Dataset</th>
-                  <th className="py-2.5 px-3 font-semibold">Type</th>
-                  <th className="py-2.5 px-3 font-semibold">Provider</th>
-                  <th className="py-2.5 px-3 font-semibold">Resolution</th>
-                  <th className="py-2.5 px-3 font-semibold">Access Protocol</th>
+                <tr className="bg-white/[0.04] text-[11px] text-white/50 border-b border-white/[0.08]">
+                  <th className="py-2.5 px-3.5 font-semibold">Dataset</th>
+                  <th className="py-2.5 px-3.5 font-semibold">Type</th>
+                  <th className="py-2.5 px-3.5 font-semibold">Provider</th>
+                  <th className="py-2.5 px-3.5 font-semibold">Resolution</th>
+                  <th className="py-2.5 px-3.5 font-semibold">Access Protocol</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/70 text-[11px]">
+              <tbody className="divide-y divide-white/[0.06] text-[11px]">
                 {datasets.map((d) => (
-                  <tr key={d.id} className="hover:bg-slate-800/30 transition-colors">
-                    <td className="py-2.5 px-3">
-                      <div className="font-bold text-slate-100">{d.name}</div>
-                      <div className="text-[10px] text-slate-400 font-sans">{d.mission}</div>
+                  <tr key={d.id} className="hover:bg-white/[0.04] transition-colors">
+                    <td className="py-2.5 px-3.5">
+                      <div className="font-bold text-white">{d.name}</div>
+                      <div className="text-[10px] text-white/50 font-sans">{d.mission}</div>
                     </td>
-                    <td className="py-2.5 px-3">
+                    <td className="py-2.5 px-3.5">
                       <Badge variant={d.classification}>{d.classification}</Badge>
                     </td>
-                    <td className="py-2.5 px-3 text-slate-300">{d.provider}</td>
-                    <td className="py-2.5 px-3 text-ares-cyan font-bold">{d.resolution}</td>
-                    <td className="py-2.5 px-3 text-slate-400">
-                      <span className="flex items-center gap-1">
-                        <Database className="w-3 h-3 text-ares-rust" />
+                    <td className="py-2.5 px-3.5 text-white/70">{d.provider}</td>
+                    <td className="py-2.5 px-3.5 text-cyan-400 font-bold tabular-nums">{d.resolution}</td>
+                    <td className="py-2.5 px-3.5 text-white/50">
+                      <span className="flex items-center gap-1.5">
+                        <Database className="w-3.5 h-3.5 text-ares-rust" />
                         <span>{d.protocol}</span>
                       </span>
                     </td>
@@ -129,14 +129,16 @@ export const ProvenanceModal: React.FC<ProvenanceModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Geodetic Reference Box */}
-        <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 flex items-center justify-between text-[11px]">
+        <div className="p-3 rounded-xl bg-white/[0.035] border border-white/[0.08] flex items-center justify-between text-[11px]">
           <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-ares-cyan" />
-            <span>Datum: <strong>D_Mars_2000</strong> | Spheroid Radius: <strong>3,396,190.0 m</strong> (WKID 104905)</span>
+            <Info className="w-4 h-4 text-cyan-400" />
+            <span>Datum: <strong className="text-white">D_Mars_2000</strong> | Spheroid Radius: <strong className="text-white">3,396,190.0 m</strong> (WKID 104905)</span>
           </div>
-          <span className="text-slate-500 font-mono">IAU 2000 Standard</span>
+          <span className="text-white/40 font-mono">IAU 2000 Standard</span>
         </div>
       </div>
     </Modal>
   );
 };
+
+export default ProvenanceModal;

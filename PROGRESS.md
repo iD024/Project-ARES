@@ -21,11 +21,42 @@
 | **Phase 08.5** | Planetary Data Expansion (Rovers, Marsquakes, Resources & Base Sites) | 2026-11-02 | 2026-11-02 | **PASSED** (259 Vitest tests + 38 Python pipeline tests = 297 tests pass, complete 5-rover mobile fleet + InSight, MQS seismic catalog, CRISM minerals, SWIM subsurface ice sheets, settlement zones catalog, ArcGIS renderers, multi-rover viewport integration, clean build). |
 | **Phase 09** | Terrain-Aware Route Planning | 2026-11-02 | 2026-11-02 | **PASSED** (274 Vitest tests + 38 Python pipeline tests = 312 tests pass, discrete geodetic lattice A* pathfinding on Mars 2000 datum, 3 candidate routes: Safest, Balanced, Direct, RoutePlannerDrawer, TopCommandBar Routes trigger, dual-viewport graphics layers, clean build in 24.96s). |
 | **Phase 10** | Scientific Intelligence Interface | 2026-11-02 | 2026-11-02 | **PASSED** (296 Vitest tests + 38 Python pipeline tests = 334 tests pass, full scientific dossiers for all 14 datasets, chronostratigraphy, altimetry physics, A* traversal science, ScientificIntelDrawer, contextual deep-links, clean build in 24.98s). |
+| **Phase 10.5** | Modern Obsidian Glass UI & Usability Overhaul | 2026-11-03 | 2026-11-03 | **PASSED** (296/296 Vitest tests pass, 100/100 Vercel Web Design Guidelines compliance, obsidian glass tokens, responsive clustered action dock, jitter-free tabular telemetry, clean build). |
 | **Phase 11** | Integration, Optimization & Release | — | — | Ready for Final Integration & Release. |
 
 ---
 
-## Phase 10 Checklist
+## Phase 10.5 Checklist (Modern Obsidian Glass UI & Usability Overhaul)
+- [x] **Obsidian Glass Tokens & Design System (`DESIGN.md` & `tailwind.config.js`)**:
+  - Established persistent single visual source of truth in `DESIGN.md`.
+  - Configured deep black canvas (`#000000`), obsidian glass surfaces (`bg-black/80 backdrop-blur-2xl`), hairline specular borders (`border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]`), and monochrome typography with disciplined Mars rust (`#EA580C`) and precision cyan (`#06B6D4`) accents.
+  - Implemented `.glass-panel`, `.glass-panel-elevated`, `.glass-card`, `.glass-pill`, and `.tabular-nums` utility classes in `src/index.css`.
+- [x] **Design Primitives Modernization (`src/components/ui/`)**:
+  - `Drawer.tsx`: Obsidian glass floating drawer with 24px corner radius, hairline highlight, tactile close button, and keyboard `Esc` dismissibility.
+  - `Modal.tsx`: Floating glassy dialog with dark frosted backdrop and specular rim.
+  - `Button.tsx`: Tactical/glass button variants with subtle sheen, accessible focus rings, and tactile micro-press (`active:scale-[0.98]`).
+  - `Badge.tsx`: Crisp monospace status capsules with semantic translucent backings.
+  - `Tabs.tsx` & `Slider.tsx`: Modern range track and segmented tab switches.
+  - Verified with 8/8 tests in `Primitives.test.tsx` (100% passing).
+- [x] **Top Command Bar & Viewport Switcher Overhaul (`TopCommandBar.tsx`)**:
+  - Restructured cluttered toolbar into 3 responsive glass pods:
+    1. **Brand Capsule**: ARES Mars 2000 badge with pulsing telemetry pip and datum chip.
+    2. **Mode Switcher**: Segmented glass capsule (Global 3D / Regional 2D / Local Analysis) with white pill active state.
+    3. **Grouped Action Dock**: Cleanly organized into Exploration (Layers, Tools, Missions), Analytics (Measure, Routes, Intel), and Utilities (Legend, Data) with monochromatic default styling and responsive icon-only collapse.
+  - Verified with 5/5 tests in `HudPanels.test.tsx`.
+- [x] **Flight Deck Telemetry Strip (`TelemetryStrip.tsx`)**:
+  - Aerodynamic floating glass capsule anchored at bottom-center.
+  - Tabular monospace typography (`tabular-nums`) eliminating numerical jitter during cursor panning.
+  - Dedicated telemetry pods: Live Status, Mars 2000 Coordinates, Signed Elevation (`+m` / `-m`), Subsolar longitude, and Geodetic CRS (`WKID 104905`).
+- [x] **Floating HUD Panels & Drawers (`TerrainInspectorCard`, `ElevationProfileTray`, `LocalPovControls`, etc.)**:
+  - Upgraded all floating HUD components to obsidian glass cards with hairline borders and high data density.
+  - Fixed mobile viewport jump (`min-h-[100dvh]` and `h-[100dvh]`) and heading levels across all components.
+- [x] **Automated Verification & Vercel Guidelines Compliance**:
+  - **Vercel Web Design Guidelines Audit**: **100/100 Compliance Score** across all modified components with **0 design or accessibility violations**.
+  - **Vitest Unit & Component Tests**: **296/296 passed (100%)** across 39 test files.
+  - **Production Build**: Clean Vite bundle output with zero TypeScript compilation errors.
+
+---
 - [x] **Scientific Intelligence Core Domain Engine (`scientificIntelligenceService.ts`)**:
   - Implemented complete provenance and sensor dossiers for all 14 datasets in `DATASET_REGISTRY` (Viking, MColorDEM, MOLA, HRSC-MOLA, CTX, Geologic Quads, IAU Nomenclature, Regional Slope, HiRISE footprints, HiRISE Jezero DTM, InSight MQS, CRISM minerals, SWIM ice sheets, Settlement sites).
   - Explicitly classified each dataset into **OBSERVED**, **DERIVED**, **MODELED**, or **SIMULATED** with PDS citations, operating wavelengths, spatial resolutions, and coverage limits.

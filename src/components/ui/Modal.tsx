@@ -38,14 +38,14 @@ export const Modal: React.FC<ModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in-50"
       onClick={onClose}
     >
       <div
         className={twMerge(
           clsx(
             'w-full flex flex-col rounded-2xl overflow-hidden',
-            'backdrop-blur-2xl bg-slate-900/95 border border-slate-700/80 shadow-2xl',
+            'backdrop-blur-2xl bg-[#080A0F]/92 border border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.95),inset_0_1px_0_0_rgba(255,255,255,0.14)]',
             maxWidth,
             className
           )
@@ -53,24 +53,24 @@ export const Modal: React.FC<ModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-950/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.08] bg-white/[0.025]">
           <div>
-            <h2 className="text-base font-bold text-slate-100 font-mono tracking-wide">{title}</h2>
+            <h2 className="text-base font-bold text-white font-mono tracking-wide">{title}</h2>
             {subtitle && (
-              <p className="text-xs text-slate-400 font-sans tracking-tight">{subtitle}</p>
+              <p className="text-xs text-white/60 font-sans tracking-tight mt-0.5">{subtitle}</p>
             )}
           </div>
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-xl text-white/50 hover:text-white hover:bg-white/10 active:scale-95 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Content */}
-        <div className="p-5 max-h-[80vh] overflow-y-auto">
+        <div className="p-6 max-h-[80vh] overflow-y-auto">
           {children}
         </div>
       </div>
@@ -78,3 +78,4 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
+export default Modal;

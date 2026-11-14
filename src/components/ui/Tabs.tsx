@@ -20,7 +20,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange, classN
     <div
       role="tablist"
       className={twMerge(
-        'flex items-center p-1 gap-1.5 rounded-xl bg-black/60 border border-white/10 font-mono text-xs select-none',
+        'flex items-center p-1 gap-1 rounded-xl bg-black/70 backdrop-blur-xl border border-white/10 font-mono text-xs select-none shadow-glass-sm',
         className
       )}
     >
@@ -33,10 +33,10 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange, classN
             aria-selected={isActive}
             onClick={() => onTabChange(tab.id)}
             className={clsx(
-              'flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all cursor-pointer',
+              'flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40',
               isActive
-                ? 'bg-white/15 text-white shadow-sm border border-white/20'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                ? 'bg-white text-black shadow-md shadow-white/10 font-bold'
+                : 'text-white/60 hover:text-white hover:bg-white/10'
             )}
           >
             {tab.icon && <span className="shrink-0">{tab.icon}</span>}
@@ -48,3 +48,4 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange, classN
   );
 };
 
+export default Tabs;

@@ -21,7 +21,7 @@ export const App: React.FC = () => {
   } = useAppStore();
 
   return (
-    <div className="relative w-full h-full min-h-screen overflow-hidden bg-ares-space text-slate-100 flex flex-col font-sans select-none">
+    <div className="relative w-full h-full min-h-[100dvh] overflow-hidden bg-black text-slate-100 flex flex-col font-sans select-none">
       {/* 1. Dominant Full-Bleed Synchronized Viewport Coordinator (3D Globe & 2D Map) */}
       <main className="relative flex-1 w-full h-full">
         <ViewportCoordinator />

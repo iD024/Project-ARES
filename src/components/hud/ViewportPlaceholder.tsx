@@ -8,7 +8,7 @@ export const ViewportPlaceholder: React.FC = () => {
   return (
     <div
       data-testid="ares-viewport-placeholder"
-      className="relative w-full h-full min-h-screen bg-ares-space overflow-hidden flex items-center justify-center select-none"
+      className="relative w-full h-full min-h-[100dvh] bg-ares-space overflow-hidden flex items-center justify-center select-none"
     >
       {/* Background Orbital Gridlines & Graticules */}
       <div

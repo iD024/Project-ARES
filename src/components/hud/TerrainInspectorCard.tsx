@@ -66,20 +66,21 @@ export const TerrainInspectorCard: React.FC = () => {
       data-testid="terrain-inspector-card"
       className={clsx(
         'absolute top-20 right-4 z-20 w-88 max-w-[calc(100vw-2rem)] select-none pointer-events-auto',
-        'bg-black/90 backdrop-blur-2xl border border-white/10 rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.9)] text-slate-100 font-sans'
+        'backdrop-blur-2xl bg-[#080A0F]/90 border border-white/10 rounded-2xl p-4',
+        'shadow-[0_20px_50px_rgba(0,0,0,0.92),inset_0_1px_0_0_rgba(255,255,255,0.12)] text-white font-sans'
       )}
     >
       {/* Header bar */}
-      <div className="flex items-center justify-between pb-3 border-b border-white/10">
+      <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-orange-500/20 border border-orange-400/40 flex items-center justify-center text-ares-rust">
-            <MapPin className="w-4 h-4 text-orange-400" />
+            <MapPin className="w-3.5 h-3.5 text-orange-400" />
           </div>
           <div>
-            <h3 className="text-sm font-bold tracking-wider uppercase font-mono text-white">
+            <h3 className="text-xs font-bold tracking-wider uppercase font-mono text-white">
               Terrain Inspection
             </h3>
-            <p className="text-xs text-white/50 font-mono">Spot Interrogation</p>
+            <p className="text-[10px] text-white/50 font-mono">Spot Interrogation</p>
           </div>
         </div>
 
@@ -91,7 +92,7 @@ export const TerrainInspectorCard: React.FC = () => {
             type="button"
             aria-label="Close terrain inspection"
             onClick={() => setActiveTerrainInspection(null)}
-            className="p-1 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-1 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
           >
             <X className="w-4 h-4" />
           </button>
@@ -101,29 +102,29 @@ export const TerrainInspectorCard: React.FC = () => {
       {/* Primary Metrics Grid */}
       <div className="mt-3.5 grid grid-cols-2 gap-2.5 font-mono">
         {/* Coordinates */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-2.5 flex flex-col justify-between">
-          <span className="text-xs text-white/60 flex items-center gap-1.5 font-medium">
-            <Compass className="w-3.5 h-3.5 text-ares-cyan" />
+        <div className="bg-white/[0.035] border border-white/[0.08] rounded-xl p-2.5 flex flex-col justify-between">
+          <span className="text-[11px] text-white/50 flex items-center gap-1.5 font-medium">
+            <Compass className="w-3.5 h-3.5 text-cyan-400" />
             COORDINATES
           </span>
           <span
             data-testid="terrain-inspector-coords"
-            className="text-sm font-bold text-ares-cyan mt-1.5 truncate"
+            className="text-xs font-bold text-cyan-400 mt-1.5 truncate tabular-nums"
           >
             {formattedCoords}
           </span>
         </div>
 
         {/* Elevation */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-2.5 flex flex-col justify-between">
-          <span className="text-xs text-white/60 flex items-center gap-1.5 font-medium">
+        <div className="bg-white/[0.035] border border-white/[0.08] rounded-xl p-2.5 flex flex-col justify-between">
+          <span className="text-[11px] text-white/50 flex items-center gap-1.5 font-medium">
             <Mountain className="w-3.5 h-3.5 text-emerald-400" />
             ELEVATION
           </span>
           <span
             data-testid="terrain-inspector-elevation"
             className={clsx(
-              'text-sm font-extrabold mt-1.5',
+              'text-xs font-bold mt-1.5 tabular-nums',
               elevationMeters < 0 ? 'text-amber-400' : 'text-emerald-400'
             )}
           >
@@ -135,23 +136,23 @@ export const TerrainInspectorCard: React.FC = () => {
       {/* Secondary Regional & Geological Attributes */}
       <div className="mt-2.5 space-y-2 font-mono">
         {/* Quadrangle */}
-        <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5">
-          <span className="text-xs text-white/60 flex items-center gap-2">
-            <Layers className="w-3.5 h-3.5 text-white/50" />
+        <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <span className="text-xs text-white/50 flex items-center gap-2">
+            <Layers className="w-3.5 h-3.5 text-white/40" />
             QUADRANGLE
           </span>
-          <span className="text-xs font-bold text-white">
+          <span className="text-xs font-semibold text-white/90">
             {quadrangleDisplay}
           </span>
         </div>
 
         {/* Regional Slope */}
         {slopeLabel && (
-          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5">
-            <span className="text-xs text-white/60">REGIONAL SLOPE</span>
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+            <span className="text-xs text-white/50">REGIONAL SLOPE</span>
             <span
               className={clsx(
-                'text-xs font-bold',
+                'text-xs font-semibold tabular-nums',
                 resolvedCategory === 'STEEP' || resolvedCategory === 'PRECIPITOUS'
                   ? 'text-rose-400'
                   : resolvedCategory === 'MODERATE'
@@ -166,29 +167,29 @@ export const TerrainInspectorCard: React.FC = () => {
 
         {/* Geological Period */}
         {geologicalPeriod && (
-          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5">
-            <span className="text-xs text-white/60">EPOCH</span>
-            <span className="text-xs font-bold text-amber-300">
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+            <span className="text-xs text-white/50">EPOCH</span>
+            <span className="text-xs font-semibold text-amber-300">
               {geologicalPeriod}
             </span>
           </div>
         )}
       </div>
 
-      {/* Phase 10 Contextual Scientific Dossier Action */}
+      {/* Contextual Scientific Dossier Action */}
       <button
         type="button"
         aria-label="Scientific Dossier"
         onClick={() => openIntelForGeology(geologicalPeriod || 'Noachian', quadrangleCode || undefined)}
-        className="mt-3 w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/40 text-purple-200 text-xs font-mono font-bold transition-all cursor-pointer shadow-md"
+        className="mt-3 w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-400/30 text-purple-200 text-xs font-mono font-bold transition-all cursor-pointer shadow-sm active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-400/50"
       >
         <BookOpen className="w-3.5 h-3.5 text-purple-300" />
         <span>SCIENTIFIC DOSSIER</span>
       </button>
 
       {/* Mandatory Scientific Disclaimer */}
-      <div className="mt-3 flex items-start gap-2 p-3 rounded-xl bg-amber-950/30 border border-amber-800/40 text-xs text-amber-200/90 leading-relaxed font-sans">
-        <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+      <div className="mt-3 flex items-start gap-2 p-2.5 rounded-xl bg-amber-950/25 border border-amber-800/30 text-[11px] text-amber-200/85 leading-relaxed font-sans">
+        <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
         <p>{REGIONAL_SLOPE_DISCLAIMER}</p>
       </div>
     </div>

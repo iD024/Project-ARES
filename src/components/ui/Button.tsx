@@ -17,7 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-mono font-medium rounded-lg transition-all focus:outline-none focus:ring-1 focus:ring-ares-cyan/50 select-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-45';
+  const baseStyles = 'inline-flex items-center justify-center font-mono font-medium rounded-xl transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 select-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-40';
 
   const sizeStyles = {
     sm: 'text-[11px] px-2.5 py-1 gap-1.5',
@@ -26,11 +26,11 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantStyles = {
-    primary: 'bg-ares-rust hover:bg-orange-600 text-white shadow-md shadow-orange-950/40 border border-orange-500/50',
-    secondary: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/80',
-    tactical: 'bg-slate-900/85 hover:bg-slate-800/90 text-slate-200 border border-slate-700/70 hover:border-slate-600 active:scale-[0.98]',
-    danger: 'bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/60',
-    ghost: 'bg-transparent hover:bg-slate-800/60 text-slate-400 hover:text-slate-200',
+    primary: 'bg-ares-rust hover:bg-orange-600 text-white shadow-md shadow-orange-950/40 border border-orange-400/40 active:scale-[0.98]',
+    secondary: 'bg-white/10 hover:bg-white/15 text-white border border-white/15 active:scale-[0.98]',
+    tactical: 'bg-white/[0.04] hover:bg-white/[0.09] text-white/90 hover:text-white border border-white/10 hover:border-white/20 shadow-sm active:scale-[0.98]',
+    danger: 'bg-red-950/50 hover:bg-red-900/70 text-red-200 border border-red-700/50 active:scale-[0.98]',
+    ghost: 'bg-transparent hover:bg-white/10 text-white/70 hover:text-white active:scale-[0.98]',
   };
 
   return (
@@ -45,3 +45,4 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
+export default Button;

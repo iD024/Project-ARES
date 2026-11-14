@@ -73,7 +73,7 @@ export const RoutePlannerDrawer: React.FC = () => {
   return (
     <aside
       data-testid="route-planner-drawer"
-      className="fixed top-0 right-0 z-30 w-full sm:w-[480px] h-screen bg-black/90 backdrop-blur-2xl border-l border-white/10 text-white shadow-2xl flex flex-col font-sans select-none overflow-hidden"
+      className="fixed top-0 right-0 z-30 w-full sm:w-[480px] h-[100dvh] bg-[#080A0F]/95 backdrop-blur-2xl border-l border-white/10 text-white shadow-2xl flex flex-col font-sans select-none overflow-hidden"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-white/[0.02]">

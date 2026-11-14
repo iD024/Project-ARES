@@ -73,7 +73,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
       width="w-full sm:w-[500px]"
     >
       {/* Rover Mission Selector Tabs */}
-      <div className="flex items-center gap-1.5 p-1 bg-white/5 rounded-2xl border border-white/10 font-mono text-xs">
+      <div className="flex items-center gap-1.5 p-1 bg-black/60 rounded-2xl border border-white/10 font-mono text-xs shadow-glass-sm">
         {ROVER_MISSIONS.map((m) => {
           const isSelected = activeTab === m.id;
           return (
@@ -81,10 +81,10 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
               key={m.id}
               onClick={() => setActiveTab(m.id)}
               className={clsx(
-                'flex-1 py-2 px-2 rounded-xl font-bold tracking-wider text-center transition-all cursor-pointer truncate',
+                'flex-1 py-1.5 px-2 rounded-xl font-bold tracking-wider text-center transition-all cursor-pointer truncate text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40',
                 isSelected
                   ? 'bg-white text-black shadow-md shadow-white/10'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
               )}
             >
               {m.name.split(' ')[0]}
@@ -94,7 +94,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
       </div>
 
       {/* Main Mission Dossier Header Card */}
-      <div className="p-4 rounded-2xl bg-black/60 border border-white/10 flex flex-col gap-3">
+      <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] shadow-glass-sm flex flex-col gap-3">
         <div className="flex items-start justify-between gap-2">
           <div>
             <div className="flex items-center gap-2">
@@ -102,7 +102,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
                 className={clsx(
                   'px-2 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase border',
                   mission.status === 'ACTIVE'
-                    ? 'bg-emerald-950/60 text-emerald-400 border-emerald-500/30'
+                    ? 'bg-emerald-950/40 text-emerald-400 border-emerald-500/30'
                     : 'bg-white/10 text-white/60 border-white/15'
                 )}
               >
@@ -112,14 +112,14 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
                 {mission.organization}
               </span>
             </div>
-            <h3 className="text-base font-extrabold text-white mt-1 font-mono tracking-tight">
+            <h3 className="text-sm font-extrabold text-white mt-1 font-mono tracking-tight">
               {mission.name}
             </h3>
           </div>
 
           <button
             onClick={handleTrackRover}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-bold shadow-lg shadow-orange-950/50 transition-all cursor-pointer border border-orange-400/30 shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-bold shadow-md shadow-orange-950/50 transition-all cursor-pointer border border-orange-400/40 shrink-0 active:scale-95 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-orange-400"
           >
             <Navigation className="w-3.5 h-3.5" />
             <span>Track Rover on Mars</span>
@@ -132,27 +132,27 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
 
         {/* Tactical Key Metrics Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 font-mono text-xs pt-1">
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5">
+          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <div className="flex items-center gap-1.5 text-white/50 text-[10px]">
               <Gauge className="w-3 h-3 text-cyan-400" />
               <span>ODOMETER</span>
             </div>
-            <div className="text-white font-bold mt-0.5">
+            <div className="text-white font-bold mt-0.5 tabular-nums">
               {mission.totalDistanceKm.toFixed(2)} km
             </div>
           </div>
 
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5">
+          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <div className="flex items-center gap-1.5 text-white/50 text-[10px]">
               <Clock className="w-3 h-3 text-amber-400" />
               <span>TOTAL SOLS</span>
             </div>
-            <div className="text-white font-bold mt-0.5">
+            <div className="text-white font-bold mt-0.5 tabular-nums">
               Sol {mission.totalSols.toLocaleString()}
             </div>
           </div>
 
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5">
+          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <div className="flex items-center gap-1.5 text-white/50 text-[10px]">
               <BatteryCharging className="w-3 h-3 text-emerald-400" />
               <span>POWER</span>
@@ -162,15 +162,15 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
             </div>
           </div>
 
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5">
+          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
             <div className="flex items-center gap-1.5 text-white/50 text-[10px]">
               <Calendar className="w-3 h-3 text-purple-400" />
               <span>LANDING DATE</span>
             </div>
-            <div className="text-white font-bold mt-0.5">{mission.landingDate}</div>
+            <div className="text-white font-bold mt-0.5 tabular-nums">{mission.landingDate}</div>
           </div>
 
-          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5 sm:col-span-2">
+          <div className="p-2 rounded-xl bg-white/[0.03] border border-white/[0.06] sm:col-span-2">
             <div className="flex items-center gap-1.5 text-white/50 text-[10px]">
               <Compass className="w-3 h-3 text-orange-400" />
               <span>LANDING SITE</span>
@@ -183,7 +183,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
       </div>
 
       {/* Primary Science Objectives */}
-      <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex flex-col gap-2.5">
+      <div className="p-4 rounded-2xl bg-white/[0.025] border border-white/[0.08] flex flex-col gap-2.5">
         <div className="flex items-center gap-2 text-xs font-mono font-bold text-white/90">
           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
           <span>PRIMARY MISSION OBJECTIVES</span>
@@ -209,7 +209,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
               <FlaskConical className="w-3.5 h-3.5 text-cyan-400" />
               <span>SCIENTIFIC INSTRUMENT PAYLOAD</span>
             </div>
-            <span className="text-[10px] text-white/50">
+            <span className="text-[10px] text-white/50 tabular-nums">
               {mission.instruments.length} INVESTIGATIONS
             </span>
           </div>
@@ -218,7 +218,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
             {mission.instruments.map((inst) => (
               <div
                 key={inst.id}
-                className="p-3 rounded-2xl bg-black/60 border border-white/10 flex flex-col gap-1.5 hover:border-white/20 transition-colors"
+                className="p-3 rounded-2xl bg-white/[0.025] border border-white/[0.08] flex flex-col gap-1.5 hover:border-white/20 hover:bg-white/[0.045] transition-all"
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
@@ -229,7 +229,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
                       {inst.name}
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-mono bg-white/5 text-white/60 border border-white/10">
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-mono bg-white/[0.04] text-white/60 border border-white/10">
                     {inst.type}
                   </span>
                 </div>
@@ -247,7 +247,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
       )}
 
       {/* Provenance & Planetary Data System (PDS) Link */}
-      <div className="p-4 rounded-2xl bg-purple-950/20 border border-purple-500/20 flex flex-col gap-2 font-sans mt-auto">
+      <div className="p-4 rounded-2xl bg-purple-950/15 border border-purple-500/20 flex flex-col gap-2 font-sans mt-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-purple-400" />
@@ -268,7 +268,7 @@ export const MissionControlDrawer: React.FC<MissionControlDrawerProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="View NASA PDS Archive"
-          className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-purple-400 hover:text-purple-300 underline underline-offset-2 transition-colors mt-1"
+          className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-purple-400 hover:text-purple-300 underline underline-offset-2 transition-colors mt-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-400"
         >
           <span>View NASA PDS Archive</span>
           <ExternalLink className="w-3 h-3" />

@@ -108,13 +108,13 @@ export const ExtentCoverageBanner: React.FC<ExtentCoverageBannerProps> = ({
       aria-live="polite"
       className={clsx(
         'absolute top-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto select-none',
-        'flex items-center gap-2 px-3 py-1.5 rounded-lg backdrop-blur-md',
-        'bg-slate-950/90 border border-amber-500/50 text-amber-300 shadow-2xl',
+        'flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-2xl',
+        'bg-[#080A0F]/90 border border-amber-500/40 text-amber-300 shadow-[0_12px_32px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.1)]',
         'font-mono text-xs max-w-xl text-center',
         className
       )}
     >
-      <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+      <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 animate-pulse" />
       <span className="truncate">{notices[0].message}</span>
     </aside>
   );

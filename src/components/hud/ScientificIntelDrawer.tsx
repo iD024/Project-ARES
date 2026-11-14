@@ -81,7 +81,7 @@ export const ScientificIntelDrawer: React.FC = () => {
   return (
     <aside
       data-testid="scientific-intel-drawer"
-      className="fixed top-0 right-0 z-30 w-full sm:w-[500px] h-screen bg-black/90 backdrop-blur-2xl border-l border-white/10 text-white shadow-2xl flex flex-col font-sans select-none overflow-hidden"
+      className="fixed top-0 right-0 z-30 w-full sm:w-[500px] h-[100dvh] bg-[#080A0F]/95 backdrop-blur-2xl border-l border-white/10 text-white shadow-2xl flex flex-col font-sans select-none overflow-hidden"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 bg-white/[0.02]">
@@ -187,7 +187,7 @@ export const ScientificIntelDrawer: React.FC = () => {
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="font-bold text-sm text-white font-mono">{d.name}</h4>
+                        <h3 className="font-bold text-sm text-white font-mono">{d.name}</h3>
                         <p className="text-white/60 text-[11px] font-mono mt-0.5">{d.mission} • {d.provider}</p>
                       </div>
                       <Badge variant={d.classification}>{d.classification}</Badge>
